@@ -46,8 +46,10 @@ Depends(Ex(r'''dA'''), Ex(r'''\partial{#})''') )
 SortOrder(Ex(r'''{dU{#},dV{#},dW{#},dB{#},dA,m{#},k{#},t{#},e{#},A,B{#},X{#},Y{#},Z{#},U{#},V{#},W{#},\partial{#},\epsilon{#},\gamma{#}}'''), Ex(r''')''') )
 
 ruleH1  = Ex(r''' H1_{\mu \nu} ->-2*A*\gamma_{\mu \nu} + \gamma_{\mu \rho} \gamma_{\nu \sigma} X^{\rho \sigma}''')
+#ruleH2  = Ex(r''' H2_{\mu \nu \rho} ->B^{\sigma} \gamma_{\sigma \nu} \gamma_{\mu \rho} - B^{\sigma} \gamma_{\sigma \rho} \gamma_{\mu \nu} + ((1/2) * \gamma_{\sigma \tau} X^{\sigma \tau} - A) * \epsilon_{\mu \nu \rho} + \epsilon_{\alpha \nu \rho} * \gamma_{\mu \sigma} Z^{\sigma \alpha}''')
 ruleH2  = Ex(r''' H2_{\mu \nu \rho} ->B^{\sigma} \gamma_{\sigma \nu} \gamma_{\mu \rho} - B^{\sigma} \gamma_{\sigma \rho} \gamma_{\mu \nu} + \epsilon_{\alpha \nu \rho} * \gamma_{\mu \sigma} Z^{\sigma \alpha}''')
-ruleH3  = Ex(r''' H3_{\mu \nu \rho \sigma} ->- (\gamma_{\mu \rho} \gamma_{\nu \sigma} - \gamma_{\mu \sigma} \gamma_{\nu \rho}) * \gamma_{\alpha \beta} X^{\alpha \beta} - \epsilon_{\alpha \mu \nu} \epsilon_{\beta \rho \sigma} Y^{\alpha \beta}''')
+#ruleH3  = Ex(r''' H3_{\mu \nu \rho \sigma} -> (\gamma_{\alpha \mu} \epsilon_{\nu \rho \sigma} - \gamma_{\alpha \nu} \epsilon_{\mu \rho \sigma} + \gamma_{\alpha \rho} \epsilon_{\sigma \mu \nu} - \gamma_{\alpha \sigma} \epsilon_{\rho \mu \nu}) B^{\alpha} - (\gamma_{\mu \rho} \gamma_{\nu \sigma} - \gamma_{\mu \sigma} \gamma_{\nu \rho}) * \gamma_{\alpha \beta} X^{\alpha \beta} - \epsilon_{\alpha \mu \nu} \epsilon_{\beta \rho \sigma} Y^{\alpha \beta}''')
+ruleH3  = Ex(r''' H3_{\mu \nu \rho \sigma} -> - (\gamma_{\mu \rho} \gamma_{\nu \sigma} - \gamma_{\mu \sigma} \gamma_{\nu \rho}) * \gamma_{\alpha \beta} X^{\alpha \beta} - \epsilon_{\alpha \mu \nu} \epsilon_{\beta \rho \sigma} Y^{\alpha \beta}''')
 
 ruleEta00  = Ex(r''' \eta^{0 0} -> 1''')
 ruleEta0a1  = Ex(r''' \eta^{0 \alpha} -> 0''')
@@ -92,46 +94,6 @@ ruleEpsToDelta2  = Ex(r''' \epsilon^{a? b? c?} \epsilon^{i? j? k?} ->\gamma^{a? 
 
 ruleEpsToDelta3  = Ex(r''' \epsilon^{a? b? c?} \epsilon_{i? j? k?} ->\delta^{a?}_{i?} \delta^{b?}_{j?} \delta^{c?}_{k?} - \delta^{a?}_{i?} \delta^{b?}_{k?} \delta^{c?}_{j?} - \delta^{a?}_{j?} \delta^{b?}_{i?} \delta^{c?}_{k?} + \delta^{a?}_{j?} \delta^{b?}_{k?} \delta^{c?}_{i?} + \delta^{a?}_{k?} \delta^{b?}_{i?} \delta^{c?}_{j?} - \delta^{a?}_{k?} \delta^{b?}_{j?} \delta^{c?}_{i?}''')
 
-ruleMassABe1  = Ex(r'''e{4} -> (-1/6)*m{1}''')
-ruleMassABe2  = Ex(r'''e{5} -> m{1}''')
-ruleMassABe3  = Ex(r'''e{6} -> (-1/2)*m{1} - (1/2)*m{2}''')
-ruleMassABe4  = Ex(r'''e{7} -> m{2}''')
-ruleMassABe5  = Ex(r'''e{8} -> (-1/3)*m{3}''')
-ruleMassABe6  = Ex(r'''e{9} -> m{3}''')
-
-ruleKinApBqe1 = Ex(r'''e{10} -> (-1/16)*k{1}''')
-ruleKinApBqe2 = Ex(r'''e{11} -> (-1/96)*k{1} - (1/6)*k{3}''')
-ruleKinApBqe3 = Ex(r'''e{12} -> (1/16)*k{1} + k{4}''')
-ruleKinApBqe4 = Ex(r'''e{13} -> k{3}''')
-ruleKinApBqe5 = Ex(r'''e{14} -> k{4}''')
-ruleKinApBqe6 = Ex(r'''e{15} -> (1/16)*k{1} - k{4}''')
-ruleKinApBqe7 = Ex(r'''e{16} -> (3/64)*k{1} - (1/2)*k{3} - (1/2)*k{5}''')
-ruleKinApBqe8 = Ex(r'''e{17} -> (-1/16)*k{1} - k{4}''')
-ruleKinApBqe9 = Ex(r'''e{18} -> k{5}''')
-ruleKinApBqe10 = Ex(r'''e{19} -> (1/8)*k{2}''')
-ruleKinApBqe11 = Ex(r'''e{20} -> (1/6)*k{6} - (1/3)*k{7}''')
-ruleKinApBqe12 = Ex(r'''e{21} -> 2*k{2}''')
-ruleKinApBqe13 = Ex(r'''e{22} -> k{6}''')
-ruleKinApBqe14 = Ex(r'''e{23} -> k{7}''')
-ruleKinApBqe15 = Ex(r'''e{24} -> k{6}''')
-
-ruleKinABIe1 = Ex(r'''e{25} -> (-1/192)*k{1} - (1/6)*k{8} - (1/12)*k{9}''')
-ruleKinABIe2 = Ex(r'''e{26} -> (1/96)*k{1} - (1/6)*k{9}''')
-ruleKinABIe3 = Ex(r'''e{27} -> k{8}''')
-ruleKinABIe4 = Ex(r'''e{28} -> k{9}''')
-ruleKinABIe5 = Ex(r'''e{29} -> (1/2)*k{9}''')
-ruleKinABIe6 = Ex(r'''e{30} -> (1/64)*k{1} - (1/2)*k{8} - (1/2)*k{10} + (1/4)*k{9}''')
-ruleKinABIe7 = Ex(r'''e{31} -> (-1/16)*k{1} - k{9}''')
-ruleKinABIe8 = Ex(r'''e{32} -> k{10}''')
-ruleKinABIe9 = Ex(r'''e{33} -> -k{9} + (1/16)*k{1}''')
-ruleKinABIe10 = Ex(r'''e{34} -> (-1/48)*k{2} - (1/2)*k{11} - (1/12)*k{12} + k{13}''')
-ruleKinABIe11 = Ex(r'''e{35} -> k{11}''')
-ruleKinABIe12 = Ex(r'''e{36} -> (-1/2)*k{12} - 6*k{13} + (1/16)*k{2}''')
-ruleKinABIe13 = Ex(r'''e{37} -> k{12}''')
-ruleKinABIe14 = Ex(r'''e{38} -> k{12}''')
-ruleKinABIe15 = Ex(r'''e{39} -> k{13}''')
-ruleKinABIe16 = Ex(r'''e{40} -> (-1/16)*k{2}''')
-
 allE = Ex(r'''e{1}, e{2}, e{3}, e{4}, e{5}, e{6}, e{7}, e{8}, e{9}, e{10}, e{11}, e{12}, e{13}, e{14}, e{15}, e{16}, e{17}, e{18}, e{19}, e{20}, e{21}, e{22}, e{23}, e{24}, e{25}, e{26}, e{27}, e{28}, e{29}, e{30}, e{31}, e{32}, e{33}, e{34}, e{35}, e{36}, e{37}, e{38}, e{39}, e{40}''')
 
 def my_eliminate_metric(ex, repeat=False):
@@ -146,9 +108,9 @@ def my_eliminate_metric(ex, repeat=False):
     return ex
 
 def my_epsilon_to_delta(ex, repeat=False):
-    substitute(ex, ruleEpsToDelta3, repeat=True)
-    substitute(ex, ruleEpsToDelta1, repeat=True)
-    substitute(ex, ruleEpsToDelta2, repeat=True)
+    substitute(ex, ruleEpsToDelta3)
+    substitute(ex, ruleEpsToDelta1)
+    substitute(ex, ruleEpsToDelta2)
     return ex
 
 def kin_ABI():
@@ -232,29 +194,29 @@ def kin_ABI():
     substitute(ex, ruleH3)
     
     
-    distribute(ex, repeat=True)
-    unwrap(ex, repeat=True)
+    distribute(ex)
+    unwrap(ex)
     
     
-    my_epsilon_to_delta(ex, repeat=True)
-    my_epsilon_to_delta(ex, repeat=True)
-    my_epsilon_to_delta(ex, repeat=True)
+    my_epsilon_to_delta(ex)
+    my_epsilon_to_delta(ex)
+    my_epsilon_to_delta(ex)
     
     
-    distribute(ex, repeat=True)
+    distribute(ex)
     
-    rewrite_indices(ex, Ex(r'\epsilon_{\alpha \beta \gamma}'), Ex(r'\gamma^{\alpha \beta}'), repeat=True)
+    rewrite_indices(ex, Ex(r'\epsilon_{\alpha \beta \gamma}'), Ex(r'\gamma^{\alpha \beta}'))
 
-    my_eliminate_metric(ex, repeat=True)
-    eliminate_kronecker(ex, repeat=True)
-    my_eliminate_metric(ex, repeat=True)
-    eliminate_kronecker(ex, repeat=True)
-    my_eliminate_metric(ex, repeat=True)
-    eliminate_kronecker(ex, repeat=True)
+    my_eliminate_metric(ex)
+    eliminate_kronecker(ex)
+    my_eliminate_metric(ex)
+    eliminate_kronecker(ex)
+    my_eliminate_metric(ex)
+    eliminate_kronecker(ex)
     
     
-    sort_product(ex, repeat=True)
-    sort_sum(ex, repeat=True)
+    sort_product(ex)
+    sort_sum(ex)
     
     
     canonicalise(ex)
@@ -270,28 +232,11 @@ def kin_ABI():
     distribute(ex)
     
     
-    substitute(ex, ruleTraceFree1, repeat=True)
-    substitute(ex, ruleTraceFree2, repeat=True)
-    substitute(ex, ruleTraceFree3, repeat=True)
+    substitute(ex, ruleTraceFree1)
+    substitute(ex, ruleTraceFree2)
+    substitute(ex, ruleTraceFree3)
     
-#    substitute(ex, ruleKinABIe1)
-#    substitute(ex, ruleKinABIe2)
-#    substitute(ex, ruleKinABIe3)
-#    substitute(ex, ruleKinABIe4)
-#    substitute(ex, ruleKinABIe5)
-#    substitute(ex, ruleKinABIe6)
-#    substitute(ex, ruleKinABIe7)
-#    substitute(ex, ruleKinABIe8)
-#    substitute(ex, ruleKinABIe9)
-#    substitute(ex, ruleKinABIe10)
-#    substitute(ex, ruleKinABIe11)
-#    substitute(ex, ruleKinABIe12)
-#    substitute(ex, ruleKinABIe13)
-#    substitute(ex, ruleKinABIe14)
-#    substitute(ex, ruleKinABIe15)
-#    substitute(ex, ruleKinABIe16)
-
-    distribute(ex, repeat=True)
+    distribute(ex)
     
     sort_product(ex)
     sort_sum(ex)
@@ -381,29 +326,29 @@ def kin_ApBq():
     substitute(ex, ruleH3)
     
     
-    distribute(ex, repeat=True)
-    unwrap(ex, repeat=True)
+    distribute(ex)
+    unwrap(ex)
     
     
-    my_epsilon_to_delta(ex, repeat=True)
-    my_epsilon_to_delta(ex, repeat=True)
-    my_epsilon_to_delta(ex, repeat=True)
+    my_epsilon_to_delta(ex)
+    my_epsilon_to_delta(ex)
+    my_epsilon_to_delta(ex)
     
-    rewrite_indices(ex, Ex(r'\epsilon_{\alpha \beta \gamma}'), Ex(r'\gamma^{\alpha \beta}'), repeat=True)
+    rewrite_indices(ex, Ex(r'\epsilon_{\alpha \beta \gamma}'), Ex(r'\gamma^{\alpha \beta}'))
     
-    distribute(ex, repeat=True)
-    
-    
-    my_eliminate_metric(ex, repeat=True)
-    eliminate_kronecker(ex, repeat=True)
-    my_eliminate_metric(ex, repeat=True)
-    eliminate_kronecker(ex, repeat=True)
-    my_eliminate_metric(ex, repeat=True)
-    eliminate_kronecker(ex, repeat=True)
+    distribute(ex)
     
     
-    sort_product(ex, repeat=True)
-    sort_sum(ex, repeat=True)
+    my_eliminate_metric(ex)
+    eliminate_kronecker(ex)
+    my_eliminate_metric(ex)
+    eliminate_kronecker(ex)
+    my_eliminate_metric(ex)
+    eliminate_kronecker(ex)
+    
+    
+    sort_product(ex)
+    sort_sum(ex)
     
     
     canonicalise(ex)
@@ -419,27 +364,11 @@ def kin_ApBq():
     distribute(ex)
     
     
-    substitute(ex, ruleTraceFree1, repeat=True)
-    substitute(ex, ruleTraceFree2, repeat=True)
-    substitute(ex, ruleTraceFree3, repeat=True)
+    substitute(ex, ruleTraceFree1)
+    substitute(ex, ruleTraceFree2)
+    substitute(ex, ruleTraceFree3)
     
-#    substitute(ex, ruleKinApBqe1)
-#    substitute(ex, ruleKinApBqe2)
-#    substitute(ex, ruleKinApBqe3)
-#    substitute(ex, ruleKinApBqe4)
-#    substitute(ex, ruleKinApBqe5)
-#    substitute(ex, ruleKinApBqe6)
-#    substitute(ex, ruleKinApBqe7)
-#    substitute(ex, ruleKinApBqe8)
-#    substitute(ex, ruleKinApBqe9)
-#    substitute(ex, ruleKinApBqe10)
-#    substitute(ex, ruleKinApBqe11)
-#    substitute(ex, ruleKinApBqe12)
-#    substitute(ex, ruleKinApBqe13)
-#    substitute(ex, ruleKinApBqe14)
-#    substitute(ex, ruleKinApBqe15)
-
-    distribute(ex, repeat=True)
+    distribute(ex)
     
     sort_product(ex)
     sort_sum(ex)
@@ -511,29 +440,29 @@ def mass_AB():
     substitute(ex, ruleH3)
 
     
-    distribute(ex, repeat=True)
-    unwrap(ex, repeat=True)
+    distribute(ex)
+    unwrap(ex)
     
     
-    my_epsilon_to_delta(ex, repeat=True)
-    my_epsilon_to_delta(ex, repeat=True)
-    my_epsilon_to_delta(ex, repeat=True)
+    my_epsilon_to_delta(ex)
+    my_epsilon_to_delta(ex)
+    my_epsilon_to_delta(ex)
     
-    rewrite_indices(ex, Ex(r'\epsilon_{\alpha \beta \gamma}'), Ex(r'\gamma^{\alpha \beta}'), repeat=True)
+    rewrite_indices(ex, Ex(r'\epsilon_{\alpha \beta \gamma}'), Ex(r'\gamma^{\alpha \beta}'))
     
-    distribute(ex, repeat=True)
-    
-    
-    my_eliminate_metric(ex, repeat=True)
-    eliminate_kronecker(ex, repeat=True)
-    my_eliminate_metric(ex, repeat=True)
-    eliminate_kronecker(ex, repeat=True)
-    my_eliminate_metric(ex, repeat=True)
-    eliminate_kronecker(ex, repeat=True)
+    distribute(ex)
     
     
-    sort_product(ex, repeat=True)
-    sort_sum(ex, repeat=True)
+    my_eliminate_metric(ex)
+    eliminate_kronecker(ex)
+    my_eliminate_metric(ex)
+    eliminate_kronecker(ex)
+    my_eliminate_metric(ex)
+    eliminate_kronecker(ex)
+    
+    
+    sort_product(ex)
+    sort_sum(ex)
     
     
     canonicalise(ex)
@@ -549,19 +478,12 @@ def mass_AB():
     distribute(ex)
     
     
-    substitute(ex, ruleTraceFree1, repeat=True)
-    substitute(ex, ruleTraceFree2, repeat=True)
-    substitute(ex, ruleTraceFree3, repeat=True)
+    substitute(ex, ruleTraceFree1)
+    substitute(ex, ruleTraceFree2)
+    substitute(ex, ruleTraceFree3)
 
-#    substitute(ex, ruleMassABe1)
-#    substitute(ex, ruleMassABe2)
-#    substitute(ex, ruleMassABe3)
-#    substitute(ex, ruleMassABe4)
-#    substitute(ex, ruleMassABe5)
-#    substitute(ex, ruleMassABe6)
     
-    
-    distribute(ex, repeat=True)
+    distribute(ex)
     sort_product(ex)
     sort_sum(ex)
     canonicalise(ex)
@@ -609,38 +531,38 @@ def load_ABI():
 def eom_from_files(toVary):
     ex1 = load_AB()
     ex2 = load_ABI()
-    substitute(ex2, Ex(r'e{1} -> e{7}'))
-    substitute(ex2, Ex(r'e{2} -> e{8}'))
-    substitute(ex2, Ex(r'e{3} -> e{9}'))
-    substitute(ex2, Ex(r'e{4} -> e{10}'))
-    substitute(ex2, Ex(r'e{5} -> e{11}'))
-    substitute(ex2, Ex(r'e{6} -> e{12}'))
-    substitute(ex2, Ex(r'e{7} -> e{13}'))
-    substitute(ex2, Ex(r'e{8} -> e{14}'))
-    substitute(ex2, Ex(r'e{9} -> e{15}'))
-    substitute(ex2, Ex(r'e{10} -> e{16}'))
-    substitute(ex2, Ex(r'e{11} -> e{17}'))
-    substitute(ex2, Ex(r'e{12} -> e{18}'))
-    substitute(ex2, Ex(r'e{13} -> e{19}'))
-    substitute(ex2, Ex(r'e{14} -> e{20}'))
-    substitute(ex2, Ex(r'e{15} -> e{21}'))
-    substitute(ex2, Ex(r'e{16} -> e{22}'))
+    substitute(ex2, Ex(r'e{1} -> e{22}'))
+    substitute(ex2, Ex(r'e{2} -> e{23}'))
+    substitute(ex2, Ex(r'e{3} -> e{24}'))
+    substitute(ex2, Ex(r'e{4} -> e{25}'))
+    substitute(ex2, Ex(r'e{5} -> e{26}'))
+    substitute(ex2, Ex(r'e{6} -> e{27}'))
+    substitute(ex2, Ex(r'e{7} -> e{28}'))
+    substitute(ex2, Ex(r'e{8} -> e{29}'))
+    substitute(ex2, Ex(r'e{9} -> e{30}'))
+    substitute(ex2, Ex(r'e{10} -> e{31}'))
+    substitute(ex2, Ex(r'e{11} -> e{32}'))
+    substitute(ex2, Ex(r'e{12} -> e{33}'))
+    substitute(ex2, Ex(r'e{13} -> e{34}'))
+    substitute(ex2, Ex(r'e{14} -> e{35}'))
+    substitute(ex2, Ex(r'e{15} -> e{36}'))
+    substitute(ex2, Ex(r'e{16} -> e{37}'))
     ex3 = load_ApBq()
-    substitute(ex3, Ex(r'e{1} -> e{23}'))
-    substitute(ex3, Ex(r'e{2} -> e{24}'))
-    substitute(ex3, Ex(r'e{3} -> e{25}'))
-    substitute(ex3, Ex(r'e{4} -> e{26}'))
-    substitute(ex3, Ex(r'e{5} -> e{27}'))
-    substitute(ex3, Ex(r'e{6} -> e{28}'))
-    substitute(ex3, Ex(r'e{7} -> e{29}'))
-    substitute(ex3, Ex(r'e{8} -> e{30}'))
-    substitute(ex3, Ex(r'e{9} -> e{31}'))
-    substitute(ex3, Ex(r'e{10} -> e{32}'))
-    substitute(ex3, Ex(r'e{11} -> e{33}'))
-    substitute(ex3, Ex(r'e{12} -> e{34}'))
-    substitute(ex3, Ex(r'e{13} -> e{35}'))
-    substitute(ex3, Ex(r'e{14} -> e{36}'))
-    substitute(ex3, Ex(r'e{15} -> e{37}'))
+    substitute(ex3, Ex(r'e{1} -> e{7}'))
+    substitute(ex3, Ex(r'e{2} -> e{8}'))
+    substitute(ex3, Ex(r'e{3} -> e{9}'))
+    substitute(ex3, Ex(r'e{4} -> e{10}'))
+    substitute(ex3, Ex(r'e{5} -> e{11}'))
+    substitute(ex3, Ex(r'e{6} -> e{12}'))
+    substitute(ex3, Ex(r'e{7} -> e{13}'))
+    substitute(ex3, Ex(r'e{8} -> e{14}'))
+    substitute(ex3, Ex(r'e{9} -> e{15}'))
+    substitute(ex3, Ex(r'e{10} -> e{16}'))
+    substitute(ex3, Ex(r'e{11} -> e{17}'))
+    substitute(ex3, Ex(r'e{12} -> e{18}'))
+    substitute(ex3, Ex(r'e{13} -> e{19}'))
+    substitute(ex3, Ex(r'e{14} -> e{20}'))
+    substitute(ex3, Ex(r'e{15} -> e{21}'))
 
     variation = Ex(r'd' + toVary.input_form())
     ruleVary = Ex(r'@{toVary} -> @{variation}')
@@ -648,14 +570,14 @@ def eom_from_files(toVary):
     ex = Ex(r'\int{@(ex1) + @(ex2) + @(ex3)}{x}')
     vary(ex, ruleVary)
 
-    integrate_by_parts(ex, Ex(r'\partial_{\alpha?}{@(variation)}'), repeat=True)
-    unwrap(ex, repeat=True)
-    product_rule(ex, repeat=True)
-    distribute(ex, repeat=True)
-    integrate_by_parts(ex, variation, repeat=True)
-    unwrap(ex, repeat=True)
-    product_rule(ex, repeat=True)
-    distribute(ex, repeat=True)
+    integrate_by_parts(ex, Ex(r'\partial_{\alpha?}{@(variation)}'))
+    unwrap(ex)
+    product_rule(ex)
+    distribute(ex)
+    integrate_by_parts(ex, variation)
+    unwrap(ex)
+    product_rule(ex)
+    distribute(ex)
 
     sort_product(ex)
     sort_sum(ex)
@@ -665,3 +587,46 @@ def eom_from_files(toVary):
     factor_out(ex, variation)
 
     return ex
+
+def apply_sol(ex):
+    substitute(ex, Ex(r'''e{1} -> (-1/6)*k{1}'''))
+    substitute(ex, Ex(r'''e{2} -> 1*k{1}'''))
+    substitute(ex, Ex(r'''e{3} -> (-1/2)*k{1} + (-1/2)*k{2}'''))
+    substitute(ex, Ex(r'''e{4} -> 1*k{2}'''))
+    substitute(ex, Ex(r'''e{5} -> (-1/3)*k{3}'''))
+    substitute(ex, Ex(r'''e{6} -> 1*k{3}'''))
+    substitute(ex, Ex(r'''e{7} -> (-1)*k{10} + (-1)*k{12}'''))
+    substitute(ex, Ex(r'''e{8} -> (-1/6)*k{4} + (-1/6)*k{10} + (-1/6)*k{12}'''))
+    substitute(ex, Ex(r'''e{9} -> 1*k{5} + 1*k{10} + 1*k{12}'''))
+    substitute(ex, Ex(r'''e{10} -> 1*k{4}'''))
+    substitute(ex, Ex(r'''e{11} -> 1*k{5}'''))
+    substitute(ex, Ex(r'''e{12} -> (-1)*k{5} + 1*k{10} + 1*k{12}'''))
+    substitute(ex, Ex(r'''e{13} -> (-1/2)*k{4} + (-1/2)*k{6} + 3/4*k{10} + 3/4*k{12}'''))
+    substitute(ex, Ex(r'''e{14} -> (-1)*k{5} + (-1)*k{10} + (-1)*k{12}'''))
+    substitute(ex, Ex(r'''e{15} -> 1*k{6}'''))
+    substitute(ex, Ex(r'''e{16} -> 1/8*k{16}'''))
+    substitute(ex, Ex(r'''e{17} -> 1/6*k{7} + (-1/3)*k{8}'''))
+    substitute(ex, Ex(r'''e{18} -> 2*k{7}'''))
+    substitute(ex, Ex(r'''e{19} -> 1*k{7}'''))
+    substitute(ex, Ex(r'''e{20} -> 1*k{8}'''))
+    substitute(ex, Ex(r'''e{21} -> 1*k{7}'''))
+    substitute(ex, Ex(r'''e{22} -> (-1/6)*k{9} + (-1/6)*k{10} + (-1/12)*k{12}'''))
+    substitute(ex, Ex(r'''e{23} -> 1/6*k{12}'''))
+    substitute(ex, Ex(r'''e{24} -> 1*k{9}'''))
+    substitute(ex, Ex(r'''e{25} -> 1*k{10}'''))
+    substitute(ex, Ex(r'''e{26} -> 1/2*k{10}'''))
+    substitute(ex, Ex(r'''e{27} -> (-1/2)*k{9} + 1/2*k{10} + (-1/2)*k{11} + 1/4*k{12}'''))
+    substitute(ex, Ex(r'''e{28} -> (-2)*k{10} + (-1)*k{12}'''))
+    substitute(ex, Ex(r'''e{29} -> 1*k{11}'''))
+    substitute(ex, Ex(r'''e{30} -> 1*k{12}'''))
+    substitute(ex, Ex(r'''e{31} -> (-1/2)*k{13} + (-1/12)*k{14} + 1*k{15} + (-1/48)*k{16}'''))
+    substitute(ex, Ex(r'''e{32} -> 1*k{13}'''))
+    substitute(ex, Ex(r'''e{33} -> (-1/2)*k{14} + (-6)*k{15} + 1/16*k{16}'''))
+    substitute(ex, Ex(r'''e{34} -> 1*k{14}'''))
+    substitute(ex, Ex(r'''e{35} -> 1*k{14}'''))
+    substitute(ex, Ex(r'''e{36} -> 1*k{15}'''))
+    substitute(ex, Ex(r'''e{37} -> (-1/16)*k{16}'''))
+    substitute(ex, Ex(r'''e{38} -> (-8)*k{10} + (-8)*k{12}'''))
+    substitute(ex, Ex(r'''e{39} -> 16*k{10} + 16*k{12}'''))
+    substitute(ex, Ex(r'''e{40} -> 1*k{16}'''))
+    return(ex)
