@@ -49,10 +49,14 @@ ruleH1  = Ex(r''' H1^{\mu \nu} ->2*A*\gamma^{\mu \nu} - X^{\mu \nu}''')
 ruleH2  = Ex(r''' H2^{\mu \nu \rho} ->B^{\nu} \gamma^{\mu \rho} - B^{\rho} \gamma^{\mu \nu} + ((1/2) * \gamma_{\sigma \tau} X^{\sigma \tau} - A) * \epsilon^{\mu \nu \rho} + \epsilon^{\alpha \nu \rho} * \gamma_{\alpha \sigma} Z^{\mu \sigma}''')
 ruleH3  = Ex(r''' H3^{\mu \nu \rho \sigma} -> -(B^{\mu} \epsilon^{\nu \rho \sigma} - B^{\nu} \epsilon^{\mu \rho \sigma} + B^{\rho} \epsilon^{\sigma \mu \nu} - B^{\sigma} \epsilon^{\rho \mu \nu}) + (\gamma^{\mu \rho} \gamma^{\nu \sigma} - \gamma^{\mu \sigma} \gamma^{\nu \rho}) * \gamma_{\alpha \beta} X^{\alpha \beta} + \epsilon^{\alpha \mu \nu} \epsilon^{\beta \rho \sigma} \gamma_{\alpha \gamma} \gamma_{\beta \delta} Y^{\gamma \delta}''')
 
-ruleEta00  = Ex(r''' \eta_{0 0} -> 1''')
-ruleEta0a1  = Ex(r''' \eta_{0 \alpha} -> 0''')
-ruleEta0a2  = Ex(r''' \eta_{\alpha 0} -> 0''')
-ruleEtaab  = Ex(r''' \eta_{\alpha \beta} -> -\gamma_{\alpha \beta}''')
+ruleEta001  = Ex(r''' \eta_{0 0} -> 1''')
+ruleEta002  = Ex(r''' \eta^{0 0} -> 1''')
+ruleEta0a11  = Ex(r''' \eta_{0 \alpha} -> 0''')
+ruleEta0a21  = Ex(r''' \eta_{\alpha 0} -> 0''')
+ruleEta0a12  = Ex(r''' \eta^{0 \alpha} -> 0''')
+ruleEta0a22  = Ex(r''' \eta^{\alpha 0} -> 0''')
+ruleEtaab1  = Ex(r''' \eta^{\alpha \beta} -> -\gamma^{\alpha \beta}''')
+ruleEtaab2  = Ex(r''' \eta_{\alpha \beta} -> -\gamma_{\alpha \beta}''')
 
 ruleEtaEta1 = Ex(r'''\eta^{a? p} \eta_{b? p} -> \delta^{a?}_{b?}''')
 ruleEtaEta2 = Ex(r'''\eta^{a? p} \eta_{p b?} -> \delta^{a?}_{b?}''')
@@ -68,9 +72,12 @@ ruleEtaEpsilon6 = Ex(r'''\eta^{p a?} \epsilon_{\alpha \beta p \gamma} -> \delta^
 ruleEtaEpsilon7 = Ex(r'''\eta^{a? p} \epsilon_{\alpha \beta \gamma p} -> -\delta^{a?}_{0} \epsilon_{\alpha \beta \gamma}''')
 ruleEtaEpsilon8 = Ex(r'''\eta^{p a?} \epsilon_{\alpha \beta \gamma p} -> -\delta^{a?}_{0} \epsilon_{\alpha \beta \gamma}''')
 
-ruleDelta1 = Ex(r'''\delta^{0}_{0} -> 1''')
+ruleDelta1 = Ex(r'''\delta_{p?}^{q?} -> \delta^{q?}_{p?}''')
 ruleDelta2 = Ex(r'''\delta^{0}_{\alpha} -> 0''')
 ruleDelta3 = Ex(r'''\delta^{\alpha}_{0} -> 0''')
+
+ruleDeltaDelta1 = Ex(r'''\delta^{p}_{q?} \delta^{r?}_{p} -> \delta^{r?}_{q?}''')
+ruleDeltaDelta2 = Ex(r'''\delta^{r?}_{p} \delta^{p}_{q?} -> \delta^{r?}_{q?}''')
 
 ruleTraceFree1  = Ex(r''' \gamma_{\alpha \beta} W^{\alpha \beta} -> 0''')
 ruleTraceFree2  = Ex(r''' \gamma_{\alpha \beta} \partial_{p?}{W^{\alpha \beta}} -> 0''')
@@ -130,22 +137,22 @@ def my_epsilon_to_delta(ex, repeat=False):
     return ex
 
 def kin_ABI():
-    ruleM1  = Ex(r''' M{1}_{a? b? c? d? e? f? g? h?}^{i? j?} ->\eta^{i? p} \eta^{j? q} \eta_{a? c?} \eta_{b? d?} \eta_{e? g?} \eta_{f? h?} \eta_{p q}''')
-    ruleM2  = Ex(r''' M{2}_{a? b? c? d? e? f? g? h?}^{i? j?} ->\eta^{i? p} \eta^{j? q} \eta_{a? c?} \eta_{b? d?} \eta_{e? g?} \eta_{f? p} \eta_{h? q}''')
-    ruleM3  = Ex(r''' M{3}_{a? b? c? d? e? f? g? h?}^{i? j?} ->\eta^{i? p} \eta^{j? q} \eta_{a? c?} \eta_{b? e?} \eta_{d? g?} \eta_{f? h?} \eta_{p q}''')
-    ruleM4  = Ex(r''' M{4}_{a? b? c? d? e? f? g? h?}^{i? j?} ->\eta^{i? p} \eta^{j? q} \eta_{a? c?} \eta_{b? e?} \eta_{d? g?} \eta_{f? p} \eta_{h? q}''')
-    ruleM5  = Ex(r''' M{5}_{a? b? c? d? e? f? g? h?}^{i? j?} ->\eta^{i? p} \eta^{j? q} \eta_{a? c?} \eta_{b? p} \eta_{d? q} \eta_{e? g?} \eta_{f? h?}''')
-    ruleM6  = Ex(r''' M{6}_{a? b? c? d? e? f? g? h?}^{i? j?} ->\eta^{i? p} \eta^{j? q} \eta_{a? e?} \eta_{b? f?} \eta_{c? g?} \eta_{d? h?} \eta_{p q}''')
-    ruleM7  = Ex(r''' M{7}_{a? b? c? d? e? f? g? h?}^{i? j?} ->\eta^{i? p} \eta^{j? q} \eta_{a? e?} \eta_{b? f?} \eta_{c? g?} \eta_{d? p} \eta_{h? q}''')
-    ruleM8  = Ex(r''' M{8}_{a? b? c? d? e? f? g? h?}^{i? j?} ->\eta^{i? p} \eta^{j? q} \eta_{a? e?} \eta_{b? g?} \eta_{c? f?} \eta_{d? h?} \eta_{p q}''')
-    ruleM9  = Ex(r''' M{9}_{a? b? c? d? e? f? g? h?}^{i? j?} ->\eta^{i? p} \eta^{j? q} \eta_{a? e?} \eta_{b? p} \eta_{c? g?} \eta_{d? q} \eta_{f? h?}''')
-    ruleM10  = Ex(r''' M{10}_{a? b? c? d? e? f? g? h?}^{i? j?} ->\eta^{i? p} \eta^{j? q} \epsilon_{a? b? c? d?} \eta_{e? g?} \eta_{f? h?} \eta_{p q}''')
-    ruleM11  = Ex(r''' M{11}_{a? b? c? d? e? f? g? h?}^{i? j?} ->\eta^{i? p} \eta^{j? q} \epsilon_{a? b? c? d?} \eta_{e? g?} \eta_{f? p} \eta_{h? q}''')
-    ruleM12  = Ex(r''' M{12}_{a? b? c? d? e? f? g? h?}^{i? j?} ->\eta^{i? p} \eta^{j? q} \epsilon_{a? b? e? f?} \eta_{c? g?} \eta_{d? h?} \eta_{p q}''')
-    ruleM13  = Ex(r''' M{13}_{a? b? c? d? e? f? g? h?}^{i? j?} ->\eta^{i? p} \eta^{j? q} \epsilon_{a? b? e? f?} \eta_{c? g?} \eta_{d? p} \eta_{h? q}''')
-    ruleM14  = Ex(r''' M{14}_{a? b? c? d? e? f? g? h?}^{i? j?} ->\eta^{i? p} \eta^{j? q} \epsilon_{a? b? e? p} \eta_{c? g?} \eta_{d? h?} \eta_{f? q}''')
-    ruleM15  = Ex(r''' M{15}_{a? b? c? d? e? f? g? h?}^{i? j?} ->\eta^{i? p} \eta^{j? q} \epsilon_{e? f? g? h?} \eta_{a? c?} \eta_{b? d?} \eta_{p q}''')
-    ruleM16  = Ex(r''' M{16}_{a? b? c? d? e? f? g? h?}^{i? j?} ->\eta^{i? p} \eta^{j? q} \epsilon_{e? f? g? h?} \eta_{a? c?} \eta_{b? p} \eta_{d? q}''')
+    ruleM1  = Ex(r''' M{1}_{a? b? c? d? e? f? g? h?}^{i? j?} -> \eta^{i? p} \eta^{j? q} \eta_{a? c?} \eta_{b? d?} \eta_{e? g?} \eta_{f? h?} \eta_{p q}''')
+    ruleM2  = Ex(r''' M{2}_{a? b? c? d? e? f? g? h?}^{i? j?} -> \eta^{i? p} \eta^{j? q} \eta_{a? c?} \eta_{b? d?} \eta_{e? g?} \eta_{f? p} \eta_{h? q}''')
+    ruleM3  = Ex(r''' M{3}_{a? b? c? d? e? f? g? h?}^{i? j?} -> \eta^{i? p} \eta^{j? q} \eta_{a? c?} \eta_{b? e?} \eta_{d? g?} \eta_{f? h?} \eta_{p q}''')
+    ruleM4  = Ex(r''' M{4}_{a? b? c? d? e? f? g? h?}^{i? j?} -> \eta^{i? p} \eta^{j? q} \eta_{a? c?} \eta_{b? e?} \eta_{d? g?} \eta_{f? p} \eta_{h? q}''')
+    ruleM5  = Ex(r''' M{5}_{a? b? c? d? e? f? g? h?}^{i? j?} -> \eta^{i? p} \eta^{j? q} \eta_{a? c?} \eta_{b? p} \eta_{d? q} \eta_{e? g?} \eta_{f? h?}''')
+    ruleM6  = Ex(r''' M{6}_{a? b? c? d? e? f? g? h?}^{i? j?} -> \eta^{i? p} \eta^{j? q} \eta_{a? e?} \eta_{b? f?} \eta_{c? g?} \eta_{d? h?} \eta_{p q}''')
+    ruleM7  = Ex(r''' M{7}_{a? b? c? d? e? f? g? h?}^{i? j?} -> \eta^{i? p} \eta^{j? q} \eta_{a? e?} \eta_{b? f?} \eta_{c? g?} \eta_{d? p} \eta_{h? q}''')
+    ruleM8  = Ex(r''' M{8}_{a? b? c? d? e? f? g? h?}^{i? j?} -> \eta^{i? p} \eta^{j? q} \eta_{a? e?} \eta_{b? g?} \eta_{c? f?} \eta_{d? h?} \eta_{p q}''')
+    ruleM9  = Ex(r''' M{9}_{a? b? c? d? e? f? g? h?}^{i? j?} -> \eta^{i? p} \eta^{j? q} \eta_{a? e?} \eta_{b? p} \eta_{c? g?} \eta_{d? q} \eta_{f? h?}''')
+    ruleM10  = Ex(r''' M{10}_{a? b? c? d? e? f? g? h?}^{i? j?} -> \eta^{i? p} \eta^{j? q} \epsilon_{a? b? c? d?} \eta_{e? g?} \eta_{f? h?} \eta_{p q}''')
+    ruleM11  = Ex(r''' M{11}_{a? b? c? d? e? f? g? h?}^{i? j?} -> \eta^{i? p} \eta^{j? q} \epsilon_{a? b? c? d?} \eta_{e? g?} \eta_{f? p} \eta_{h? q}''')
+    ruleM12  = Ex(r''' M{12}_{a? b? c? d? e? f? g? h?}^{i? j?} -> \eta^{i? p} \eta^{j? q} \epsilon_{a? b? e? f?} \eta_{c? g?} \eta_{d? h?} \eta_{p q}''')
+    ruleM13  = Ex(r''' M{13}_{a? b? c? d? e? f? g? h?}^{i? j?} -> \eta^{i? p} \eta^{j? q} \epsilon_{a? b? e? f?} \eta_{c? g?} \eta_{d? p} \eta_{h? q}''')
+    ruleM14  = Ex(r''' M{14}_{a? b? c? d? e? f? g? h?}^{i? j?} -> \eta^{i? p} \eta^{j? q} \epsilon_{a? b? e? p} \eta_{c? g?} \eta_{d? h?} \eta_{f? q}''')
+    ruleM15  = Ex(r''' M{15}_{a? b? c? d? e? f? g? h?}^{i? j?} -> \eta^{i? p} \eta^{j? q} \epsilon_{e? f? g? h?} \eta_{a? c?} \eta_{b? d?} \eta_{p q}''')
+    ruleM16  = Ex(r''' M{16}_{a? b? c? d? e? f? g? h?}^{i? j?} -> \eta^{i? p} \eta^{j? q} \epsilon_{e? f? g? h?} \eta_{a? c?} \eta_{b? p} \eta_{d? q}''')
     
     ruleM  = Ex(r''' M_{a? b? c? d? e? f? g? h?}^{i? j?} ->e{1} * M{1}_{a? b? c? d? e? f? g? h?}^{i? j?} + e{2} * M{2}_{a? b? c? d? e? f? g? h?}^{i? j?} + e{3} * M{3}_{a? b? c? d? e? f? g? h?}^{i? j?} + e{4} * M{4}_{a? b? c? d? e? f? g? h?}^{i? j?} + e{5} * M{5}_{a? b? c? d? e? f? g? h?}^{i? j?} + e{6} * M{6}_{a? b? c? d? e? f? g? h?}^{i? j?} + e{7} * M{7}_{a? b? c? d? e? f? g? h?}^{i? j?} + e{8} * M{8}_{a? b? c? d? e? f? g? h?}^{i? j?} + e{9} * M{9}_{a? b? c? d? e? f? g? h?}^{i? j?} + e{10} * M{10}_{a? b? c? d? e? f? g? h?}^{i? j?} + e{11} * M{11}_{a? b? c? d? e? f? g? h?}^{i? j?} + e{12} * M{12}_{a? b? c? d? e? f? g? h?}^{i? j?} + e{13} * M{13}_{a? b? c? d? e? f? g? h?}^{i? j?} + e{14} * M{14}_{a? b? c? d? e? f? g? h?}^{i? j?} + e{15} * M{15}_{a? b? c? d? e? f? g? h?}^{i? j?} + e{16} * M{16}_{a? b? c? d? e? f? g? h?}^{i? j?}''')
     
@@ -179,132 +186,194 @@ def kin_ABI():
     substitute(ex, ruleM14)
     substitute(ex, ruleM15)
     substitute(ex, ruleM16)
-    
-    substitute(ex, ruleEta00)
-    substitute(ex, ruleEta0a1)
-    substitute(ex, ruleEta0a2)
-    substitute(ex, ruleEtaab)
-    
-    
-    substitute(ex, ruleEps0000)
-    substitute(ex, ruleEps000a1)
-    substitute(ex, ruleEps000a2)
-    substitute(ex, ruleEps000a3)
-    substitute(ex, ruleEps000a4)
-    substitute(ex, ruleEps00ab1)
-    substitute(ex, ruleEps00ab2)
-    substitute(ex, ruleEps00ab3)
-    substitute(ex, ruleEps00ab4)
-    substitute(ex, ruleEps00ab5)
-    substitute(ex, ruleEps00ab6)
-    substitute(ex, ruleEps0abc1)
-    substitute(ex, ruleEps0abc2)
-    substitute(ex, ruleEps0abc3)
-    substitute(ex, ruleEps0abc4)
-    substitute(ex, ruleEpsabcd)
-    
-    
-    substitute(ex, ruleH1)
-    substitute(ex, ruleH2)
-    substitute(ex, ruleH3)
 
-    
-    distribute(ex)
-    unwrap(ex)
+    three_plus_one(ex)
 
+    return(ex)
+
+def eliminate_eta(ex):
     substitute(ex, ruleEtaEta1, repeat=True)
     substitute(ex, ruleEtaEta2, repeat=True)
     substitute(ex, ruleEtaEta3, repeat=True)
     substitute(ex, ruleEtaEta4, repeat=True)
 
-    substitute(ex, ruleEtaEpsilon1, repeat=True)
-    substitute(ex, ruleEtaEpsilon2, repeat=True)
-    substitute(ex, ruleEtaEpsilon3, repeat=True)
-    substitute(ex, ruleEtaEpsilon4, repeat=True)
-    substitute(ex, ruleEtaEpsilon5, repeat=True)
-    substitute(ex, ruleEtaEpsilon6, repeat=True)
-    substitute(ex, ruleEtaEpsilon7, repeat=True)
-    substitute(ex, ruleEtaEpsilon8, repeat=True)
+def three_plus_one_eta(ex):
+    substitute(ex, ruleEta001, repeat=True)
+    substitute(ex, ruleEta0a11, repeat=True)
+    substitute(ex, ruleEta0a21, repeat=True)
+    substitute(ex, ruleEtaab1, repeat=True)
+    
+    substitute(ex, ruleEta002, repeat=True)
+    substitute(ex, ruleEta0a12, repeat=True)
+    substitute(ex, ruleEta0a22, repeat=True)
+    substitute(ex, ruleEtaab2, repeat=True)
 
-    substitute(ex, ruleDelta1, repeat=True)
+def my_eliminate_kronecker(ex):
+    substitute(ex, ruleDeltaDelta1, repeat=True)
+    substitute(ex, ruleDeltaDelta2, repeat=True)
+
+def three_plus_one_delta(ex):
     substitute(ex, ruleDelta2, repeat=True)
     substitute(ex, ruleDelta3, repeat=True)
+
+def three_plus_one_epsilon(ex):
+    substitute(ex, ruleEps0000, repeat=True)
+    substitute(ex, ruleEps000a1, repeat=True)
+    substitute(ex, ruleEps000a2, repeat=True)
+    substitute(ex, ruleEps000a3, repeat=True)
+    substitute(ex, ruleEps000a4, repeat=True)
+    substitute(ex, ruleEps00ab1, repeat=True)
+    substitute(ex, ruleEps00ab2, repeat=True)
+    substitute(ex, ruleEps00ab3, repeat=True)
+    substitute(ex, ruleEps00ab4, repeat=True)
+    substitute(ex, ruleEps00ab5, repeat=True)
+    substitute(ex, ruleEps00ab6, repeat=True)
+    substitute(ex, ruleEps0abc1, repeat=True)
+    substitute(ex, ruleEps0abc2, repeat=True)
+    substitute(ex, ruleEps0abc3, repeat=True)
+    substitute(ex, ruleEps0abc4, repeat=True)
+    substitute(ex, ruleEpsabcd, repeat=True)
+
+def subs_delta_eta(ex):
+    substitute(ex, Ex(r'''\delta^{p?}_{a} \eta^{a q?} -> \eta^{p? q?}'''), repeat=True)
+    substitute(ex, Ex(r'''\delta^{p?}_{a} \eta^{q? a} -> \eta^{p? q?}'''), repeat=True)
+    substitute(ex, Ex(r'''\delta^{a}_{p?} \eta_{a q?} -> \eta_{p? q?}'''), repeat=True)
+    substitute(ex, Ex(r'''\delta^{a}_{p?} \eta_{q? a} -> \eta_{p? q?}'''), repeat=True)
+
+def subs_delta_epsilon(ex):
+    substitute(ex, Ex(r'''\delta^{a}_{p?} \epsilon_{q? r? s? a} -> \epsilon_{q? r? s? p?}'''), repeat=True)
+    substitute(ex, Ex(r'''\delta^{a}_{p?} \epsilon_{q? r? a s?} -> \epsilon_{q? r? p? s?}'''), repeat=True)
+    substitute(ex, Ex(r'''\delta^{a}_{p?} \epsilon_{q? a r? s?} -> \epsilon_{q? p? r? s?}'''), repeat=True)
+    substitute(ex, Ex(r'''\delta^{a}_{p?} \epsilon_{a q? r? s?} -> \epsilon_{p? q? r? s?}'''), repeat=True)
+
+    substitute(ex, Ex(r'''\delta_{a}^{p?} \epsilon^{q? r? s? a} -> \epsilon^{q? r? s? p?}'''), repeat=True)
+    substitute(ex, Ex(r'''\delta_{a}^{p?} \epsilon^{q? r? a s?} -> \epsilon^{q? r? p? s?}'''), repeat=True)
+    substitute(ex, Ex(r'''\delta_{a}^{p?} \epsilon^{q? a r? s?} -> \epsilon^{q? p? r? s?}'''), repeat=True)
+    substitute(ex, Ex(r'''\delta_{a}^{p?} \epsilon^{a q? r? s?} -> \epsilon^{p? q? r? s?}'''), repeat=True)
+
+def subs_eta_epsilon(ex):
+    substitute(ex, Ex(r'''\eta^{0 a} \epsilon_{p? q? r? a} -> \epsilon_{p? q? r? 0}'''), repeat=True)
+    substitute(ex, Ex(r'''\eta^{0 a} \epsilon_{p? q? a r?} -> \epsilon_{p? q? 0 r?}'''), repeat=True)
+    substitute(ex, Ex(r'''\eta^{0 a} \epsilon_{p? a q? r?} -> \epsilon_{p? 0 q? r?}'''), repeat=True)
+    substitute(ex, Ex(r'''\eta^{0 a} \epsilon_{a p? q? r?} -> \epsilon_{0 p? q? r?}'''), repeat=True)
+
+    substitute(ex, Ex(r'''\eta^{a 0} \epsilon_{p? q? r? a} -> \epsilon_{p? q? r? 0}'''), repeat=True)
+    substitute(ex, Ex(r'''\eta^{a 0} \epsilon_{p? q? a r?} -> \epsilon_{p? q? 0 r?}'''), repeat=True)
+    substitute(ex, Ex(r'''\eta^{a 0} \epsilon_{p? a q? r?} -> \epsilon_{p? 0 q? r?}'''), repeat=True)
+    substitute(ex, Ex(r'''\eta^{a 0} \epsilon_{a p? q? r?} -> \epsilon_{0 p? q? r?}'''), repeat=True)
+
+    substitute(ex, Ex(r'''\eta^{\alpha a} \epsilon_{p? q? r? a} -> -\gamma^{\alpha \mu} \epsilon_{p? q? r? \mu}'''), repeat=True)
+    substitute(ex, Ex(r'''\eta^{\alpha a} \epsilon_{p? q? a r?} -> -\gamma^{\alpha \mu} \epsilon_{p? q? \mu r?}'''), repeat=True)
+    substitute(ex, Ex(r'''\eta^{\alpha a} \epsilon_{p? a q? r?} -> -\gamma^{\alpha \mu} \epsilon_{p? \mu q? r?}'''), repeat=True)
+    substitute(ex, Ex(r'''\eta^{\alpha a} \epsilon_{a p? q? r?} -> -\gamma^{\alpha \mu} \epsilon_{\mu p? q? r?}'''), repeat=True)
+
+    substitute(ex, Ex(r'''\eta^{a \alpha} \epsilon_{p? q? r? a} -> -\gamma^{\alpha \mu} \epsilon_{p? q? r? \mu}'''), repeat=True)
+    substitute(ex, Ex(r'''\eta^{a \alpha} \epsilon_{p? q? a r?} -> -\gamma^{\alpha \mu} \epsilon_{p? q? \mu r?}'''), repeat=True)
+    substitute(ex, Ex(r'''\eta^{a \alpha} \epsilon_{p? a q? r?} -> -\gamma^{\alpha \mu} \epsilon_{p? \mu q? r?}'''), repeat=True)
+    substitute(ex, Ex(r'''\eta^{a \alpha} \epsilon_{a p? q? r?} -> -\gamma^{\alpha \mu} \epsilon_{\mu p? q? r?}'''), repeat=True)
+
+def normalize_delta(ex):
+    substitute(ex, Ex(r'''\delta_{p?}^{q?} -> \delta^{q?}_{p?}'''), repeat=True)
+
+def my_canonicalise(ex):
+    sort_product(ex)
+    sort_sum(ex)
+    canonicalise(ex)
+    rename_dummies(ex)
+    collect_terms(ex)
+
+def three_plus_one(ex):
+    eliminate_eta(ex)
+    three_plus_one_eta(ex)
+
+    distribute(ex, repeat=True)
+
+    normalize_delta(ex)
+    my_eliminate_kronecker(ex)
+    three_plus_one_delta(ex)
     
-    return(ex)
+    three_plus_one_epsilon(ex)
+    subs_delta_eta(ex)
     
+    my_canonicalise(ex)
+
+    normalize_delta(ex)
+    subs_delta_epsilon(ex)
+    subs_eta_epsilon(ex)
+
+    three_plus_one_delta(ex)
+    three_plus_one_epsilon(ex)
+    three_plus_one_eta(ex)
+
+    my_canonicalise(ex)
+
+    substitute(ex, ruleH1, repeat=True)
+    substitute(ex, ruleH2, repeat=True)
+    substitute(ex, ruleH3, repeat=True)
+
+    distribute(ex)
+    unwrap(ex)
+
     my_epsilon_to_delta(ex)
     my_epsilon_to_delta(ex)
     my_epsilon_to_delta(ex)
-    
     
     distribute(ex)
+
+    my_canonicalise(ex)
     
     rewrite_indices(ex, Ex(r'\epsilon_{\alpha \beta \gamma}'), Ex(r'\gamma^{\alpha \beta}'))
 
     my_eliminate_metric(ex)
-    eliminate_kronecker(ex)
+    eliminate_kronecker(ex, repeat=True)
     my_eliminate_metric(ex)
-    eliminate_kronecker(ex)
+    eliminate_kronecker(ex, repeat=True)
     my_eliminate_metric(ex)
-    eliminate_kronecker(ex)
+    eliminate_kronecker(ex, repeat=True)
     
-    
-    sort_product(ex)
-    sort_sum(ex)
-    
-    
-    canonicalise(ex)
-    rename_dummies(ex)
-    
+    my_canonicalise(ex)
     
     substitute(ex, ruleX)
     substitute(ex, ruleY)
     substitute(ex, ruleZ)
     
-    
     unwrap(ex)
     distribute(ex)
     
-    
-    substitute(ex, ruleTraceFree1)
-    substitute(ex, ruleTraceFree2)
-    substitute(ex, ruleTraceFree3)
+    substitute(ex, ruleTraceFree1, repeat=True)
+    substitute(ex, ruleTraceFree2, repeat=True)
+    substitute(ex, ruleTraceFree3, repeat=True)
     
     distribute(ex)
     
-    sort_product(ex)
-    sort_sum(ex)
-    canonicalise(ex)
-    rename_dummies(ex)
-    
-    collect_terms(ex)
+    my_canonicalise(ex)
     
     return(ex)
 
 def kin_ApBq():
-    ruleM1  = Ex(r''' M{1}^{a? b? c? d? e? f? g? h? i? j?} ->\eta^{a? c?} \eta^{b? d?} \eta^{e? f?} \eta^{g? h?} \eta^{i? j?}''')
-    ruleM2  = Ex(r''' M{2}^{a? b? c? d? e? f? g? h? i? j?} ->\eta^{a? c?} \eta^{b? d?} \eta^{e? j?} \eta^{f? h?} \eta^{g? i?}''')
-    ruleM3  = Ex(r''' M{3}^{a? b? c? d? e? f? g? h? i? j?} ->\eta^{a? c?} \eta^{b? e?} \eta^{d? f?} \eta^{g? h?} \eta^{i? j?}''')
-    ruleM4  = Ex(r''' M{4}^{a? b? c? d? e? f? g? h? i? j?} ->\eta^{a? c?} \eta^{b? f?} \eta^{d? h?} \eta^{e? j?} \eta^{g? i?}''')
-    ruleM5  = Ex(r''' M{5}^{a? b? c? d? e? f? g? h? i? j?} ->\eta^{a? c?} \eta^{b? f?} \eta^{d? j?} \eta^{e? h?} \eta^{g? i?}''')
-    ruleM6  = Ex(r''' M{6}^{a? b? c? d? e? f? g? h? i? j?} ->\eta^{a? e?} \eta^{b? f?} \eta^{c? h?} \eta^{d? i?} \eta^{g? j?}''')
-    ruleM7  = Ex(r''' M{7}^{a? b? c? d? e? f? g? h? i? j?} ->\eta^{a? f?} \eta^{b? g?} \eta^{c? h?} \eta^{d? i?} \eta^{e? j?}''')
-    ruleM8  = Ex(r''' M{8}^{a? b? c? d? e? f? g? h? i? j?} ->\eta^{a? f?} \eta^{b? g?} \eta^{c? h?} \eta^{d? j?} \eta^{e? i?}''')
-    ruleM9  = Ex(r''' M{9}^{a? b? c? d? e? f? g? h? i? j?} ->\eta^{a? f?} \eta^{b? h?} \eta^{c? g?} \eta^{d? i?} \eta^{e? j?}''')
-    ruleM10  = Ex(r''' M{10}^{a? b? c? d? e? f? g? h? i? j?} ->\epsilon^{a? b? c? d?} \eta^{e? f?} \eta^{g? h?} \eta^{i? j?}''')
-    ruleM11  = Ex(r''' M{11}^{a? b? c? d? e? f? g? h? i? j?} ->\epsilon^{a? b? c? d?} \eta^{e? j?} \eta^{f? h?} \eta^{g? i?}''')
-    ruleM12  = Ex(r''' M{12}^{a? b? c? d? e? f? g? h? i? j?} ->\epsilon^{a? b? e? f?} \eta^{c? h?} \eta^{d? i?} \eta^{g? j?}''')
-    ruleM13  = Ex(r''' M{13}^{a? b? c? d? e? f? g? h? i? j?} ->\epsilon^{a? b? f? g?} \eta^{c? e?} \eta^{d? h?} \eta^{i? j?}''')
-    ruleM14  = Ex(r''' M{14}^{a? b? c? d? e? f? g? h? i? j?} ->\epsilon^{a? b? f? g?} \eta^{c? h?} \eta^{d? i?} \eta^{e? j?}''')
-    ruleM15  = Ex(r''' M{15}^{a? b? c? d? e? f? g? h? i? j?} ->\epsilon^{a? b? f? g?} \eta^{c? h?} \eta^{d? j?} \eta^{e? i?}''')
+    ruleM1  = Ex(r''' M{1}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} -> \eta^{e? p} \eta^{j? q} \eta_{a? c?} \eta_{b? d?} \eta_{p f?} \eta_{g? h?} \eta_{i? q}''')
+    ruleM2  = Ex(r''' M{2}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} -> \eta^{e? p} \eta^{j? q} \eta_{a? c?} \eta_{b? d?} \eta_{p q} \eta_{f? h?} \eta_{g? i?}''')
+    ruleM3  = Ex(r''' M{3}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} -> \eta^{e? p} \eta^{j? q} \eta_{a? c?} \eta_{b? p} \eta_{d? f?} \eta_{g? h?} \eta_{i? q}''')
+    ruleM4  = Ex(r''' M{4}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} -> \eta^{e? p} \eta^{j? q} \eta_{a? c?} \eta_{b? f?} \eta_{d? h?} \eta_{p q} \eta_{g? i?}''')
+    ruleM5  = Ex(r''' M{5}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} -> \eta^{e? p} \eta^{j? q} \eta_{a? c?} \eta_{b? f?} \eta_{d? q} \eta_{p h?} \eta_{g? i?}''')
+    ruleM6  = Ex(r''' M{6}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} -> \eta^{e? p} \eta^{j? q} \eta_{a? p} \eta_{b? f?} \eta_{c? h?} \eta_{d? i?} \eta_{g? q}''')
+    ruleM7  = Ex(r''' M{7}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} -> \eta^{e? p} \eta^{j? q} \eta_{a? f?} \eta_{b? g?} \eta_{c? h?} \eta_{d? i?} \eta_{p q}''')
+    ruleM8  = Ex(r''' M{8}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} -> \eta^{e? p} \eta^{j? q} \eta_{a? f?} \eta_{b? g?} \eta_{c? h?} \eta_{d? q} \eta_{p i?}''')
+    ruleM9  = Ex(r''' M{9}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} -> \eta^{e? p} \eta^{j? q} \eta_{a? f?} \eta_{b? h?} \eta_{c? g?} \eta_{d? i?} \eta_{p q}''')
+    ruleM10  = Ex(r''' M{10}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} -> \eta^{e? p} \eta^{j? q} \epsilon_{a? b? c? d?} \eta_{p f?} \eta_{g? h?} \eta_{i? q}''')
+    ruleM11  = Ex(r''' M{11}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} -> \eta^{e? p} \eta^{j? q} \epsilon_{a? b? c? d?} \eta_{p q} \eta_{f? h?} \eta_{g? i?}''')
+    ruleM12  = Ex(r''' M{12}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} -> \eta^{e? p} \eta^{j? q} \epsilon_{a? b? p f?} \eta_{c? h?} \eta_{d? i?} \eta_{g? q}''')
+    ruleM13  = Ex(r''' M{13}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} -> \eta^{e? p} \eta^{j? q} \epsilon_{a? b? f? g?} \eta_{c? p} \eta_{d? h?} \eta_{i? q}''')
+    ruleM14  = Ex(r''' M{14}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} -> \eta^{e? p} \eta^{j? q} \epsilon_{a? b? f? g?} \eta_{c? h?} \eta_{d? i?} \eta_{p q}''')
+    ruleM15  = Ex(r''' M{15}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} -> \eta^{e? p} \eta^{j? q} \epsilon_{a? b? f? g?} \eta_{c? h?} \eta_{d? q} \eta_{p i?}''')
     
-    ruleM  = Ex(r''' M^{a? b? c? d? e? f? g? h? i? j?} ->e{1} * M{1}^{a? b? c? d? e? f? g? h? i? j?} + e{2} * M{2}^{a? b? c? d? e? f? g? h? i? j?} + e{3} * M{3}^{a? b? c? d? e? f? g? h? i? j?} + e{4} * M{4}^{a? b? c? d? e? f? g? h? i? j?} + e{5} * M{5}^{a? b? c? d? e? f? g? h? i? j?} + e{6} * M{6}^{a? b? c? d? e? f? g? h? i? j?} + e{7} * M{7}^{a? b? c? d? e? f? g? h? i? j?} + e{8} * M{8}^{a? b? c? d? e? f? g? h? i? j?} + e{9} * M{9}^{a? b? c? d? e? f? g? h? i? j?} + e{10} * M{10}^{a? b? c? d? e? f? g? h? i? j?} + e{11} * M{11}^{a? b? c? d? e? f? g? h? i? j?} + e{12} * M{12}^{a? b? c? d? e? f? g? h? i? j?} + e{13} * M{13}^{a? b? c? d? e? f? g? h? i? j?} + e{14} * M{14}^{a? b? c? d? e? f? g? h? i? j?} + e{15} * M{15}^{a? b? c? d? e? f? g? h? i? j?}''')
+    ruleM  = Ex(r''' M_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} ->e{1} * M{1}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} + e{2} * M{2}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} + e{3} * M{3}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} + e{4} * M{4}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} + e{5} * M{5}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} + e{6} * M{6}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} + e{7} * M{7}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} + e{8} * M{8}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} + e{9} * M{9}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} + e{10} * M{10}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} + e{11} * M{11}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} + e{12} * M{12}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} + e{13} * M{13}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} + e{14} * M{14}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?} + e{15} * M{15}_{a? b? c? d?}^{e?}_{f? g? h? i?}^{j?}''')
     
-    ruleMH1  = Ex(r''' M^{a b c d e f? g? h? i? j?} \partial_{e}{H_{a b c d}} ->(M^{0 \mu 0 \nu 0 f? g? h? i? j?} - M^{0 \mu \nu 0 0 f? g? h? i? j?} - M^{\mu 0 0 \nu 0 f? g? h? i? j?} + M^{\mu 0 \nu 0 0 f? g? h? i? j?}) \partial_{0}{H1_{\mu \nu}} + (M^{0 \mu 0 \nu \alpha f? g? h? i? j?} - M^{0 \mu \nu 0 \alpha f? g? h? i? j?} - M^{\mu 0 0 \nu \alpha f? g? h? i? j?} + M^{\mu 0 \nu 0 \alpha f? g? h? i? j?}) \partial_{\alpha}{H1_{\mu \nu}} + (M^{0 \mu \nu \rho 0 f? g? h? i? j?} - M^{\mu 0 \nu \rho 0 f? g? h? i? j?} + M^{\nu \rho 0 \mu 0 f? g? h? i? j?} - M^{\nu \rho \mu 0 0 f? g? h? i? j?}) \partial_{0}{H2_{\mu \nu \rho}} + (M^{0 \mu \nu \rho \alpha f? g? h? i? j?} - M^{\mu 0 \nu \rho \alpha f? g? h? i? j?} + M^{\nu \rho 0 \mu \alpha f? g? h? i? j?} - M^{\nu \rho \mu 0 \alpha f? g? h? i? j?}) \partial_{\alpha}{H2_{\mu \nu \rho}} + M^{\mu \nu \rho \sigma 0 f? g? h? i? j?} \partial_{0}{H3_{\mu \nu \rho \sigma}} + M^{\mu \nu \rho \sigma \alpha f? g? h? i? j?} \partial_{\alpha}{H3_{\mu \nu \rho \sigma}}''')
+    ruleMH1  = Ex(r''' M_{a b c d}^{e}_{f? g? h? i?}^{j?} \partial_{e}{H^{a b c d}} ->(M_{0 \mu 0 \nu}^{0}_{f? g? h? i?}^{j?} - M_{0 \mu \nu 0}^{0}_{f? g? h? i?}^{j?} - M_{\mu 0 0 \nu}^{0}_{f? g? h? i?}^{j?} + M_{\mu 0 \nu 0}^{0}_{f? g? h? i?}^{j?}) \partial_{0}{H1^{\mu \nu}} + (M_{0 \mu 0 \nu}^{\alpha}_{f? g? h? i?}^{j?} - M_{0 \mu \nu 0}^{\alpha}_{f? g? h? i?}^{j?} - M_{\mu 0 0 \nu}^{\alpha}_{f? g? h? i?}^{j?} + M_{\mu 0 \nu 0}^{\alpha}_{f? g? h? i?}^{j?}) \partial_{\alpha}{H1^{\mu \nu}} + (M_{0 \mu \nu \rho}^{0}_{f? g? h? i?}^{j?} - M_{\mu 0 \nu \rho}^{0}_{f? g? h? i?}^{j?} + M_{\nu \rho 0 \mu}^{0}_{f? g? h? i?}^{j?} - M_{\nu \rho \mu 0}^{0}_{f? g? h? i?}^{j?}) \partial_{0}{H2^{\mu \nu \rho}} + (M_{0 \mu \nu \rho}^{\alpha}_{f? g? h? i?}^{j?} - M_{\mu 0 \nu \rho}^{\alpha}_{f? g? h? i?}^{j?} + M_{\nu \rho 0 \mu}^{\alpha}_{f? g? h? i?}^{j?} - M_{\nu \rho \mu 0}^{\alpha}_{f? g? h? i?}^{j?}) \partial_{\alpha}{H2^{\mu \nu \rho}} + M_{\mu \nu \rho \sigma}^{0}_{f? g? h? i?}^{j?} \partial_{0}{H3^{\mu \nu \rho \sigma}} + M_{\mu \nu \rho \sigma}^{\alpha}_{f? g? h? i?}^{j?} \partial_{\alpha}{H3^{\mu \nu \rho \sigma}}''')
     
-    ruleMH2  = Ex(r''' M^{f? g? h? i? j? a b c d e} \partial_{e}{H_{a b c d}} ->(M^{f? g? h? i? j? 0 \mu 0 \nu 0} - M^{f? g? h? i? j? 0 \mu \nu 0 0} - M^{f? g? h? i? j? \mu 0 0 \nu 0} + M^{f? g? h? i? j? \mu 0 \nu 0 0}) \partial_{0}{H1_{\mu \nu}} + (M^{f? g? h? i? j? 0 \mu 0 \nu \alpha} - M^{f? g? h? i? j? 0 \mu \nu 0 \alpha} - M^{f? g? h? i? j? \mu 0 0 \nu \alpha} + M^{f? g? h? i? j? \mu 0 \nu 0 \alpha}) \partial_{\alpha}{H1_{\mu \nu}} + (M^{f? g? h? i? j? 0 \mu \nu \rho 0} - M^{f? g? h? i? j? \mu 0 \nu \rho 0} + M^{f? g? h? i? j? \nu \rho 0 \mu 0} - M^{f? g? h? i? j? \nu \rho \mu 0 0}) \partial_{0}{H2_{\mu \nu \rho}} + (M^{f? g? h? i? j? 0 \mu \nu \rho \alpha} - M^{f? g? h? i? j? \mu 0 \nu \rho \alpha} + M^{f? g? h? i? j? \nu \rho 0 \mu \alpha} - M^{f? g? h? i? j? \nu \rho \mu 0 \alpha}) \partial_{\alpha}{H2_{\mu \nu \rho}} + M^{f? g? h? i? j? \mu \nu \rho \sigma 0} \partial_{0}{H3_{\mu \nu \rho \sigma}} + M^{f? g? h? i? j? \mu \nu \rho \sigma \alpha} \partial_{\alpha}{H3_{\mu \nu \rho \sigma}}''')
+    ruleMH2  = Ex(r''' M_{f? g? h? i?}^{j?}_{a b c d}^{e} \partial_{e}{H^{a b c d}} ->(M_{f? g? h? i?}^{j?}_{0 \mu 0 \nu}^{0} - M_{f? g? h? i?}^{j?}_{0 \mu \nu 0}^{0} - M_{f? g? h? i?}^{j?}_{\mu 0 0 \nu}^{0} + M_{f? g? h? i?}^{j?}_{\mu 0 \nu 0}^{0}) \partial_{0}{H1^{\mu \nu}} + (M_{f? g? h? i?}^{j?}_{0 \mu 0 \nu}^{\alpha} - M_{f? g? h? i?}^{j?}_{0 \mu \nu 0}^{\alpha} - M_{f? g? h? i?}^{j?}_{\mu 0 0 \nu}^{\alpha} + M_{f? g? h? i?}^{j?}_{\mu 0 \nu 0}^{\alpha}) \partial_{\alpha}{H1^{\mu \nu}} + (M_{f? g? h? i?}^{j?}_{0 \mu \nu \rho}^{0} - M_{f? g? h? i?}^{j?}_{\mu 0 \nu \rho}^{0} + M_{f? g? h? i?}^{j?}_{\nu \rho 0 \mu}^{0} - M_{f? g? h? i?}^{j?}_{\nu \rho \mu 0}^{0}) \partial_{0}{H2^{\mu \nu \rho}} + (M_{f? g? h? i?}^{j?}_{0 \mu \nu \rho}^{\alpha} - M_{f? g? h? i?}^{j?}_{\mu 0 \nu \rho}^{\alpha} + M_{f? g? h? i?}^{j?}_{\nu \rho 0 \mu}^{\alpha} - M_{f? g? h? i?}^{j?}_{\nu \rho \mu 0}^{\alpha}) \partial_{\alpha}{H2^{\mu \nu \rho}} + M_{f? g? h? i?}^{j?}_{\mu \nu \rho \sigma}^{0} \partial_{0}{H3^{\mu \nu \rho \sigma}} + M_{f? g? h? i?}^{j?}_{\mu \nu \rho \sigma}^{\alpha} \partial_{\alpha}{H3^{\mu \nu \rho \sigma}}''')
     
-    ex  = Ex(r''' M^{a b c d e f g h i j} \partial_{e}{H_{a b c d}} \partial_{j}{H_{f g h i}}''')
+    ex  = Ex(r''' M_{a b c d}^{e}_{f g h i}^{j} \partial_{e}{H^{a b c d}} \partial_{j}{H^{f g h i}}''')
     
     
     substitute(ex, ruleMH1)
@@ -330,111 +399,30 @@ def kin_ApBq():
     substitute(ex, ruleM14)
     substitute(ex, ruleM15)
     
-    
-    substitute(ex, ruleEta00)
-    substitute(ex, ruleEta0a1)
-    substitute(ex, ruleEta0a2)
-    substitute(ex, ruleEtaab)
-    
-    
-    substitute(ex, ruleEps0000)
-    substitute(ex, ruleEps000a1)
-    substitute(ex, ruleEps000a2)
-    substitute(ex, ruleEps000a3)
-    substitute(ex, ruleEps000a4)
-    substitute(ex, ruleEps00ab1)
-    substitute(ex, ruleEps00ab2)
-    substitute(ex, ruleEps00ab3)
-    substitute(ex, ruleEps00ab4)
-    substitute(ex, ruleEps00ab5)
-    substitute(ex, ruleEps00ab6)
-    substitute(ex, ruleEps0abc1)
-    substitute(ex, ruleEps0abc2)
-    substitute(ex, ruleEps0abc3)
-    substitute(ex, ruleEps0abc4)
-    substitute(ex, ruleEpsabcd)
-    
-    
-    substitute(ex, ruleH1)
-    substitute(ex, ruleH2)
-    substitute(ex, ruleH3)
-    
-    
-    distribute(ex)
-    unwrap(ex)
-    
-    
-    my_epsilon_to_delta(ex)
-    my_epsilon_to_delta(ex)
-    my_epsilon_to_delta(ex)
-    
-    rewrite_indices(ex, Ex(r'\epsilon_{\alpha \beta \gamma}'), Ex(r'\gamma^{\alpha \beta}'))
-    
-    distribute(ex)
-    
-    
-    my_eliminate_metric(ex)
-    eliminate_kronecker(ex)
-    my_eliminate_metric(ex)
-    eliminate_kronecker(ex)
-    my_eliminate_metric(ex)
-    eliminate_kronecker(ex)
-    
-    
-    sort_product(ex)
-    sort_sum(ex)
-    
-    
-    canonicalise(ex)
-    rename_dummies(ex)
-    
-    
-    substitute(ex, ruleX)
-    substitute(ex, ruleY)
-    substitute(ex, ruleZ)
-    
-    
-    unwrap(ex)
-    distribute(ex)
-    
-    
-    substitute(ex, ruleTraceFree1)
-    substitute(ex, ruleTraceFree2)
-    substitute(ex, ruleTraceFree3)
-    
-    distribute(ex)
-    
-    sort_product(ex)
-    sort_sum(ex)
-    canonicalise(ex)
-    rename_dummies(ex)
+    three_plus_one(ex)
 
-    collect_terms(ex)
-    
     return(ex)
 
 def mass_AB():
-    ruleM1  = Ex(r''' M{1}^{a? b? c? d? e? f? g? h?} ->\eta^{a? c?} \eta^{b? d?} \eta^{e? g?} \eta^{f? h?}''')
-    ruleM2  = Ex(r''' M{2}^{a? b? c? d? e? f? g? h?} ->\eta^{a? c?} \eta^{b? e?} \eta^{d? g?} \eta^{f? h?}''')
-    ruleM3  = Ex(r''' M{3}^{a? b? c? d? e? f? g? h?} ->\eta^{a? e?} \eta^{b? f?} \eta^{c? g?} \eta^{d? h?}''')
-    ruleM4  = Ex(r''' M{4}^{a? b? c? d? e? f? g? h?} ->\eta^{a? e?} \eta^{b? g?} \eta^{c? f?} \eta^{d? h?}''')
-    ruleM5  = Ex(r''' M{5}^{a? b? c? d? e? f? g? h?} ->\epsilon^{a? b? c? d?} \eta^{e? g?} \eta^{f? h?}''')
-    ruleM6  = Ex(r''' M{6}^{a? b? c? d? e? f? g? h?} ->\epsilon^{a? b? e? f?} \eta^{c? g?} \eta^{d? h?}''')
+    ruleM1  = Ex(r''' M{1}_{a? b? c? d? e? f? g? h?} ->\eta_{a? c?} \eta_{b? d?} \eta_{e? g?} \eta_{f? h?}''')
+    ruleM2  = Ex(r''' M{2}_{a? b? c? d? e? f? g? h?} ->\eta_{a? c?} \eta_{b? e?} \eta_{d? g?} \eta_{f? h?}''')
+    ruleM3  = Ex(r''' M{3}_{a? b? c? d? e? f? g? h?} ->\eta_{a? e?} \eta_{b? f?} \eta_{c? g?} \eta_{d? h?}''')
+    ruleM4  = Ex(r''' M{4}_{a? b? c? d? e? f? g? h?} ->\eta_{a? e?} \eta_{b? g?} \eta_{c? f?} \eta_{d? h?}''')
+    ruleM5  = Ex(r''' M{5}_{a? b? c? d? e? f? g? h?} ->\epsilon_{a? b? c? d?} \eta_{e? g?} \eta_{f? h?}''')
+    ruleM6  = Ex(r''' M{6}_{a? b? c? d? e? f? g? h?} ->\epsilon_{a? b? e? f?} \eta_{c? g?} \eta_{d? h?}''')
     
-    ruleM  = Ex(r''' M^{a? b? c? d? e? f? g? h?} ->e{1} * M{1}^{a? b? c? d? e? f? g? h?} + e{2} * M{2}^{a? b? c? d? e? f? g? h?} + e{3} * M{3}^{a? b? c? d? e? f? g? h?} + e{4} * M{4}^{a? b? c? d? e? f? g? h?} + e{5} * M{5}^{a? b? c? d? e? f? g? h?} + e{6} * M{6}^{a? b? c? d? e? f? g? h?}''')
+    ruleM  = Ex(r''' M_{a? b? c? d? e? f? g? h?} ->e{1} * M{1}_{a? b? c? d? e? f? g? h?} + e{2} * M{2}_{a? b? c? d? e? f? g? h?} + e{3} * M{3}_{a? b? c? d? e? f? g? h?} + e{4} * M{4}_{a? b? c? d? e? f? g? h?} + e{5} * M{5}_{a? b? c? d? e? f? g? h?} + e{6} * M{6}_{a? b? c? d? e? f? g? h?}''')
     
-    ruleMH1  = Ex(r''' M^{a b c d e? f? g? h?} H_{a b c d} ->(M^{0 \mu 0 \nu e? f? g? h?} - M^{0 \mu \nu 0 e? f? g? h?} - M^{\mu 0 0 \nu e? f? g? h?} + M^{\mu 0 \nu 0 e? f? g? h?}) H1_{\mu \nu} + (M^{0 \mu \nu \rho e? f? g? h?} - M^{\mu 0 \nu \rho e? f? g? h?} + M^{\nu \rho 0 \mu e? f? g? h?} - M^{\nu \rho \mu 0 e? f? g? h?}) H2_{\mu \nu \rho} + M^{\mu \nu \rho \sigma e? f? g? h?} H3_{\mu \nu \rho \sigma}''')
+    ruleMH1  = Ex(r''' M_{a b c d e? f? g? h?} H^{a b c d} ->(M_{0 \mu 0 \nu e? f? g? h?} - M_{0 \mu \nu 0 e? f? g? h?} - M_{\mu 0 0 \nu e? f? g? h?} + M_{\mu 0 \nu 0 e? f? g? h?}) H1^{\mu \nu} + (M_{0 \mu \nu \rho e? f? g? h?} - M_{\mu 0 \nu \rho e? f? g? h?} + M_{\nu \rho 0 \mu e? f? g? h?} - M_{\nu \rho \mu 0 e? f? g? h?}) H2^{\mu \nu \rho} + M_{\mu \nu \rho \sigma e? f? g? h?} H3^{\mu \nu \rho \sigma}''')
     
-    ruleMH2  = Ex(r''' M^{e? f? g? h? a b c d} H_{a b c d} ->(M^{e? f? g? h? 0 \mu 0 \nu} - M^{e? f? g? h? 0 \mu \nu 0} - M^{e? f? g? h? \mu 0 0 \nu} + M^{e? f? g? h? \mu 0 \nu 0}) H1_{\mu \nu} + (M^{e? f? g? h? 0 \mu \nu \rho} - M^{e? f? g? h? \mu 0 \nu \rho} + M^{e? f? g? h? \nu \rho 0 \mu} - M^{e? f? g? h? \nu \rho \mu 0}) H2_{\mu \nu \rho} + M^{e? f? g? h? \mu \nu \rho \sigma} H3_{\mu \nu \rho \sigma}''')
+    ruleMH2  = Ex(r''' M_{e? f? g? h? a b c d} H^{a b c d} ->(M_{e? f? g? h? 0 \mu 0 \nu} - M_{e? f? g? h? 0 \mu \nu 0} - M_{e? f? g? h? \mu 0 0 \nu} + M_{e? f? g? h? \mu 0 \nu 0}) H1^{\mu \nu} + (M_{e? f? g? h? 0 \mu \nu \rho} - M_{e? f? g? h? \mu 0 \nu \rho} + M_{e? f? g? h? \nu \rho 0 \mu} - M_{e? f? g? h? \nu \rho \mu 0}) H2^{\mu \nu \rho} + M_{e? f? g? h? \mu \nu \rho \sigma} H3^{\mu \nu \rho \sigma}''')
     
-    ex  = Ex(r''' M^{a b c d e f g h} H_{a b c d} H_{e f g h}''')
-    
+    ex  = Ex(r''' M_{a b c d e f g h} H^{a b c d} H^{e f g h}''')
     
     substitute(ex, ruleMH1)
     distribute(ex)
     substitute(ex, ruleMH2)
     distribute(ex)
-    
     
     substitute(ex, ruleM)
     substitute(ex, ruleM1)
@@ -444,86 +432,7 @@ def mass_AB():
     substitute(ex, ruleM5)
     substitute(ex, ruleM6)
     
-    
-    substitute(ex, ruleEta00)
-    substitute(ex, ruleEta0a1)
-    substitute(ex, ruleEta0a2)
-    substitute(ex, ruleEtaab)
-    
-    
-    substitute(ex, ruleEps0000)
-    substitute(ex, ruleEps000a1)
-    substitute(ex, ruleEps000a2)
-    substitute(ex, ruleEps000a3)
-    substitute(ex, ruleEps000a4)
-    substitute(ex, ruleEps00ab1)
-    substitute(ex, ruleEps00ab2)
-    substitute(ex, ruleEps00ab3)
-    substitute(ex, ruleEps00ab4)
-    substitute(ex, ruleEps00ab5)
-    substitute(ex, ruleEps00ab6)
-    substitute(ex, ruleEps0abc1)
-    substitute(ex, ruleEps0abc2)
-    substitute(ex, ruleEps0abc3)
-    substitute(ex, ruleEps0abc4)
-    substitute(ex, ruleEpsabcd)
-    
-    
-    substitute(ex, ruleH1)
-    substitute(ex, ruleH2)
-    substitute(ex, ruleH3)
-
-    
-    distribute(ex)
-    unwrap(ex)
-    
-    
-    my_epsilon_to_delta(ex)
-    my_epsilon_to_delta(ex)
-    my_epsilon_to_delta(ex)
-    
-    rewrite_indices(ex, Ex(r'\epsilon_{\alpha \beta \gamma}'), Ex(r'\gamma^{\alpha \beta}'))
-    
-    distribute(ex)
-    
-    
-    my_eliminate_metric(ex)
-    eliminate_kronecker(ex)
-    my_eliminate_metric(ex)
-    eliminate_kronecker(ex)
-    my_eliminate_metric(ex)
-    eliminate_kronecker(ex)
-    
-    
-    sort_product(ex)
-    sort_sum(ex)
-    
-    
-    canonicalise(ex)
-    rename_dummies(ex)
-    
-    
-    substitute(ex, ruleX)
-    substitute(ex, ruleY)
-    substitute(ex, ruleZ)
-    
-    
-    unwrap(ex)
-    distribute(ex)
-    
-    
-    substitute(ex, ruleTraceFree1)
-    substitute(ex, ruleTraceFree2)
-    substitute(ex, ruleTraceFree3)
-
-    
-    distribute(ex)
-    sort_product(ex)
-    sort_sum(ex)
-    canonicalise(ex)
-    rename_dummies(ex)
-
-    collect_terms(ex)
+    three_plus_one(ex)
     
     return(ex)
 
@@ -664,3 +573,4 @@ def apply_sol(ex):
     substitute(ex, Ex(r'''e{39} -> 16*k{10} + 16*k{12}'''))
     substitute(ex, Ex(r'''e{40} -> 1*k{16}'''))
     return(ex)
+
