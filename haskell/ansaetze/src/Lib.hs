@@ -69,9 +69,9 @@ someFunc = do
 --    putStrLn $ "DOFs      : " ++ (show r)
 --    putStrLn $ "my eqns   : " ++ (show $ tensorRank6 system)
 
-    sequence_ $ map putStrLn $ etaList eta10_2
-    sequence_ $ map putStrLn $ epsList eps10_2
---    putStrLn $ unlines $ map (\((i, j), SField v) -> if denominator v /= 1
---                                              then undefined
---                                              else "(" ++ show i ++ ", " ++ show j ++ ") = " ++ show (numerator v) ++ ",")
---                       $ toMatListT6 system
+--    sequence_ $ map putStrLn $ etaList eta10_2
+--    sequence_ $ map putStrLn $ epsList eps10_2
+    putStrLn $ unlines $ map (\((i, j), SField v) -> if denominator v /= 1
+                                              then undefined
+                                              else "(" ++ show i ++ ", " ++ show j ++ ") = " ++ show (numerator v) ++ ",")
+                       $ toMatListT6 system
