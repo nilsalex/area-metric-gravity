@@ -560,6 +560,41 @@ def eom_from_files(toVary):
 
     return eom(ex1, ex2, ex3, toVary)
 
+def tt(ex):
+  substitute(ex, Ex(r'''\int{Q??}{x} -> Q??'''))
+  distribute(ex)
+  substitute(ex, Ex(r'''U^{\mu \nu} \gamma_{\mu \nu} -> 0'''))
+  substitute(ex, Ex(r'''V^{\mu \nu} \gamma_{\mu \nu} -> 0'''))
+  substitute(ex, Ex(r'''W^{\mu \nu} \gamma_{\mu \nu} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{p? q?}{U^{\mu \nu}} \gamma_{\mu \nu} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{p? q?}{V^{\mu \nu}} \gamma_{\mu \nu} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{p? q?}{W^{\mu \nu}} \gamma_{\mu \nu} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{p? \mu}{U^{q? \mu}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{p? \mu}{V^{q? \mu}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{p? \mu}{W^{q? \mu}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{p? \mu}{U^{\mu q?}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{p? \mu}{V^{\mu q?}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{p? \mu}{W^{\mu q?}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\mu p?}{U^{q? \mu}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\mu p?}{V^{q? \mu}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\mu p?}{W^{q? \mu}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\mu p?}{U^{\mu q?}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\mu p?}{V^{\mu q?}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\mu p?}{W^{\mu q?}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\mu \nu}{U^{\mu \nu}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\mu \nu}{V^{\mu \nu}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\mu \nu}{W^{\mu \nu}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\mu \nu}{U^{\nu \mu}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\mu \nu}{V^{\nu \mu}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\mu \nu}{W^{\nu \mu}} -> 0'''))
+
+  sort_product(ex)
+  sort_sum(ex)
+  canonicalise(ex)
+  rename_dummies(ex)
+
+  factor_in(ex, Ex(r'''k{1}, k{2}, k{3}, k{4}, k{5}, k{6}, k{7}, k{8}, k{9}, k{10}, k{11}, k{12}, k{13}, k{14}, k{15}, k{16}'''))
+
 def apply_sol(ex):
   substitute(ex, Ex(r'''e{1} -> 1/2*k{1} + (-1)*k{2} + (-1/3)*k{3}'''))
   substitute(ex, Ex(r'''e{2} -> (-3)*k{1} + 12*k{2} + 4*k{3}'''))
