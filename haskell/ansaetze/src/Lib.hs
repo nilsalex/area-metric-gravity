@@ -8,7 +8,7 @@ import Math.Tensor
 import Math.Tensor.Examples.Gravity
 import Math.Tensor.Examples.Gravity.DiffeoSymEqns
 import Math.Tensor.LorentzGenerator
-import Data.List (intersperse, sortOn)
+import Data.List (intersperse, sortOn, sort, nub)
 import Data.Ratio ((%), numerator, denominator)
 import qualified Data.IntMap.Strict as I (fromList)
 
@@ -69,9 +69,10 @@ someFunc = do
 --    putStrLn $ "DOFs      : " ++ (show r)
 --    putStrLn $ "my eqns   : " ++ (show $ tensorRank6 system)
 
-    sequence_ $ map putStrLn $ etaList eta8
-    sequence_ $ map putStrLn $ epsList eps8
+--    sequence_ $ map putStrLn $ etaList eta6
+--    sequence_ $ map putStrLn $ epsList eps6
 --    putStrLn $ unlines $ map (\((i, j), SField v) -> if denominator v /= 1
 --                                              then undefined
 --                                              else "(" ++ show i ++ ", " ++ show j ++ ") = " ++ show (numerator v) ++ ",")
 --                       $ toMatListT6 system
+    mapM_ print $ nub $ map snd $ toListT6 e2

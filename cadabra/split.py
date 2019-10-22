@@ -1,7 +1,7 @@
 from cadabra2 import *
 
 Indices(Ex(r'''{a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z#}'''), Ex(r'''fourD, position=independent''') )
-Integer(Ex(r'''{a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z#}'''), Ex(r'''0..4''') )
+Integer(Ex(r'''{a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z#}'''), Ex(r'''0..3''') )
 
 Indices(Ex(r'''{\alpha,\beta,\gamma,\delta,\epsilon,\zeta,\theta,\iota,\kappa,\lambda,\mu,\nu,\rho,\sigma,\tau#}'''), Ex(r'''threeD, position=independent, parent=fourD''') )
 Integer(Ex(r'''{\alpha,\beta,\gamma,\delta,\epsilon,\zeta,\theta,\iota,\kappa,\lambda,\mu,\nu,\rho,\sigma,\tau#}'''), Ex(r'''1..3''') )
@@ -42,6 +42,16 @@ Depends(Ex(r'''B{#}'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dB{#}'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''A'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dA'''), Ex(r'''\partial{#})''') )
+Depends(Ex(r'''U1'''), Ex(r'''\partial{#})''') )
+Depends(Ex(r'''U2'''), Ex(r'''\partial{#})''') )
+Depends(Ex(r'''V1'''), Ex(r'''\partial{#})''') )
+Depends(Ex(r'''V2'''), Ex(r'''\partial{#})''') )
+Depends(Ex(r'''W2'''), Ex(r'''\partial{#})''') )
+Depends(Ex(r'''dU1'''), Ex(r'''\partial{#})''') )
+Depends(Ex(r'''dU2'''), Ex(r'''\partial{#})''') )
+Depends(Ex(r'''dV1'''), Ex(r'''\partial{#})''') )
+Depends(Ex(r'''dV2'''), Ex(r'''\partial{#})''') )
+Depends(Ex(r'''dW2'''), Ex(r'''\partial{#})''') )
 
 SortOrder(Ex(r'''{dU{#},dV{#},dW{#},dB{#},dA,m{#},k{#},t{#},e{#},A,B{#},X{#},Y{#},Z{#},U{#},V{#},W{#},\partial{#},\epsilon{#},\gamma{#}}'''), Ex(r''')''') )
 
@@ -594,6 +604,74 @@ def tt(ex):
   rename_dummies(ex)
 
   factor_in(ex, Ex(r'''k{1}, k{2}, k{3}, k{4}, k{5}, k{6}, k{7}, k{8}, k{9}, k{10}, k{11}, k{12}, k{13}, k{14}, k{15}, k{16}'''))
+
+def scalars():
+  u1 = scalar(Ex(r'U1'))
+  u2 = scalar(Ex(r'U2'))
+  v1 = scalar(Ex(r'V1'))
+  v2 = scalar(Ex(r'V2'))
+  w2 = scalar(Ex(r'W2'))
+
+  return (u1, u2, v1, v2, w2)
+
+def scalar(toVary):
+    ex1 = load_AB()
+    ex2 = load_ABI()
+    ex3 = load_ApBq()
+
+    substitute(ex1, Ex(r'''U^{\mu \nu} -> \gamma^{\mu \nu} U1 + (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{U2}'''))
+    substitute(ex1, Ex(r'''V^{\mu \nu} -> \gamma^{\mu \nu} V1 + (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{V2}'''))
+    substitute(ex1, Ex(r'''W^{\mu \nu} -> (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{W2}'''))
+
+    substitute(ex2, Ex(r'''U^{\mu \nu} -> \gamma^{\mu \nu} U1 + (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{U2}'''))
+    substitute(ex2, Ex(r'''V^{\mu \nu} -> \gamma^{\mu \nu} V1 + (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{V2}'''))
+    substitute(ex2, Ex(r'''W^{\mu \nu} -> (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{W2}'''))
+
+    substitute(ex3, Ex(r'''U^{\mu \nu} -> \gamma^{\mu \nu} U1 + (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{U2}'''))
+    substitute(ex3, Ex(r'''V^{\mu \nu} -> \gamma^{\mu \nu} V1 + (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{V2}'''))
+    substitute(ex3, Ex(r'''W^{\mu \nu} -> (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{W2}'''))
+
+    distribute(ex1, repeat=True)
+    unwrap(ex1, repeat=True)
+    my_eliminate_metric(ex1)
+    eliminate_kronecker(ex1, repeat=True)
+    my_eliminate_metric(ex1)
+    eliminate_kronecker(ex1, repeat=True)
+    my_eliminate_metric(ex1)
+    eliminate_kronecker(ex1, repeat=True)
+    my_canonicalise(ex1)
+
+    distribute(ex2, repeat=True)
+    unwrap(ex2, repeat=True)
+    my_eliminate_metric(ex2)
+    eliminate_kronecker(ex2, repeat=True)
+    my_eliminate_metric(ex2)
+    eliminate_kronecker(ex2, repeat=True)
+    my_eliminate_metric(ex2)
+    eliminate_kronecker(ex2, repeat=True)
+    my_canonicalise(ex2)
+
+    distribute(ex3, repeat=True)
+    unwrap(ex3, repeat=True)
+    my_eliminate_metric(ex3)
+    eliminate_kronecker(ex3, repeat=True)
+    my_eliminate_metric(ex3)
+    eliminate_kronecker(ex3, repeat=True)
+    my_eliminate_metric(ex3)
+    eliminate_kronecker(ex3, repeat=True)
+    my_canonicalise(ex3)
+
+    ex = eom(ex1, ex2, ex3, toVary)
+
+    substitute(ex, Ex(r'''\int{Q??}{x} -> Q??'''))
+    variation = Ex(r'd' + toVary.input_form())
+    substitute(ex, Ex(r'@{variation} -> 1'))
+    distribute(ex)
+    my_canonicalise(ex)
+
+    factor_in(ex, Ex(r'''k{1}, k{2}, k{3}, k{4}, k{5}, k{6}, k{7}, k{8}, k{9}, k{10}, k{11}, k{12}, k{13}, k{14}, k{15}, k{16}'''))
+
+    return(ex)
 
 def apply_sol(ex):
   substitute(ex, Ex(r'''e{1} -> 1/2*k{1} + (-1)*k{2} + (-1/3)*k{3}'''))
