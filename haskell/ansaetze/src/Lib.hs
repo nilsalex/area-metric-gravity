@@ -19,21 +19,23 @@ type Expr = I.IntMap Rational
 alphabet :: String
 alphabet = "abcdefghijklmnpqrstuvwxyz"
 
+-- η
 etaString :: Eta -> String
-etaString (Eta a b) = "η^{" ++ [alphabet !! (a-1), alphabet !! (b-1)] ++ "}"
+etaString (Eta a b) = "\\eta^{" ++ [alphabet !! (a-1)] ++ "? " ++ [alphabet !! (b-1)] ++ "?}"
 
+-- ε
 epsString :: Epsilon -> String
-epsString (Epsilon a b c d) = "ε^{" ++ [alphabet !! (a-1), alphabet !! (b-1), alphabet !! (c-1), alphabet !! (d-1)] ++ "}"
+epsString (Epsilon a b c d) = "\\epsilon^{" ++ [alphabet !! (a-1)] ++ "? " ++ [alphabet !! (b-1)] ++ "? " ++ [alphabet !! (c-1)] ++ "? " ++ [alphabet !! (d-1)] ++ "?}"
 
 etaList :: AnsatzForestEta -> [String]
-etaList = map (\(f, x, s) -> if f > 0 then "e_" ++ show x ++ " " ++ s else error "negative prefactor") .
+etaList = map (\(f, _, s) -> if f > 0 then s else error "negative prefactor") .
           nubBy (\(_,x,_) (_,y,_) -> x == y) .
           sortOn (\(_,x,_) -> x) .
           map (\(is, Var f x) -> (f, x, (concat $ intersperse " " $ map etaString is))) .
           flattenForest
 
 epsList :: AnsatzForestEpsilon -> [String]
-epsList = map (\(f, x, s) -> if f > 0 then "e_" ++ show x ++ " " ++ s else error "negative prefactor") .
+epsList = map (\(f, _, s) -> if f > 0 then s else error "negative prefactor") .
           nubBy (\(_,x,_) (_,y,_) -> x == y) .
           sortOn (\(_,x,_) -> x) .
           map (\(e, is, Var f x) -> (f, x, (concat $ intersperse " " $ [epsString e] ++ map etaString is))) .
