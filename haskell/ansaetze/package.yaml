@@ -21,8 +21,9 @@ description:         Please see the README on GitHub at <https://github.com/gith
 
 dependencies:
 - base >= 4.7 && < 5
-- sparse-tensor >= 0.2.1.2
+- sparse-tensor >= 0.3
 - containers
+- hmatrix
 
 library:
   source-dirs: src

@@ -3,10 +3,26 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages: []
+packages:
+- completed:
+    subdir: package
+    cabal-file:
+      size: 3313
+      sha256: 6e1f193d688667120387433526418b49ace776afd7403b2bafaed40a2a5f1e01
+    name: sparse-tensor
+    version: '0.3'
+    git: https://github.com/nilsalex/sparse-tensor.git
+    pantry-tree:
+      size: 1358
+      sha256: cfedef395620226df34498cdca42de4ce7124b5bab36fa657a5ada633e73da1f
+    commit: 31cab7fa7b11bf2ea4243c1de4ba2df3468e8f33
+  original:
+    subdir: package
+    git: https://github.com/nilsalex/sparse-tensor.git
+    commit: 31cab7fa7b11bf2ea4243c1de4ba2df3468e8f33
 snapshots:
 - completed:
-    size: 397477
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2019/10/10.yaml
-    sha256: a9ecedf3b5394aad33313da80bd0eba6276498685c5dae28da24e77859b8de73
-  original: nightly-2019-10-10
+    size: 434661
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2019/11/29.yaml
+    sha256: 9edba401b588c0b8359262043b51f0bd33e2334802f0a1467eb660a23601eaf6
+  original: nightly-2019-11-29
