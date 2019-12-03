@@ -9,15 +9,14 @@ Integer(Ex(r'''{\alpha,\beta,\gamma,\delta,\epsilon,\zeta,\theta,\iota,\kappa,\l
 KroneckerDelta(Ex(r'''\delta{#}'''), Ex(r'''''') )
 Symmetric(Ex(r'''\gamma_{\alpha \beta}'''), Ex(r'''''') )
 Symmetric(Ex(r'''\gamma^{\alpha \beta}'''), Ex(r'''''') )
-Symmetric(Ex(r'''X^{\alpha \beta}'''), Ex(r'''''') )
-Symmetric(Ex(r'''Y^{\alpha \beta}'''), Ex(r'''''') )
-Symmetric(Ex(r'''Z^{\alpha \beta}'''), Ex(r'''''') )
 Symmetric(Ex(r'''U^{\alpha \beta}'''), Ex(r'''''') )
 Symmetric(Ex(r'''dU^{\alpha \beta}'''), Ex(r'''''') )
 Symmetric(Ex(r'''V^{\alpha \beta}'''), Ex(r'''''') )
 Symmetric(Ex(r'''dV^{\alpha \beta}'''), Ex(r'''''') )
 Symmetric(Ex(r'''W^{\alpha \beta}'''), Ex(r'''''') )
 Symmetric(Ex(r'''dW^{\alpha \beta}'''), Ex(r'''''') )
+Symmetric(Ex(r'''B^{\alpha}'''), Ex(r'''''') )
+Symmetric(Ex(r'''dB^{\alpha}'''), Ex(r'''''') )
 EpsilonTensor(Ex(r'''\epsilon_{\alpha \beta \gamma}'''), Ex(r'''''') )
 EpsilonTensor(Ex(r'''\epsilon^{\alpha \beta \gamma}'''), Ex(r'''''') )
 
@@ -29,9 +28,6 @@ Depends(Ex(r'''H{#}'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''H1{#}'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''H2{#}'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''H3{#}'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''X{#}'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''Y{#}'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''Z{#}'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''U{#}'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dU{#}'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''V{#}'''), Ex(r'''\partial{#})''') )
@@ -46,18 +42,20 @@ Depends(Ex(r'''U1'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''U2'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''V1'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''V2'''), Ex(r'''\partial{#})''') )
+Depends(Ex(r'''W1'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''W2'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dU1'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dU2'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dV1'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dV2'''), Ex(r'''\partial{#})''') )
+Depends(Ex(r'''dW1'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dW2'''), Ex(r'''\partial{#})''') )
 
-SortOrder(Ex(r'''{dU{#},dV{#},dW{#},dB{#},dA,m{#},k{#},t{#},e{#},A,B{#},X{#},Y{#},Z{#},U{#},V{#},W{#},\partial{#},\epsilon{#},\gamma{#}}'''), Ex(r''')''') )
+SortOrder(Ex(r'''{dU{#},dV{#},dW{#},dB{#},dA,m{#},k{#},t{#},e{#},A,B{#},U{#},V{#},W{#},U1,U2,V1,V2,W1,W2,\partial{#},\epsilon{#},\gamma{#}}'''), Ex(r''')''') )
 
-ruleH1  = Ex(r''' H1_{\mu \nu} -> \gamma_{\alpha \mu} \gamma_{\beta \nu} X^{\alpha \beta}''')
-ruleH2  = Ex(r''' H2_{\mu \nu \rho} -> \epsilon_{\alpha \nu \rho} * \gamma_{\mu \sigma} Z^{\alpha \sigma}''')
-ruleH3  = Ex(r''' H3_{\mu \nu \rho \sigma} -> \epsilon_{\alpha \mu \nu} \epsilon_{\beta \rho \sigma} Y^{\alpha \beta}''')
+ruleH1  = Ex(r''' H1_{\mu \nu} -> -1/2 * \gamma_{\alpha \mu} \gamma_{\beta \nu} (U^{\alpha \beta} + V^{\alpha \beta})''')
+ruleH2  = Ex(r''' H2_{\mu \nu \rho} -> 1/4 * \epsilon_{\mu \nu \rho} \gamma_{\alpha \beta} (U^{\alpha \beta} + V^{\alpha \beta}) - 1/2 * \epsilon_{\alpha \nu \rho} \gamma_{\beta \mu} W^{\alpha \beta} + 1/2 * \gamma_{\mu \nu} \gamma_{\rho \alpha} B^{\alpha} - 1/2 * \gamma_{\mu \rho} \gamma_{\nu \alpha} B^{\alpha}''')
+ruleH3  = Ex(r''' H3_{\mu \nu \rho \sigma} -> -1/2 * (\gamma_{\mu \rho} \gamma_{\nu \sigma} - \gamma_{\mu \sigma} \gamma_{\nu \rho}) \gamma_{\alpha \beta} (U^{\alpha \beta} + V^{\alpha \beta}) - 1/2 * \epsilon_{\alpha \mu \nu} \epsilon_{\beta \rho \sigma} (U^{\alpha \beta} - V^{\alpha \beta})''')
 
 ruleEta001  = Ex(r''' \eta_{0 0} -> -1''')
 ruleEta002  = Ex(r''' \eta^{0 0} -> -1''')
@@ -88,14 +86,6 @@ ruleDelta3 = Ex(r'''\delta^{\alpha}_{0} -> 0''')
 
 ruleDeltaDelta1 = Ex(r'''\delta^{p}_{q?} \delta^{r?}_{p} -> \delta^{r?}_{q?}''')
 ruleDeltaDelta2 = Ex(r'''\delta^{r?}_{p} \delta^{p}_{q?} -> \delta^{r?}_{q?}''')
-
-ruleTraceFree1  = Ex(r''' \gamma_{\alpha \beta} W^{\alpha \beta} -> 0''')
-ruleTraceFree2  = Ex(r''' \gamma_{\alpha \beta} \partial_{p?}{W^{\alpha \beta}} -> 0''')
-ruleTraceFree3  = Ex(r''' \gamma_{\alpha \beta} \partial_{p? q?}{W^{\alpha \beta}} -> 0''')
-
-ruleX  = Ex(r''' X^{\alpha \beta} -> (1/2) * (U^{\alpha \beta} + V^{\alpha \beta})''')
-ruleY  = Ex(r''' Y^{\alpha \beta} -> (-1/2) * (U^{\alpha \beta} - V^{\alpha \beta})''')
-ruleZ  = Ex(r''' Z^{\alpha \beta} -> (1/2) * W^{\alpha \beta}''')
 
 ruleEps0000  = Ex(r''' \epsilon^{0 0 0 0} -> 0''')
 ruleEps000a1  = Ex(r''' \epsilon^{0 0 0 \alpha} -> 0''')
@@ -343,21 +333,6 @@ def three_plus_one(ex):
     
     my_canonicalise(ex)
     
-    substitute(ex, ruleX)
-    substitute(ex, ruleY)
-    substitute(ex, ruleZ)
-    
-    unwrap(ex)
-    distribute(ex)
-    
-    substitute(ex, ruleTraceFree1, repeat=True)
-    substitute(ex, ruleTraceFree2, repeat=True)
-    substitute(ex, ruleTraceFree3, repeat=True)
-    
-    distribute(ex)
-    
-    my_canonicalise(ex)
-    
     return(ex)
 
 def kin_ApBq():
@@ -553,20 +528,14 @@ def eom_from_files(toVary):
     my_eliminate_metric(ex1)
     eliminate_kronecker(ex1, repeat=True)
     my_canonicalise(ex1)
-    substitute(ex1, ruleTraceFree1)
-    substitute(ex1, ruleTraceFree2)
 
     my_eliminate_metric(ex2)
     eliminate_kronecker(ex2, repeat=True)
     my_canonicalise(ex2)
-    substitute(ex2, ruleTraceFree1)
-    substitute(ex2, ruleTraceFree2)
 
     my_eliminate_metric(ex3)
     eliminate_kronecker(ex3, repeat=True)
     my_canonicalise(ex3)
-    substitute(ex3, ruleTraceFree1)
-    substitute(ex3, ruleTraceFree2)
 
     return eom(ex1, ex2, ex3, toVary)
 
@@ -597,6 +566,9 @@ def tt(ex):
   substitute(ex, Ex(r'''\partial_{\mu \nu}{U^{\nu \mu}} -> 0'''))
   substitute(ex, Ex(r'''\partial_{\mu \nu}{V^{\nu \mu}} -> 0'''))
   substitute(ex, Ex(r'''\partial_{\mu \nu}{W^{\nu \mu}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\mu}{B^{\mu}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{p? \mu}{B^{\mu}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\mu p?}{B^{\mu}} -> 0'''))
 
   sort_product(ex)
   sort_sum(ex)
@@ -614,64 +586,29 @@ def scalars():
 
   return (u1, u2, v1, v2, w2)
 
-def scalar(toVary):
-    ex1 = load_AB()
-    ex2 = load_ABI()
-    ex3 = load_ApBq()
+def scalar(ex):
+  substitute(ex, Ex(r'''\int{Q??}{x} -> Q??'''))
+  distribute(ex)
 
-    substitute(ex1, Ex(r'''U^{\mu \nu} -> \gamma^{\mu \nu} U1 + (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{U2}'''))
-    substitute(ex1, Ex(r'''V^{\mu \nu} -> \gamma^{\mu \nu} V1 + (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{V2}'''))
-    substitute(ex1, Ex(r'''W^{\mu \nu} -> (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{W2}'''))
+  substitute(ex, Ex(r'''U^{\mu \nu} -> \gamma^{\mu \nu} U1'''))
+  substitute(ex, Ex(r'''V^{\mu \nu} -> \gamma^{\mu \nu} V1 + (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{V2}'''))
+  substitute(ex, Ex(r'''W^{\mu \nu} -> \gamma^{\mu \nu} W1 + (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{W2}'''))
 
-    substitute(ex2, Ex(r'''U^{\mu \nu} -> \gamma^{\mu \nu} U1 + (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{U2}'''))
-    substitute(ex2, Ex(r'''V^{\mu \nu} -> \gamma^{\mu \nu} V1 + (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{V2}'''))
-    substitute(ex2, Ex(r'''W^{\mu \nu} -> (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{W2}'''))
+  substitute(ex, Ex(r'''B^{\mu} -> 0'''))
 
-    substitute(ex3, Ex(r'''U^{\mu \nu} -> \gamma^{\mu \nu} U1 + (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{U2}'''))
-    substitute(ex3, Ex(r'''V^{\mu \nu} -> \gamma^{\mu \nu} V1 + (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{V2}'''))
-    substitute(ex3, Ex(r'''W^{\mu \nu} -> (\gamma^{\mu \alpha} \gamma^{\nu \beta} - 1/3 * \gamma^{\mu \nu} \gamma^{\alpha \beta}) \partial_{\alpha \beta}{W2}'''))
+  distribute(ex, repeat=True)
+  unwrap(ex, repeat=True)
+  my_eliminate_metric(ex)
+  eliminate_kronecker(ex, repeat=True)
+  my_eliminate_metric(ex)
+  eliminate_kronecker(ex, repeat=True)
+  my_eliminate_metric(ex)
+  eliminate_kronecker(ex, repeat=True)
+  my_canonicalise(ex)
 
-    distribute(ex1, repeat=True)
-    unwrap(ex1, repeat=True)
-    my_eliminate_metric(ex1)
-    eliminate_kronecker(ex1, repeat=True)
-    my_eliminate_metric(ex1)
-    eliminate_kronecker(ex1, repeat=True)
-    my_eliminate_metric(ex1)
-    eliminate_kronecker(ex1, repeat=True)
-    my_canonicalise(ex1)
+  factor_in(ex, Ex(r'''k{1}, k{2}, k{3}, k{4}, k{5}, k{6}, k{7}, k{8}, k{9}, k{10}, k{11}, k{12}, k{13}, k{14}, k{15}, k{16}'''))
 
-    distribute(ex2, repeat=True)
-    unwrap(ex2, repeat=True)
-    my_eliminate_metric(ex2)
-    eliminate_kronecker(ex2, repeat=True)
-    my_eliminate_metric(ex2)
-    eliminate_kronecker(ex2, repeat=True)
-    my_eliminate_metric(ex2)
-    eliminate_kronecker(ex2, repeat=True)
-    my_canonicalise(ex2)
-
-    distribute(ex3, repeat=True)
-    unwrap(ex3, repeat=True)
-    my_eliminate_metric(ex3)
-    eliminate_kronecker(ex3, repeat=True)
-    my_eliminate_metric(ex3)
-    eliminate_kronecker(ex3, repeat=True)
-    my_eliminate_metric(ex3)
-    eliminate_kronecker(ex3, repeat=True)
-    my_canonicalise(ex3)
-
-    ex = eom(ex1, ex2, ex3, toVary)
-
-    substitute(ex, Ex(r'''\int{Q??}{x} -> Q??'''))
-    variation = Ex(r'd' + toVary.input_form())
-    substitute(ex, Ex(r'@{variation} -> 1'))
-    distribute(ex)
-    my_canonicalise(ex)
-
-    factor_in(ex, Ex(r'''k{1}, k{2}, k{3}, k{4}, k{5}, k{6}, k{7}, k{8}, k{9}, k{10}, k{11}, k{12}, k{13}, k{14}, k{15}, k{16}'''))
-
-    return(ex)
+  return(ex)
 
 def apply_sol(ex):
   substitute(ex, Ex(r'''e{1} -> 1/2*k{1} + (-1)*k{2} + (-1/3)*k{3}'''))
