@@ -4,6 +4,8 @@ module Lib (
   someFunc
 ) where
 
+import Debug.Trace (trace)
+
 import Math.Tensor
 import Math.Tensor.Examples.Gravity
 import Math.Tensor.Examples.Gravity.DiffeoSymEqns
@@ -21,11 +23,11 @@ alphabet = "abcdefghijklmnpqrstuvwxyz"
 
 -- η
 etaString :: Eta -> String
-etaString (Eta a b) = "\\eta^{" ++ [alphabet !! (a-1)] ++ "? " ++ [alphabet !! (b-1)] ++ "?}"
+etaString (Eta a b) = "\\eta_{" ++ [alphabet !! (a-1)] ++ "? " ++ [alphabet !! (b-1)] ++ "?}"
 
 -- ε
 epsString :: Epsilon -> String
-epsString (Epsilon a b c d) = "\\epsilon^{" ++ [alphabet !! (a-1)] ++ "? " ++ [alphabet !! (b-1)] ++ "? " ++ [alphabet !! (c-1)] ++ "? " ++ [alphabet !! (d-1)] ++ "?}"
+epsString (Epsilon a b c d) = "\\epsilon_{" ++ [alphabet !! (a-1)] ++ "? " ++ [alphabet !! (b-1)] ++ "? " ++ [alphabet !! (c-1)] ++ "? " ++ [alphabet !! (d-1)] ++ "?}"
 
 etaList :: AnsatzForestEta -> [String]
 etaList = map (\(f, _, s) -> if f > 0 then s else error "negative prefactor") .
@@ -41,26 +43,27 @@ epsList = map (\(f, _, s) -> if f > 0 then s else error "negative prefactor") .
           map (\(e, is, Var f x) -> (f, x, (concat $ intersperse " " $ [epsString e] ++ map etaString is))) .
           flattenForestEpsilon
 
-metric :: ATens 0 2 0 0 0 0 (SField Rational)
-metric = fromListT6 $ map (\(i, s) -> ((Empty, (Ind20 i) `Append` ((Ind20 i) `Append` Empty), Empty, Empty, Empty, Empty), SField s))
-                    $ zip [0..] [1, 1, 1, -1, -1, -1, 1, 1, -1, -1, -1, 1, -1, -1, -1, 1, 1, 1, 1, 1, 1]
+metric :: ATens 0 0 2 0 0 0 (SField Rational)
+metric = fromListT6 $ map (\(i, s) -> ((Empty, Empty, (Ind9 i) `Append` ((Ind9 i) `Append` Empty), Empty, Empty, Empty), SField s))
+                    $ zip [0..] [1, -1, -1, -1, 1, 1, 1, 1, 1, 1]
 
 system :: (Int, [(AnsatzForestEta, AnsatzForestEpsilon)], TensList6 Ind20 Ind9 Ind3 AnsVarR)
-system = (r,
+system = trace (unlines . fmap show . toListShow6 $ ans6') $
+         (r,
           [(eta6, eps6), (eta8, eps8), (eta10_1, eps10_1), (eta10_2, eps10_2)],
           sys)
   where
 --  (eta4,eps4,ans4) = mkAnsatzTensorFastAbs 4 symList4 areaList4 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 1 0 0 0 0 0 AnsVarR)
     ans4 = ZeroTensor :: ATens 0 1 0 0 0 0 AnsVarR
-    (eta6,eps6,_ans6) = mkAnsatzTensorFastAbs 6 symList6 areaList6 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 1 0 1 0 0 0 AnsVarR)
-    (eta8,eps8,_ans8) = mkAnsatzTensorFastAbs 8 symList8 areaList8 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 2 0 0 0 0 0 AnsVarR)
-    (eta10_1,eps10_1,_ans10_1) = mkAnsatzTensorFastAbs 10 symList10_1 areaList10_1 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 2 0 0 0 2 0 AnsVarR)
-    (eta10_2,eps10_2,_ans10_2) = mkAnsatzTensorFastAbs 10 symList10_2 areaList10_2 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 2 0 1 0 0 0 AnsVarR)
+    (eta6,eps6,_ans6) = mkAnsatzTensorFastAbs 6 symList6 areaList6 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 0 1 0 1 0 0 AnsVarR)
+    (eta8,eps8,_ans8) = mkAnsatzTensorFastAbs 8 symList8 areaList8 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 0 2 0 0 0 0 AnsVarR)
+    (eta10_1,eps10_1,_ans10_1) = mkAnsatzTensorFastAbs 10 symList10_1 areaList10_1 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 0 2 0 0 0 2 AnsVarR)
+    (eta10_2,eps10_2,_ans10_2) = mkAnsatzTensorFastAbs 10 symList10_2 areaList10_2 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 0 2 0 1 0 0 AnsVarR)
 
-    ans6 = contrATens1 (0,0) $ metric &* _ans6
-    ans8 = contrATens1 (0,0) $ contrATens1 (1,2) $ metric &* metric &* _ans8
-    ans10_1 = contrATens1 (0,0) $ contrATens1 (1,2) $ metric &* metric &* _ans10_1
-    ans10_2 = contrATens1 (0,0) $ contrATens1 (1,2) $ metric &* metric &* _ans10_2
+    ans6 = contrATens2 (0,0) $ metric &* _ans6
+    ans8 = _ans8
+    ans10_1 = contrATens3 (0,0) $ contrATens3 (2,1) $ invEtaA &* invEtaA &* _ans10_1
+    ans10_2 = contrATens2 (0,0) $ metric &* _ans10_2
 
     r6    = tensorRank6' ans6
     r8    = tensorRank6' ans8
