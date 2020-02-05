@@ -48,7 +48,10 @@ metric = fromListT6 $ map (\(i, s) -> ((Empty, Empty, (Ind9 i) `Append` ((Ind9 i
                     $ zip [0..] [1, -1, -1, -1, 1, 1, 1, 1, 1, 1]
 
 system :: (Int, [(AnsatzForestEta, AnsatzForestEpsilon)], TensList6 Ind20 Ind9 Ind3 AnsVarR)
-system = trace (unlines . fmap show . toListShow6 $ ans6') $
+system = trace (unlines . fmap show . nub . sort . fmap (\(_,AnsVar m) -> let xs = I.assocs m
+                                                                              xs' = fmap (fmap (\(SField a) -> a)) xs
+                                                                              p  = snd (head xs')
+                                                                          in fmap (fmap (/p)) xs') . toListT6 $ e2) $
          (r,
           [(eta6, eps6), (eta8, eps8), (eta10_1, eps10_1), (eta10_2, eps10_2)],
           sys)
