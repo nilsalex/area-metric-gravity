@@ -55,9 +55,13 @@ Depends(Ex(r'''dW2'''), Ex(r'''\partial{#})''') )
 
 SortOrder(Ex(r'''{dU{#},dV{#},dW{#},dB{#},dA,m{#},k{#},t{#},e{#},A,B{#},X{#},Y{#},Z{#},U{#},V{#},W{#},\partial{#},\epsilon{#},\gamma{#}}'''), Ex(r''')''') )
 
-ruleH1  = Ex(r''' H1_{\mu \nu} -> \gamma_{\alpha \mu} \gamma_{\beta \nu} X^{\alpha \beta}''')
-ruleH2  = Ex(r''' H2_{\mu \nu \rho} -> \epsilon_{\alpha \nu \rho} * \gamma_{\mu \sigma} Z^{\alpha \sigma}''')
-ruleH3  = Ex(r''' H3_{\mu \nu \rho \sigma} -> \epsilon_{\alpha \mu \nu} \epsilon_{\beta \rho \sigma} Y^{\alpha \beta}''')
+#ruleH1  = Ex(r''' H1_{\mu \nu} -> \gamma_{\alpha \mu} \gamma_{\beta \nu} X^{\alpha \beta}''')
+#ruleH2  = Ex(r''' H2_{\mu \nu \rho} -> \epsilon_{\alpha \nu \rho} * \gamma_{\mu \sigma} Z^{\alpha \sigma}''')
+#ruleH3  = Ex(r''' H3_{\mu \nu \rho \sigma} -> \epsilon_{\alpha \mu \nu} \epsilon_{\beta \rho \sigma} Y^{\alpha \beta}''')
+
+ruleH1 = Ex(r''' H1^{\alpha \beta} -> 2 A \gamma^{\alpha \beta} - X^{\alpha \beta}''')
+ruleH2 = Ex(r''' H2^{\alpha \beta \gamma} -> -2 A \epsilon^{\alpha \beta \gamma} + B^{\beta} \gamma^{\alpha \gamma} + B^{\gamma} \gamma^{\alpha \beta} + \epsilon^{\mu \beta \gamma} \gamma_{\mu \nu} Z^{\nu \alpha} + (1/2) \epsilon^{\alpha \beta \gamma} \gamma_{\mu \nu} X^{\mu \nu}''')
+ruleH3 = Ex(r''' H3^{\alpha \beta \gamma \delta} -> -B^{\alpha} \epsilon^{\beta \gamma \delta} + B^{\beta} \epsilon^{\alpha \gamma \delta} - B^{\gamma} \epsilon^{\delta \alpha \beta} + B^{\delta} \epsilon^{\gamma \alpha \beta} + (\gamma^{\alpha \gamma} \gamma^{\beta \delta} - \gamma^{\alpha \delta} \gamma^{\beta \gamma}) \gamma_{\mu \nu} X^{\mu \nu} + \epsilon^{\mu \alpha \beta} \epsilon^{\nu \gamma \delta} \gamma_{\mu \rho} \gamma_{\nu \sigma} Y^{\rho \sigma}''')
 
 ruleEta001  = Ex(r''' \eta_{0 0} -> -1''')
 ruleEta002  = Ex(r''' \eta^{0 0} -> -1''')
@@ -303,6 +307,7 @@ def three_plus_one(ex):
     three_plus_one_delta(ex)
     
     three_plus_one_epsilon(ex)
+    three_plus_one_epsilon(ex)
     subs_delta_eta(ex)
     
     my_canonicalise(ex)
@@ -418,8 +423,8 @@ def mass_AB():
     ruleM2  = Ex(r''' M{2}_{a? b? c? d? e? f? g? h?} -> \eta_{a? c?} \eta_{b? e?} \eta_{d? g?} \eta_{f? h?}''')
     ruleM3  = Ex(r''' M{3}_{a? b? c? d? e? f? g? h?} -> \eta_{a? e?} \eta_{b? f?} \eta_{c? g?} \eta_{d? h?}''')
     ruleM4  = Ex(r''' M{4}_{a? b? c? d? e? f? g? h?} -> \eta_{a? e?} \eta_{b? g?} \eta_{c? f?} \eta_{d? h?}''')
-    ruleM5  = Ex(r''' M{5}_{a? b? c? d? e? f? g? h?} -> -\epsilon_{a? b? c? d?} \eta_{e? g?} \eta_{f? h?}''')
-    ruleM6  = Ex(r''' M{6}_{a? b? c? d? e? f? g? h?} -> -\epsilon_{a? b? e? f?} \eta_{c? g?} \eta_{d? h?}''')
+    ruleM5  = Ex(r''' M{5}_{a? b? c? d? e? f? g? h?} -> \epsilon_{a? b? c? d?} \eta_{e? g?} \eta_{f? h?}''')
+    ruleM6  = Ex(r''' M{6}_{a? b? c? d? e? f? g? h?} -> \epsilon_{a? b? e? f?} \eta_{c? g?} \eta_{d? h?}''')
     
     ruleM  = Ex(r''' M_{a? b? c? d? e? f? g? h?} ->e{1} * M{1}_{a? b? c? d? e? f? g? h?} + e{2} * M{2}_{a? b? c? d? e? f? g? h?} + e{3} * M{3}_{a? b? c? d? e? f? g? h?} + e{4} * M{4}_{a? b? c? d? e? f? g? h?} + e{5} * M{5}_{a? b? c? d? e? f? g? h?} + e{6} * M{6}_{a? b? c? d? e? f? g? h?}''')
     
