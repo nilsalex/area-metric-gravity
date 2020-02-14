@@ -24,7 +24,7 @@ EpsilonTensor(Ex(r'''\epsilon^{\alpha \beta \gamma}'''), Ex(r'''''') )
 Symmetric(Ex(r'''\eta_{a? b?}'''), Ex(r'''''') )
 AntiSymmetric(Ex(r'''\epsilon_{a? b? c? d?}'''), Ex(r'''''') )
 
-PartialDerivative(Ex(r'''\partial{#}'''), Ex(r''')''') )
+PartialDerivative(Ex(r'''\partial{#}'''), Ex(r'''''') )
 Depends(Ex(r'''H{#}'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''H1{#}'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''H2{#}'''), Ex(r'''\partial{#})''') )
@@ -53,7 +53,7 @@ Depends(Ex(r'''dV1'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dV2'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dW2'''), Ex(r'''\partial{#})''') )
 
-SortOrder(Ex(r'''{dU{#},dV{#},dW{#},dB{#},dA,m{#},k{#},t{#},e{#},A,B{#},X{#},Y{#},Z{#},U{#},V{#},W{#},\partial{#},\epsilon{#},\gamma{#}}'''), Ex(r''')''') )
+SortOrder(Ex(r'''{dU{#},dV{#},dW{#},dB{#},dA,m{#},k{#},t{#},e{#},A,B{#},X{#},Y{#},Z{#},U{#},V{#},W{#},\epsilon{#},\gamma{#}}'''), Ex(r'''''') )
 
 #ruleH1  = Ex(r''' H1_{\mu \nu} -> \gamma_{\alpha \mu} \gamma_{\beta \nu} X^{\alpha \beta}''')
 #ruleH2  = Ex(r''' H2_{\mu \nu \rho} -> \epsilon_{\alpha \nu \rho} * \gamma_{\mu \sigma} Z^{\alpha \sigma}''')
@@ -253,6 +253,7 @@ def my_eliminate_kronecker(ex):
     substitute(ex, ruleDeltaDelta2, repeat=True)
 
 def three_plus_one_delta(ex):
+    substitute(ex, ruleDelta1, repeat=True)
     substitute(ex, ruleDelta2, repeat=True)
     substitute(ex, ruleDelta3, repeat=True)
 
@@ -339,7 +340,7 @@ def my_canonicalise(ex):
     collect_terms(ex)
 
 def three_plus_one(ex):
-    eliminate_eta(ex)
+    three_plus_one_delta(ex)
     three_plus_one_eta(ex)
 
     distribute(ex, repeat=True)

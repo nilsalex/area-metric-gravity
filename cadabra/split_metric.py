@@ -10,48 +10,23 @@ KroneckerDelta(Ex(r'''\delta{#}'''), Ex(r'''''') )
 Symmetric(Ex(r'''\gamma_{\alpha \beta}'''), Ex(r'''''') )
 Symmetric(Ex(r'''\gamma^{\alpha \beta}'''), Ex(r'''''') )
 Symmetric(Ex(r'''X^{\alpha \beta}'''), Ex(r'''''') )
-Symmetric(Ex(r'''Y^{\alpha \beta}'''), Ex(r'''''') )
-Symmetric(Ex(r'''Z^{\alpha \beta}'''), Ex(r'''''') )
-Symmetric(Ex(r'''U^{\alpha \beta}'''), Ex(r'''''') )
-Symmetric(Ex(r'''dU^{\alpha \beta}'''), Ex(r'''''') )
-Symmetric(Ex(r'''V^{\alpha \beta}'''), Ex(r'''''') )
-Symmetric(Ex(r'''dV^{\alpha \beta}'''), Ex(r'''''') )
-Symmetric(Ex(r'''W^{\alpha \beta}'''), Ex(r'''''') )
-Symmetric(Ex(r'''dW^{\alpha \beta}'''), Ex(r'''''') )
+Symmetric(Ex(r'''dX^{\alpha \beta}'''), Ex(r'''''') )
 
 Symmetric(Ex(r'''\eta_{a? b?}'''), Ex(r'''''') )
 
-PartialDerivative(Ex(r'''\partial{#}'''), Ex(r''')''') )
+PartialDerivative(Ex(r'''\partial{#}'''), Ex(r'''''') )
 Depends(Ex(r'''H{#}'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''H1{#}'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''H2{#}'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''H3{#}'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''X{#}'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''Y{#}'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''Z{#}'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''U{#}'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''dU{#}'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''V{#}'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''dV{#}'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''W{#}'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''dW{#}'''), Ex(r'''\partial{#})''') )
+Depends(Ex(r'''A'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''B{#}'''), Ex(r'''\partial{#})''') )
+Depends(Ex(r'''X{#}'''), Ex(r'''\partial{#})''') )
+Depends(Ex(r'''dA'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dB{#}'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dX{#}'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''A'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''dA'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''U1'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''U2'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''V1'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''V2'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''W2'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''dU1'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''dU2'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''dV1'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''dV2'''), Ex(r'''\partial{#})''') )
-Depends(Ex(r'''dW2'''), Ex(r'''\partial{#})''') )
 
-SortOrder(Ex(r'''{dX{#},dU{#},dV{#},dW{#},dB{#},dA,m{#},k{#},t{#},e{#},A,B{#},X{#},Y{#},Z{#},U{#},V{#},W{#},\partial{#},\gamma{#}}'''), Ex(r''')''') )
+SortOrder(Ex(r'''{dX{#},dA{#},dB{#},A,B{#},X{#},\gamma{#}}'''), Ex(r'''''') )
 
 ruleH1  = Ex(r''' H1 -> -2 A''')
 ruleH2  = Ex(r''' H2^{\mu} -> -B^{\mu}''')
@@ -78,22 +53,12 @@ ruleDelta3 = Ex(r'''\delta^{\alpha}_{0} -> 0''')
 ruleDeltaDelta1 = Ex(r'''\delta^{p}_{q?} \delta^{r?}_{p} -> \delta^{r?}_{q?}''')
 ruleDeltaDelta2 = Ex(r'''\delta^{r?}_{p} \delta^{p}_{q?} -> \delta^{r?}_{q?}''')
 
-ruleTraceFree1  = Ex(r''' \gamma_{\alpha \beta} W^{\alpha \beta} -> 0''')
-ruleTraceFree2  = Ex(r''' \gamma_{\alpha \beta} \partial_{p?}{W^{\alpha \beta}} -> 0''')
-ruleTraceFree3  = Ex(r''' \gamma_{\alpha \beta} \partial_{p? q?}{W^{\alpha \beta}} -> 0''')
-
-ruleX  = Ex(r''' X^{\alpha \beta} -> (1/2) * (U^{\alpha \beta} + V^{\alpha \beta})''')
-ruleY  = Ex(r''' Y^{\alpha \beta} -> (-1/2) * (U^{\alpha \beta} - V^{\alpha \beta})''')
-ruleZ  = Ex(r''' Z^{\alpha \beta} -> (1/2) * W^{\alpha \beta}''')
-
 rulegg1  = Ex(r''' \gamma^{\mu \nu} \gamma_{\mu \nu} -> 3''')
 rulegg2  = Ex(r''' \gamma^{\mu \nu} \gamma_{\nu \mu} -> 3''')
 rulegg3  = Ex(r''' \gamma^{\mu \nu} \gamma_{\mu \rho} -> \delta^{\nu}_{\rho}''')
 rulegg4  = Ex(r''' \gamma^{\mu \nu} \gamma_{\rho \mu} -> \delta^{\nu}_{\rho}''')
 rulegg5  = Ex(r''' \gamma^{\nu \mu} \gamma_{\mu \rho} -> \delta^{\nu}_{\rho}''')
 rulegg6  = Ex(r''' \gamma^{\nu \mu} \gamma_{\rho \mu} -> \delta^{\nu}_{\rho}''')
-
-allE = Ex(r'''e{1}, e{2}, e{3}, e{4}, e{5}, e{6}, e{7}, e{8}, e{9}, e{10}, e{11}, e{12}, e{13}, e{14}, e{15}, e{16}, e{17}, e{18}, e{19}, e{20}, e{21}, e{22}, e{23}, e{24}, e{25}, e{26}, e{27}, e{28}, e{29}, e{30}, e{31}, e{32}, e{33}, e{34}, e{35}, e{36}, e{37}, e{38}, e{39}, e{40}''')
 
 def my_eliminate_metric(ex, repeat=False):
     substitute(ex, Ex(r'''\delta_{\alpha \beta} -> \gamma_{\alpha \beta}''', False), repeat=repeat)
@@ -105,39 +70,6 @@ def my_eliminate_metric(ex, repeat=False):
     substitute(ex, rulegg5, repeat=repeat)
     substitute(ex, rulegg6, repeat=repeat)
     return ex
-
-def kin_ABI():
-    ruleM1 = Ex(r''' M{1}_{a? b? c? d?}^{p? q?} -> (-1/2) * \eta_{a? b?} \eta_{c? d?} \eta^{p? q?}''')
-    ruleM2 = Ex(r''' M{2}_{a? b? c? d?}^{p? q?} ->          \delta_{a?}^{p?} \delta_{b?}^{q?} \eta_{c? d?}''')
-    ruleM3 = Ex(r''' M{3}_{a? b? c? d?}^{p? q?} ->          \eta_{a? c?} \eta_{b? d?} \eta^{p? q?}''')
-    ruleM4 = Ex(r''' M{4}_{a? b? c? d?}^{p? q?} ->  (1/2) * \eta_{a? b?} \delta_{c?}^{p?} \delta_{d?}^{q?}''')
-    ruleM5 = Ex(r''' M{5}_{a? b? c? d?}^{p? q?} ->   (-2) * \eta_{a? c?} \delta_{b?}^{p?} \delta_{d?}^{q?}''')
-    
-    ruleM  = Ex(r''' M_{a? b? c? d?}^{p? q?} -> M{1}_{a? b? c? d?}^{p? q?} + M{2}_{a? b? c? d?}^{p? q?} + M{3}_{a? b? c? d?}^{p? q?} + M{4}_{a? b? c? d?}^{p? q?} + M{5}_{a? b? c? d?}^{p? q?}''')
-    
-    ruleMH1  = Ex(r''' M_{a b c? d?}^{p? q?} H^{a b} -> M_{0 0 c? d?}^{p? q?} H1 + (M_{0 \mu c? d?}^{p? q?} + M_{\mu 0 c? d?}^{p? q?}) H2^{\mu} + M_{\mu \nu c? d?}^{p? q?} H3^{\mu \nu}''')
-    
-    ruleMH2  = Ex(r''' M_{c? d? a b}^{p q} \partial_{p q}{H^{a b}} -> M_{c? d? 0 0}^{0 0} \partial_{0 0}{H1} + M_{c? d? 0 0}^{0 \alpha} \partial_{0 \alpha}{H1} + M_{c? d? 0 0}^{\alpha 0} \partial_{0 \alpha}{H1} + M_{c? d? 0 0}^{\alpha \beta} \partial_{\alpha \beta}{H1} + (M_{c? d? 0 \mu}^{0 0} + M_{c? d? \mu 0}^{0 0}) \partial_{0 0}{H2^{\mu}} + (M_{c? d? 0 \mu}^{0 \alpha} + M_{c? d? \mu 0}^{0 \alpha}) \partial_{0 \alpha}{H2^{\mu}} + (M_{c? d? 0 \mu}^{\alpha 0} + M_{c? d? \mu 0}^{\alpha 0}) \partial_{0 \alpha}{H2^{\mu}} + (M_{c? d? 0 \mu}^{\alpha \beta} + M_{c? d? \mu 0}^{\alpha \beta}) \partial_{\alpha \beta}{H2^{\mu}} + M_{c? d? \mu \nu}^{0 0} \partial_{0 0}{H3^{\mu \nu}} + M_{c? d? \mu \nu}^{0 \alpha} \partial_{0 \alpha}{H3^{\mu \nu}} + M_{c? d? \mu \nu}^{\alpha 0} \partial_{0 \alpha}{H3^{\mu \nu}} + M_{c? d? \mu \nu}^{\alpha \beta} \partial_{\alpha \beta}{H3^{\mu \nu}}''')
-    
-    ex  = Ex(r'''M_{a b c d}^{p q} H^{a b} \partial_{p q}{H^{c d}}''')
-    
-    
-    substitute(ex, ruleMH1)
-    distribute(ex)
-    substitute(ex, ruleMH2)
-    distribute(ex)
-    
-    
-    substitute(ex, ruleM)
-    substitute(ex, ruleM1)
-    substitute(ex, ruleM2)
-    substitute(ex, ruleM3)
-    substitute(ex, ruleM4)
-    substitute(ex, ruleM5)
-
-    three_plus_one(ex)
-
-    return(ex)
 
 def eliminate_eta(ex):
     substitute(ex, ruleEtaEta1, repeat=True)
@@ -161,6 +93,7 @@ def my_eliminate_kronecker(ex):
     substitute(ex, ruleDeltaDelta2, repeat=True)
 
 def three_plus_one_delta(ex):
+    substitute(ex, ruleDelta1, repeat=True)
     substitute(ex, ruleDelta2, repeat=True)
     substitute(ex, ruleDelta3, repeat=True)
 
@@ -181,8 +114,8 @@ def my_canonicalise(ex):
     collect_terms(ex)
 
 def three_plus_one(ex):
-    eliminate_eta(ex)
     three_plus_one_eta(ex)
+    three_plus_one_delta(ex)
 
     distribute(ex, repeat=True)
 
@@ -238,34 +171,31 @@ def three_plus_one(ex):
     return(ex)
 
 def kin_ApBq():
-    ruleM1 = Ex(r''' M{1}_{a? b?}^{p?}_{c? d?}^{q?} -> (-1/4) * \eta_{a? b?} \eta_{c? d?} \eta^{p? q?}''')
-    ruleM2 = Ex(r''' M{2}_{a? b?}^{p?}_{c? d?}^{q?} ->          \eta_{a? b?} \delta_{c?}^{p?} \delta_{d?}^{q?}''')
-    ruleM3 = Ex(r''' M{3}_{a? b?}^{p?}_{c? d?}^{q?} -> (-1/2) * \delta_{a?}^{q?} \eta_{b? c?} \delta_{d?}^{p?}''')
-    ruleM4 = Ex(r''' M{4}_{a? b?}^{p?}_{c? d?}^{q?} ->  (3/4) * \eta_{a? c?} \eta_{b? d?} \eta^{p? q?}''')
-    ruleM5 = Ex(r''' M{5}_{a? b?}^{p?}_{c? d?}^{q?} ->   (-1) * \delta_{a?}^{p?} \eta_{b? c?} \delta_{d?}^{q?}''')
+    ruleM1 = Ex(r''' M{1}_{a? b?}^{p?}_{c? d?}^{q?} ->  (1/4) * \eta_{a? b?} \eta_{c? d?} \eta^{p? q?}''')
+    ruleM2 = Ex(r''' M{2}_{a? b?}^{p?}_{c? d?}^{q?} -> (-1/2) * \eta_{a? b?} \delta_{c?}^{p?} \delta_{d?}^{q?}''')
+    ruleM3 = Ex(r''' M{3}_{a? b?}^{p?}_{c? d?}^{q?} ->  (1/2) * \delta_{a?}^{q?} \eta_{b? c?} \delta_{d?}^{p?}''')
+    ruleM4 = Ex(r''' M{4}_{a? b?}^{p?}_{c? d?}^{q?} -> (-1/4) * \eta_{a? c?} \eta_{b? d?} \eta^{p? q?}''')
     
-    ruleM  = Ex(r''' M_{a? b?}^{p?}_{c? d?}^{q?} -> M{1}_{a? b?}^{p?}_{c? d?}^{q?} + M{2}_{a? b?}^{p?}_{c? d?}^{q?} + M{3}_{a? b?}^{p?}_{c? d?}^{q?} + M{4}_{a? b?}^{p?}_{c? d?}^{q?} + M{5}_{a? b?}^{p?}_{c? d?}^{q?}''')
+#    ruleM  = Ex(r''' M_{a? b?}^{p?}_{c? d?}^{q?} -> M{1}_{a? b?}^{p?}_{c? d?}^{q?} + M{2}_{a? b?}^{p?}_{c? d?}^{q?} + M{3}_{a? b?}^{p?}_{c? d?}^{q?} + M{4}_{a? b?}^{p?}_{c? d?}^{q?}''')
+    ruleM  = Ex(r''' M_{a? b?}^{p?}_{c? d?}^{q?} -> M{4}_{a? b?}^{p?}_{c? d?}^{q?}''')
     
-    ruleMH1  = Ex(r''' M_{a b}^{p}_{c? d?}^{q?} \partial_{p}{H^{a b}} -> M_{0 0}^{0}_{c? d?}^{q?} \partial_{0}{H1} + M_{0 0}^{\alpha}_{c? d?}^{q?} \partial_{\alpha}{H1} + (M_{0 \mu}^{0}_{c? d?}^{q?} + M_{\mu 0}^{0}_{c? d?}^{q?}) \partial_{0}{H2^{\mu}} + (M_{0 \mu}^{\alpha}_{c? d?}^{q?} + M_{\mu 0}^{\alpha}_{c? d?}^{q?}) \partial_{\alpha}{H2^{\mu}} + M_{\mu \nu}^{0}_{c? d?}^{q?} \partial_{0}{H3^{\mu \nu}} + M_{\mu \nu}^{\alpha}_{c? d?}^{q?} \partial_{\alpha}{H3^{\mu \nu}}''')
+    ruleMH1  = Ex(r'''M_{a b}^{p}_{c? d?}^{q?} \partial_{p}{H^{a b}} -> M_{0 0}^{0}_{c? d?}^{q?} \partial_{0}{H1} + M_{0 0}^{\alpha}_{c? d?}^{q?} \partial_{\alpha}{H1} + (M_{0 \mu}^{0}_{c? d?}^{q?} + M_{\mu 0}^{0}_{c? d?}^{q?}) \partial_{0}{H2^{\mu}} + (M_{0 \mu}^{\alpha}_{c? d?}^{q?} + M_{\mu 0}^{\alpha}_{c? d?}^{q?}) \partial_{\alpha}{H2^{\mu}} + M_{\mu \nu}^{0}_{c? d?}^{q?} \partial_{0}{H3^{\mu \nu}} + M_{\mu \nu}^{\alpha}_{c? d?}^{q?} \partial_{\alpha}{H3^{\mu \nu}}''')
     
     ruleMH2  = Ex(r''' M_{c? d?}^{q?}_{a b}^{p} \partial_{p}{H^{a b}} -> M_{c? d?}^{q?}_{0 0}^{0} \partial_{0}{H1} + M_{c? d?}^{q?}_{0 0}^{\alpha} \partial_{\alpha}{H1} + (M_{c? d?}^{q?}_{0 \mu}^{0} + M_{c? d?}^{q?}_{\mu 0}^{0}) \partial_{0}{H2^{\mu}} + (M_{c? d?}^{q?}_{0 \mu}^{\alpha} + M_{c? d?}^{q?}_{\mu 0}^{\alpha}) \partial_{\alpha}{H2^{\mu}} + M_{c? d?}^{q?}_{\mu \nu}^{0} \partial_{0}{H3^{\mu \nu}} + M_{c? d?}^{q?}_{\mu \nu}^{\alpha} \partial_{\alpha}{H3^{\mu \nu}}''')
     
     ex  = Ex(r''' M_{a b}^{p}_{c d}^{q} \partial_{p}{H^{a b}} \partial_{q}{H^{c d}}''')
-    
-    
+
     substitute(ex, ruleMH1)
     distribute(ex)
     substitute(ex, ruleMH2)
     distribute(ex)
-    
-    
+
     substitute(ex, ruleM)
     substitute(ex, ruleM1)
     substitute(ex, ruleM2)
     substitute(ex, ruleM3)
     substitute(ex, ruleM4)
-    substitute(ex, ruleM5)
-    
+
     three_plus_one(ex)
 
     return(ex)
