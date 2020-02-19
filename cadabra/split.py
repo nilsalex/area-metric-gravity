@@ -53,7 +53,7 @@ Depends(Ex(r'''dV1'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dV2'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dW2'''), Ex(r'''\partial{#})''') )
 
-SortOrder(Ex(r'''{dU{#},dV{#},dW{#},dB{#},dA,m{#},k{#},t{#},e{#},A,B{#},X{#},Y{#},Z{#},U{#},V{#},W{#},\epsilon{#},\gamma{#}}'''), Ex(r'''''') )
+SortOrder(Ex(r'''{dU{#},dV{#},dW{#},dB{#},dA,m{#},k{#},t{#},e{#},A,B{#},X{#},Y{#},Z{#},U{#},V{#},W{#},\epsilon{#},\gamma{#},\partial{#}{dU{#}},\partial{#}{dV{#}},\partial{#}{dW{#}},\partial{#}{dB{#}},\partial{#}{dA},\partial{#}{A},\partial{#}{B{#}},\partial{#}{X{#}},\partial{#}{Y{#}},\partial{#}{Z{#}},\partial{#}{U{#}},\partial{#}{V{#}},\partial{#}{W{#}}}'''), Ex(r'''''') )
 
 #ruleH1  = Ex(r''' H1_{\mu \nu} -> \gamma_{\alpha \mu} \gamma_{\beta \nu} X^{\alpha \beta}''')
 #ruleH2  = Ex(r''' H2_{\mu \nu \rho} -> \epsilon_{\alpha \nu \rho} * \gamma_{\mu \sigma} Z^{\alpha \sigma}''')
