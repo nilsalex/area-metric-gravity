@@ -162,8 +162,6 @@ ruleEpsToDelta3  = Ex(r''' \epsilon^{a? b? c?} \epsilon_{i? j? k?} ->\delta^{a?}
 allE = Ex(r'''e{1}, e{2}, e{3}, e{4}, e{5}, e{6}, e{7}, e{8}, e{9}, e{10}, e{11}, e{12}, e{13}, e{14}, e{15}, e{16}, e{17}, e{18}, e{19}, e{20}, e{21}, e{22}, e{23}, e{24}, e{25}, e{26}, e{27}, e{28}, e{29}, e{30}, e{31}, e{32}, e{33}, e{34}, e{35}, e{36}, e{37}, e{38}, e{39}, e{40}''')
 
 def my_eliminate_metric(ex, repeat=False):
-    substitute(ex, Ex(r'''\delta_{\alpha \beta} -> \gamma_{\alpha \beta}''', False), repeat=repeat)
-    substitute(ex, Ex(r'''\delta^{\alpha \beta} -> \gamma^{\alpha \beta}''', False), repeat=repeat)
     substitute(ex, rulegg1, repeat=repeat)
     substitute(ex, rulegg2, repeat=repeat)
     substitute(ex, rulegg3, repeat=repeat)
@@ -379,6 +377,13 @@ def three_plus_one(ex):
     
     distribute(ex)
 
+    my_eliminate_metric(ex)
+    eliminate_kronecker(ex, repeat=True)
+    my_eliminate_metric(ex)
+    eliminate_kronecker(ex, repeat=True)
+    my_eliminate_metric(ex)
+    eliminate_kronecker(ex, repeat=True)
+
     my_canonicalise(ex)
     
     rewrite_indices(ex, Ex(r'\epsilon_{\alpha \beta \gamma}'), Ex(r'\gamma^{\alpha \beta}'))
@@ -464,7 +469,7 @@ def kin_ApBq():
     substitute(ex, ruleM13)
     substitute(ex, ruleM14)
     substitute(ex, ruleM15)
-    
+
     three_plus_one(ex)
 
     return(ex)
