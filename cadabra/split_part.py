@@ -12,7 +12,6 @@ Symmetric(Ex(r'''\gamma^{\alpha \beta}'''), Ex(r'''''') )
 Symmetric(Ex(r'''H1^{\alpha \beta}'''), Ex(r'''''') )
 Symmetric(Ex(r'''X^{\alpha \beta}'''), Ex(r'''''') )
 Symmetric(Ex(r'''Y^{\alpha \beta}'''), Ex(r'''''') )
-#Symmetric(Ex(r'''Z^{\alpha \beta}'''), Ex(r'''''') )
 Symmetric(Ex(r'''dX^{\alpha \beta}'''), Ex(r'''''') )
 Symmetric(Ex(r'''dY^{\alpha \beta}'''), Ex(r'''''') )
 Symmetric(Ex(r'''U^{\alpha \beta}'''), Ex(r'''''') )
@@ -64,7 +63,6 @@ Depends(Ex(r'''dV2'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dW2'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''\xi{#}'''), Ex(r'''\partial{#})''') )
 
-#SortOrder(Ex(r'''{dU{#},dV{#},dW{#},dB{#},dA,m{#},k{#},t{#},e{#},A,B{#},X{#},Y{#},Z{#},U{#},V{#},W{#},\epsilon{#},\gamma{#},\partial{#}{dU{#}},\partial{#}{dV{#}},\partial{#}{dW{#}},\partial{#}{dB{#}},\partial{#}{dA},\partial{#}{A},\partial{#}{B{#}},\partial{#}{X{#}},\partial{#}{Y{#}},\partial{#}{Z{#}},\partial{#}{U{#}},\partial{#}{V{#}},\partial{#}{W{#}}}'''), Ex(r'''''') )
 SortOrder(Ex(r'''{\gamma_{p? q?},\epsilon_{p? q? r?},\gamma^{p? q?},\epsilon^{p? q? r?}'''), Ex(r'''''') )
 
 ruleH1  = Ex(r''' H1^{\mu \nu} -> X^{\mu \nu}''')
@@ -789,13 +787,27 @@ def noethera():
   n5 = Ex(r'\partial_{\tau101}{@(n5temp)}')
   simplify3d(n5)
 
+  n6temp = eom_from_files(Ex(r'Z^{\alpha \beta}'))
+  substitute(n6temp, Ex(r'\int{Q??}{x} -> Q??'))
+  distribute(n6temp, repeat=True)
+  substitute(n6temp, Ex(r'dZ^{\alpha \beta} -> \gamma^{\alpha \tau100} \gamma^{\beta \tau101}'))
+  n6 = Ex(r'\partial_{\tau101}{@(n6temp)}')
+  simplify3d(n6)
+
+  n7temp = eom_from_files(Ex(r'Z^{\alpha \beta}'))
+  substitute(n7temp, Ex(r'\int{Q??}{x} -> Q??'))
+  distribute(n7temp, repeat=True)
+  substitute(n7temp, Ex(r'dZ^{\alpha \beta} -> \gamma^{\alpha \tau101} \gamma^{\beta \tau100}'))
+  n7 = Ex(r'\partial_{\tau101}{@(n7temp)}')
+  simplify3d(n7)
+
   nt = Ex(r'@(n1)')
   simplify3d(nt)
 
   ns = Ex(r'- 2 @(n2) + 1/2 @(n3) - 1/2 @(n4) + @(n5)')
   simplify3d(ns)
 
-  return(n1,n2,n3,n4,n5)
+  return(n1,n2,n3,n4,n5,n6,n7)
   
 
 def simplify3d(n):
