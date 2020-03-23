@@ -240,6 +240,9 @@ def kin_ABI():
 
     three_plus_one(ex)
 
+    split_part(ex)
+    simplify3d(ex)
+
     return(ex)
 
 def eliminate_eta(ex):
@@ -428,6 +431,9 @@ def kin_ApBq():
 
     three_plus_one(ex)
 
+    split_part(ex)
+    simplify3d(ex)
+
     return(ex)
 
 def mass_AB():
@@ -461,6 +467,9 @@ def mass_AB():
     
     three_plus_one(ex)
     
+    split_part(ex)
+    simplify3d(ex)
+
     return(ex)
 
 def save_all():
@@ -807,8 +816,23 @@ def noethera():
   ns = Ex(r'- 2 @(n2) + 1/2 @(n3) - 1/2 @(n4) + @(n5)')
   simplify3d(ns)
 
-  return(n1,n2,n3,n4,n5,n6,n7)
+  n = Ex(r'@(nt) + @(ns)')
+  simplify3d(n)
+
+  return(n)
   
+def split_part(e):
+  substitute(e, ruleH1, repeat=True)
+  distribute(e, repeat=True)
+  unwrap(e, repeat=True)
+
+  substitute(e, ruleH2, repeat=True)
+  distribute(e, repeat=True)
+  unwrap(e, repeat=True)
+
+  substitute(e, ruleH3, repeat=True)
+  distribute(e, repeat=True)
+  unwrap(e, repeat=True)
 
 def simplify3d(n):
   distribute(n, repeat=True)
