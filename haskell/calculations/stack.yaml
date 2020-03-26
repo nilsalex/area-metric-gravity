@@ -1,0 +1,12 @@
+resolver: lts-15.5
+
+packages:
+- .
+
+extra-deps:
+- git: https://github.com/nilsalex/type-tensor.git
+  commit: df552c0e9b3e429630c04223fe11e438eb9f3b08 
+- git: https://github.com/nilsalex/sparse-tensor.git
+  commit: e72e9a60b5f0a5c8f944c1c4836b8d8e5419deb3
+  subdirs:
+    - package
