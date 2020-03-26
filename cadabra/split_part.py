@@ -1,4 +1,5 @@
 from cadabra2 import *
+#from multiprocessing import Process, Queue
 
 Indices(Ex(r'''{a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z#}'''), Ex(r'''fourD, position=independent''') )
 Integer(Ex(r'''{a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z#}'''), Ex(r'''0..3''') )
@@ -760,63 +761,83 @@ def noether0():
 
   return(n)
 
-def noethera():
+def n1():
   n1temp = eom_from_files(Ex(r'Z^{\alpha \beta}'))
   substitute(n1temp, Ex(r'\int{Q??}{x} -> Q??'))
   distribute(n1temp, repeat=True)
   substitute(n1temp, Ex(r'dZ^{\alpha \beta} -> \epsilon^{\tau100 \alpha \beta}'))
-  n1 = Ex(r'\partial_{0}{@(n1temp)}')
-  simplify3d(n1)
+  n1res = Ex(r'\partial_{0}{@(n1temp)}')
+  simplify3d(n1res)
+  return(n1res)
 
+def n2():
   n2temp = eom_from_files(Ex(r'X^{\alpha \beta}'))
   substitute(n2temp, Ex(r'\int{Q??}{x} -> Q??'))
   distribute(n2temp, repeat=True)
   substitute(n2temp, Ex(r'dX^{\alpha \beta} -> 1/2 \gamma^{\alpha \tau100} \gamma^{\beta \tau101} + 1/2 \gamma^{\alpha \tau101} \gamma^{\beta \tau100}'))
-  n2 = Ex(r'\partial_{\tau101}{@(n2temp)}')
-  simplify3d(n2)
+  n2res = Ex(r'\partial_{\tau101}{@(n2temp)}')
+  simplify3d(n2res)
+  return(n2res)
 
+def n3():
   n3temp = eom_from_files(Ex(r'Y^{\alpha \beta}'))
   substitute(n3temp, Ex(r'\int{Q??}{x} -> Q??'))
   distribute(n3temp, repeat=True)
   substitute(n3temp, Ex(r'dY^{\alpha \beta} -> \gamma^{\alpha \beta} \gamma^{\tau100 \tau101}'))
-  n3 = Ex(r'\partial_{\tau101}{@(n3temp)}')
-  simplify3d(n3)
+  n3res = Ex(r'\partial_{\tau101}{@(n3temp)}')
+  simplify3d(n3res)
+  return(n3res)
 
+def n4():
   n4temp = eom_from_files(Ex(r'Y^{\alpha \beta}'))
   substitute(n4temp, Ex(r'\int{Q??}{x} -> Q??'))
   distribute(n4temp, repeat=True)
   substitute(n4temp, Ex(r'dY^{\alpha \beta} -> 1/2 \gamma^{\alpha \tau100} \gamma^{\beta \tau101} + 1/2 \gamma^{\alpha \tau101} \gamma^{\beta \tau100}'))
-  n4 = Ex(r'\partial_{\tau101}{@(n4temp)}')
-  simplify3d(n4)
+  n4res = Ex(r'\partial_{\tau101}{@(n4temp)}')
+  simplify3d(n4res)
+  return(n4res)
 
+def n5():
   n5temp = eom_from_files(Ex(r'Z^{\alpha \beta}'))
   substitute(n5temp, Ex(r'\int{Q??}{x} -> Q??'))
   distribute(n5temp, repeat=True)
   substitute(n5temp, Ex(r'dZ^{\alpha \beta} -> \gamma^{\alpha \beta} \gamma^{\tau100 \tau101}'))
-  n5 = Ex(r'\partial_{\tau101}{@(n5temp)}')
-  simplify3d(n5)
+  n5res = Ex(r'\partial_{\tau101}{@(n5temp)}')
+  simplify3d(n5res)
+  return(n5res)
 
-  n6temp = eom_from_files(Ex(r'Z^{\alpha \beta}'))
-  substitute(n6temp, Ex(r'\int{Q??}{x} -> Q??'))
-  distribute(n6temp, repeat=True)
-  substitute(n6temp, Ex(r'dZ^{\alpha \beta} -> \gamma^{\alpha \tau100} \gamma^{\beta \tau101}'))
-  n6 = Ex(r'\partial_{\tau101}{@(n6temp)}')
-  simplify3d(n6)
+def noethera():
+  #  n1_ = Queue()
+  #  n2_ = Queue()
+  #  n3_ = Queue()
+  #  n4_ = Queue()
+  #  n5_ = Queue()
+  #
+  #  p1 = Process(target=n1, args=(n1_,))
+  #  p2 = Process(target=n2, args=(n2_,))
+  #  p3 = Process(target=n3, args=(n3_,))
+  #  p4 = Process(target=n4, args=(n4_,))
+  #  p5 = Process(target=n5, args=(n5_,))
+  #
+  #  p1.start()
+  #  p2.start()
+  #  p3.start()
+  #  p4.start()
+  #  p5.start()
 
-  n7temp = eom_from_files(Ex(r'Z^{\alpha \beta}'))
-  substitute(n7temp, Ex(r'\int{Q??}{x} -> Q??'))
-  distribute(n7temp, repeat=True)
-  substitute(n7temp, Ex(r'dZ^{\alpha \beta} -> \gamma^{\alpha \tau101} \gamma^{\beta \tau100}'))
-  n7 = Ex(r'\partial_{\tau101}{@(n7temp)}')
-  simplify3d(n7)
+  #  p1.join()
+  #  p2.join()
+  #  p3.join()
+  #  p4.join()
+  #  p5.join()
 
-  nt = Ex(r'@(n1)')
-  simplify3d(nt)
+  n1res = n1()
+  n2res = n2()
+  n3res = n3()
+  n4res = n4()
+  n5res = n5()
 
-  ns = Ex(r'- 2 @(n2) + 1/2 @(n3) - 1/2 @(n4) + @(n5)')
-  simplify3d(ns)
-
-  n = Ex(r'@(nt) + @(ns)')
+  n = Ex(r'1/4 @(n1res) - 1/2 @(n2res) + 1/2 @(n3res) - 1/2 @(n4res) + 1/4 @(n5res)')
   simplify3d(n)
 
   return(n)

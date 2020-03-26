@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: d2a6a08074663fe1d23b6a720ca82645c07ae5dc7d18fb7698b3d3899fbae538
+-- hash: 1852b1e5c50de8d9a4031bc7b88e007c80c49697cf7c961fd01f9c33a5e2e72f
 
 name:           calculations
 version:        0.1.0.0
@@ -34,6 +34,7 @@ library
       src
   build-depends:
       base >=4.7 && <5
+    , singletons
     , type-tensor
   default-language: Haskell2010
 
@@ -47,5 +48,6 @@ executable calculations-exe
   build-depends:
       base >=4.7 && <5
     , calculations
+    , singletons
     , type-tensor
   default-language: Haskell2010

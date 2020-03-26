@@ -13,11 +13,11 @@ packages:
     git: https://github.com/nilsalex/type-tensor.git
     pantry-tree:
       size: 1446
-      sha256: 2979bb253a7754e493962d2f1c7b844d5e70dbc41093b390370a74e985a2708b
-    commit: df552c0e9b3e429630c04223fe11e438eb9f3b08
+      sha256: d1fc0146d23a9e55fbc99c2772d253ccb7ca3e2bc3920e9503fea4ed654d44bf
+    commit: 7190bd5d7598f6b41186bd33fe54fb7a8b4fd06c
   original:
     git: https://github.com/nilsalex/type-tensor.git
-    commit: df552c0e9b3e429630c04223fe11e438eb9f3b08
+    commit: 7190bd5d7598f6b41186bd33fe54fb7a8b4fd06c
 - completed:
     subdir: package
     cabal-file:
