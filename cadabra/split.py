@@ -745,3 +745,77 @@ def shift(kinABI, kinApBq):
     substitute(kinApBq, Ex(r'f{13} -> e{19}'))
     substitute(kinApBq, Ex(r'f{14} -> e{20}'))
     substitute(kinApBq, Ex(r'f{15} -> e{21}'))
+
+def noether0():
+  n1temp = eom_from_files(Ex(r'A'))
+  substitute(n1temp, Ex(r'\int{Q??}{x} -> Q??'))
+  distribute(n1temp, repeat=True)
+  substitute(n1temp, Ex(r'dA -> 1'))
+  n1 = Ex(r'\partial_{0}{@(n1temp)}')
+  simplify3d(n1)
+
+  n2temp = eom_from_files(Ex(r'B^{\alpha}'))
+  substitute(n2temp, Ex(r'\int{Q??}{x} -> Q??'))
+  distribute(n2temp, repeat=True)
+  substitute(n2temp, Ex(r'dB^{\alpha} -> \gamma^{\alpha \tau101}'))
+  n2 = Ex(r'\partial_{\tau101}{@(n2temp)}')
+  simplify3d(n2)
+
+  n = Ex(r'@(n1) - @(n2)')
+  simplify3d(n)
+
+  factor_in(n, Ex(r'k{1}, k{2}, k{3}, k{4}, k{5}, k{6}, k{7}, k{8}, k{9}, k{10}, k{11}, k{12}, k{13}, k{14}, k{15}, k{16}'))
+
+  return(n)
+
+def noethera():
+  n1temp = eom_from_files(Ex(r'B^{\alpha}'))
+  substitute(n1temp, Ex(r'\int{Q??}{x} -> Q??'))
+  distribute(n1temp, repeat=True)
+  substitute(n1temp, Ex(r'dB^{\alpha} -> \delta^{\alpha}_{\tau100}'))
+  n1 = Ex(r'\partial_{0}{@(n1temp)}')
+  simplify3d(n1)
+
+  n2temp = eom_from_files(Ex(r'U^{\alpha \beta}'))
+  substitute(n2temp, Ex(r'\int{Q??}{x} -> Q??'))
+  distribute(n2temp, repeat=True)
+  substitute(n2temp, Ex(r'dU^{\alpha \beta} -> 1/2 \delta^{\alpha}_{\tau100} \gamma^{\beta \tau101} + 1/2 \delta^{\beta}_{\tau100} \gamma^{\alpha \tau101}'))
+  n2 = Ex(r'\partial_{\tau101}{@(n2temp)}')
+  simplify3d(n2)
+
+  n = Ex(r'@(n1) - 4 @(n2)')
+  simplify3d(n)
+
+  factor_in(n, Ex(r'k{1}, k{2}, k{3}, k{4}, k{5}, k{6}, k{7}, k{8}, k{9}, k{10}, k{11}, k{12}, k{13}, k{14}, k{15}, k{16}'))
+
+  return(n)
+
+def noether():
+  return(noether0(),noethera())
+
+def simplify3d(n):
+  distribute(n, repeat=True)
+  unwrap(n, repeat=True)
+  distribute(n, repeat=True)
+  unwrap(n, repeat=True)
+  distribute(n, repeat=True)
+  unwrap(n, repeat=True)
+
+  substitute(n, ruleEpsToDelta1, repeat=True)
+  substitute(n, ruleEpsToDelta2, repeat=True)
+  substitute(n, ruleEpsToDelta3, repeat=True)
+
+  distribute(n, repeat=True)
+
+  rewrite_indices(n, Ex(r'\epsilon_{\alpha \beta \gamma}'), Ex(r'\gamma^{\alpha \beta}'))
+
+  my_eliminate_metric(n)
+  eliminate_kronecker(n, repeat=True)
+  my_eliminate_metric(n)
+  eliminate_kronecker(n, repeat=True)
+  my_eliminate_metric(n)
+  eliminate_kronecker(n, repeat=True)
+  my_eliminate_metric(n)
+  eliminate_kronecker(n, repeat=True)
+
+  my_canonicalise(n)

@@ -5,7 +5,7 @@ packages:
 
 extra-deps:
 - git: https://github.com/nilsalex/type-tensor.git
-  commit: 7190bd5d7598f6b41186bd33fe54fb7a8b4fd06c
+  commit: b3993be9f030c451b0a6bacfdaa811229f8adb65
 - git: https://github.com/nilsalex/sparse-tensor.git
   commit: e72e9a60b5f0a5c8f944c1c4836b8d8e5419deb3
   subdirs:
