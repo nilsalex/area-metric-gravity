@@ -655,7 +655,7 @@ def scalar(ex):
   distribute(ex)
   my_canonicalise(ex)
   substitute(ex, Ex(r'''B^{\alpha} -> 0'''))
-  substitute(ex, Ex(r'''U^{\alpha \beta} -> \gamma^{\alpha \beta} U1 - (\gamma^{\alpha \mu} \gamma^{\beta \nu} \partial_{\mu \nu}{V2} - 1/3 \gamma^{\alpha \beta} \gamma^{\mu \nu} \partial_{\mu \nu}{V2})'''))
+  substitute(ex, Ex(r'''U^{\alpha \beta} -> \gamma^{\alpha \beta} U1 - (\gamma^{\alpha \mu} \gamma^{\beta \nu} \partial_{\mu \nu}{V2} + 1/3 \gamma^{\alpha \beta} \gamma^{\mu \nu} \partial_{\mu \nu}{V2})'''))
   substitute(ex, Ex(r'''V^{\alpha \beta} -> \gamma^{\alpha \beta} V1 + (\gamma^{\alpha \mu} \gamma^{\beta \nu} \partial_{\mu \nu}{V2} - 1/3 \gamma^{\alpha \beta} \gamma^{\mu \nu} \partial_{\mu \nu}{V2})'''))
   substitute(ex, Ex(r'''W^{\alpha \beta} -> (\gamma^{\alpha \mu} \gamma^{\beta \nu} \partial_{\mu \nu}{W2} - 1/3 \gamma^{\alpha \beta} \gamma^{\mu \nu} \partial_{\mu \nu}{W2})'''))
 
