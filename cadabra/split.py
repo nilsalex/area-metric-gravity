@@ -53,6 +53,9 @@ Depends(Ex(r'''dU2'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dV1'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dV2'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dW2'''), Ex(r'''\partial{#})''') )
+Depends(Ex(r'''U^{\alpha}'''), Ex(r'''\partial{#}''') )
+Depends(Ex(r'''W^{\alpha}'''), Ex(r'''\partial{#}''') )
+Depends(Ex(r'''B^{\alpha}'''), Ex(r'''\partial{#}''') )
 
 #SortOrder(Ex(r'''{dU{#},dV{#},dW{#},dB{#},dA,m{#},k{#},t{#},e{#},A,B{#},X{#},Y{#},Z{#},U{#},V{#},W{#},\epsilon{#},\gamma{#},\partial{#}{dU{#}},\partial{#}{dV{#}},\partial{#}{dW{#}},\partial{#}{dB{#}},\partial{#}{dA},\partial{#}{A},\partial{#}{B{#}},\partial{#}{X{#}},\partial{#}{Y{#}},\partial{#}{Z{#}},\partial{#}{U{#}},\partial{#}{V{#}},\partial{#}{W{#}}}'''), Ex(r'''''') )
 SortOrder(Ex(r'''{\gamma_{p? q?},\epsilon_{p? q? r?},\gamma^{p? q?},\epsilon^{p? q? r?}'''), Ex(r'''''') )
@@ -647,6 +650,45 @@ def tt(ex):
   sort_sum(ex)
   canonicalise(ex)
   rename_dummies(ex)
+
+  factor_in(ex, Ex(r'''k{1}, k{2}, k{3}, k{4}, k{5}, k{6}, k{7}, k{8}, k{9}, k{10}, k{11}, k{12}, k{13}, k{14}, k{15}, k{16}'''))
+
+def vector(ex):
+  substitute(ex, Ex(r'''\int{Q??}{x} -> Q??'''))
+  distribute(ex)
+  my_canonicalise(ex)
+  substitute(ex, Ex(r'''A -> 0'''))
+  substitute(ex, Ex(r'''U^{\alpha \beta} -> \gamma^{\alpha \mu} \partial_{\mu}{U^{\beta}} + \gamma^{\beta \mu} \partial_{\mu}{U^{\alpha}}'''))
+  substitute(ex, Ex(r'''V^{\alpha \beta} -> \gamma^{\alpha \mu} \partial_{\mu}{U^{\beta}} + \gamma^{\beta \mu} \partial_{\mu}{U^{\alpha}}'''))
+  substitute(ex, Ex(r'''W^{\alpha \beta} -> \gamma^{\alpha \mu} \partial_{\mu}{W^{\beta}} + \gamma^{\beta \mu} \partial_{\mu}{W^{\alpha}}'''))
+
+  simplify3d(ex)
+
+  substitute(ex, Ex(r'''\partial_{\alpha}{B^{\alpha}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\alpha}{U^{\alpha}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\alpha}{W^{\alpha}} -> 0'''))
+
+  substitute(ex, Ex(r'''\partial_{p? \alpha}{B^{\alpha}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{p? \alpha}{U^{\alpha}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{p? \alpha}{W^{\alpha}} -> 0'''))
+
+  substitute(ex, Ex(r'''\partial_{\alpha p?}{B^{\alpha}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\alpha p?}{U^{\alpha}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\alpha p?}{W^{\alpha}} -> 0'''))
+
+  substitute(ex, Ex(r'''\partial_{p? q? \alpha}{B^{\alpha}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{p? q? \alpha}{U^{\alpha}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{p? q? \alpha}{W^{\alpha}} -> 0'''))
+
+  substitute(ex, Ex(r'''\partial_{p? \alpha q?}{B^{\alpha}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{p? \alpha q?}{U^{\alpha}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{p? \alpha q?}{W^{\alpha}} -> 0'''))
+
+  substitute(ex, Ex(r'''\partial_{\alpha p? q?}{B^{\alpha}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\alpha p? q?}{U^{\alpha}} -> 0'''))
+  substitute(ex, Ex(r'''\partial_{\alpha p? q?}{W^{\alpha}} -> 0'''))
+
+  simplify3d(ex)
 
   factor_in(ex, Ex(r'''k{1}, k{2}, k{3}, k{4}, k{5}, k{6}, k{7}, k{8}, k{9}, k{10}, k{11}, k{12}, k{13}, k{14}, k{15}, k{16}'''))
 
