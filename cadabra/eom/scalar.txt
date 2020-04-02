@@ -1,14 +1,14 @@
 U tracefree:
 
-0 = s1 A + s2 U1 + s3 V1 + s4 V2'' + s5 Delta V2 + s6 W2'' + s7 Delta W2
+0 = dd (s1 A + s2 U1 + s3 V1 + s4 V2'' + s5 Delta V2 + s6 W2'' + s7 Delta W2)
 
 V tracefree:
 
-0 = s8 A + s9 U1 + s10 V1 + s11 V2'' + s12 Delta V2 + s13 V2 + s14 W2'' + s15 Delta W2 + s16 W2
+0 = dd (s8 A + s9 U1 + s10 V1 + s11 V2'' + s12 Delta V2 + s13 V2 + s14 W2'' + s15 Delta W2 + s16 W2)
 
 W tracefree:
 
-0 = s17 A + s18 U1 + s19 V1 + s20 V2'' + s21 Delta V2 + s22 V2 + S23 W2'' + s24 Delta W2 + s25 W2
+0 = dd (s17 A + s18 U1 + s19 V1 + s20 V2'' + s21 Delta V2 + s22 V2 + S23 W2'' + s24 Delta W2 + s25 W2)
 
 U trace:
 
