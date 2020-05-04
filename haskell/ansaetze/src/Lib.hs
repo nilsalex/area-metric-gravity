@@ -98,17 +98,18 @@ system = --trace (unlines . fmap show . nub . sort . fmap (\(_,AnsVar m) -> let 
     ans14_2' = shiftLabels6 (r8 + r10_1 + r10_2 + r6 + r12 + r14_1) ans14_2
 
     two = SField (2 :: Rational)
+    six = SField (6 :: Rational)
 
     e1 = eqn3 ans6'
     e2 = eqn1A (ZeroTensor :: ATens 0 1 0 0 0 0 AnsVarR) (two &. ans8')
     e3 = eqn1AI ans6' ans10_2'
     e4 = eqn2Aa ans6' (two &. ans10_1')
     e5 = eqn3A ans6' ans10_2'
-    e6 = eqn1AB ans8' ans12'
-    e7 = eqn1ABI ans10_2' ans14_2'
-    e8 = eqn3AB ans10_2' ans14_2'
-    e9 = eqn2ABb ans10_1' ans10_2' ans14_1'
-    e10 = eqn1AaBb ans10_1' ans14_1'
+    e6 = eqn1AB (two &. ans8') (six &. ans12')
+    e7 = eqn1ABI ans10_2' (two &. ans14_2')
+    e8 = eqn3AB ans10_2' (two &. ans14_2')
+    e9 = eqn2ABb (two &. ans10_1') ans10_2' (two &. ans14_1')
+    e10 = eqn1AaBb (two &. ans10_1') (two &. ans14_1')
 
     sys = (e10 `AppendTList6`) $
           (e9  `AppendTList6`) $
@@ -160,7 +161,7 @@ someFunc
                             writeAnsatz "ansABCI" eta14_2 eps14_2
     where
         (r, (eta6, eps6):(eta8, eps8):(eta10_1, eps10_1):(eta10_2, eps10_2):(eta12, eps12):(eta14_1, eps14_1):(eta14_2, eps14_2):_ , sys) = system 
-        matDoubles   = HM.toLists $ toMatrixT6 sys
+        matDoubles   = map reverse $ HM.toLists $ toMatrixT6 sys
         isFractional = any (\x -> snd (properFraction x) /= 0) $ concat matDoubles
         lZ       = map (map round) matDoubles :: [[HM.Z]]
         lNonZero = filter (\rs -> any (/=0) rs) $ lZ
@@ -168,7 +169,7 @@ someFunc
         mat      = HM.fromLists lUniques
         ref      = rref mat
         wrongSolution = not (isrref ref && verify mat ref)
-        sol      = fmap (\(AnsVar v) -> fmap (\(SField r) -> r) v) $ fromRref ref
+        sol      = fmap (\(AnsVar v) -> fmap (\(SField r) -> r) v) $ fromRrefRev ref
         sol'     = map (\i -> case I.lookup i sol of
                                 Nothing -> I.singleton i 1
                                 Just v  -> v) [1..r]
