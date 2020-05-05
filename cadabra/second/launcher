@@ -1,0 +1,3 @@
+#!/bin/bash
+
+PYTHONPATH=~/.local/share/cadabra2/python python3 -i split.py
