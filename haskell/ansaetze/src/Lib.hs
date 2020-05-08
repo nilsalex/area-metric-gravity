@@ -48,7 +48,7 @@ metric = fromListT6 $ map (\(i, s) -> ((Empty, Empty, (Ind9 i) `Append` ((Ind9 i
                     $ zip [0..] [1, -1, -1, -1, 1, 1, 1, 1, 1, 1]
 
 system :: (Int, [(AnsatzForestEta, AnsatzForestEpsilon)], TensList6 Ind20 Ind9 Ind3 AnsVarR)
-system =
+system = --trace (unlines $ fmap show $ toListShow6 $ contrATens1 (0,0) $ contrATens1 (1,1) $ interJArea &* interJArea &* ans8) $
          --trace (unlines . fmap show . nub . sort . fmap (\(_,AnsVar m) -> let xs = I.assocs m
          --                                                                     xs' = fmap (fmap (\(SField a) -> a)) xs
          --                                                                     p  = snd (head xs')
@@ -73,13 +73,13 @@ system =
     (eta14_1,eps14_1,_ans14_1) = mkAnsatzTensorFastAbs 14 symList14_1 areaList14_1 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 0 3 0 0 0 2 AnsVarR)
     (eta14_2,eps14_2,_ans14_2) = mkAnsatzTensorFastAbs 14 symList14_2 areaList14_2 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 0 3 0 1 0 0 AnsVarR)
 
-    ans6 = contrATens2 (0,0) $ (SField $ 1 / (16 :: Rational)) &. metric &* _ans6
-    ans8 = (SField $ 1 / (128 :: Rational)) &. _ans8
-    ans10_1 = contrATens3 (0,0) $ contrATens3 (2,1) $ (SField $ 1 / (128 :: Rational)) &. invEtaA &* invEtaA &* _ans10_1
-    ans10_2 = contrATens2 (0,0) $ (SField $ 1 / (128 :: Rational)) &. metric &* _ans10_2
-    ans12 = (SField $ 1 / (3072 :: Rational)) &. _ans12
-    ans14_1 = contrATens3 (0,0) $ contrATens3 (2,1) $ (SField $ 1 / (1024 :: Rational)) &. invEtaA &* invEtaA &* _ans14_1
-    ans14_2 = contrATens2 (0,0) $ (SField $ 1 / (2048 :: Rational)) &. metric &* _ans14_2
+    ans6 = contrATens2 (0,0) $ metric &* _ans6
+    ans8 = _ans8
+    ans10_1 = contrATens3 (0,0) $ contrATens3 (2,1) $ invEtaA &* invEtaA &* _ans10_1
+    ans10_2 = contrATens2 (0,0) $ metric &* _ans10_2
+    ans12 = _ans12
+    ans14_1 = contrATens3 (0,0) $ contrATens3 (2,1) $ invEtaA &* invEtaA &* _ans14_1
+    ans14_2 = contrATens2 (0,0) $ metric &* _ans14_2
 
     r6    = tensorRank6' ans6
     r8    = tensorRank6' ans8
