@@ -740,9 +740,9 @@ def apply_sol(ex):
   substitute(ex, Ex(r'''e{35} -> (-2)*k{4} + (-1)*k{6} + 1/4*k{7}'''))
   substitute(ex, Ex(r'''e{36} -> (-1)*k{4} + 1/2*k{7} + (-3/2)*k{12} + (-1/2)*k{14} + (-3)*k{16}'''))
   substitute(ex, Ex(r'''e{37} -> 1/12*k{4} + 1/12*k{6} + 1/48*k{7} + (-1/8)*k{12} + (-1/24)*k{14} + 1*k{15} + 1/4*k{16}'''))
-  substitute(ex, Ex(r'''e{38} -> (-16)*k{4} + 8*k{7}'''))
-  substitute(ex, Ex(r'''e{39} -> (-16)*k{6} + (-12)*k{7}'''))
-  substitute(ex, Ex(r'''e{40} -> 8*k{4} + 4*k{6} + (-1)*k{7}'''))
+  substitute(ex, Ex(r'''e{38} -> (-2)*k{4} + 1*k{7}'''))
+  substitute(ex, Ex(r'''e{39} -> (-2)*k{6} + (-3/2)*k{7}'''))
+  substitute(ex, Ex(r'''e{40} -> 1*k{4} + 1/2*k{6} + (-1/8)*k{7}'''))
   return(ex)
 
 def shift(kinABI, kinApBq):
