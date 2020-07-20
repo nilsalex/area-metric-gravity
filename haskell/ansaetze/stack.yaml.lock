@@ -24,12 +24,12 @@ packages:
     git: https://github.com/nilsalex/safe-tensor.git
     pantry-tree:
       size: 1576
-      sha256: 97a623b805bd74311756a9881f1fc908b968809417f36d5fcbbe2616f3cba4da
-    commit: 45e480ba2035ffc5232df931b7877ea0cfc60ee4
+      sha256: 7d4b918e2e40c102084a68e3480a2dc2f6ef43c01ae3beed4cd8db8956fecec4
+    commit: 22aaf95855a1b14158796889ddd07a54da803cac
   original:
     subdir: packages/safe-tensor
     git: https://github.com/nilsalex/safe-tensor.git
-    commit: 45e480ba2035ffc5232df931b7877ea0cfc60ee4
+    commit: 22aaf95855a1b14158796889ddd07a54da803cac
 - completed:
     subdir: packages/safe-tensor-sparse-tensor-compat
     name: safe-tensor-sparse-tensor-compat
@@ -38,11 +38,11 @@ packages:
     pantry-tree:
       size: 691
       sha256: 12d1c7eb33b708a238c83fcb4561e6643b3b528e66da5929236f7c66b84eba59
-    commit: 45e480ba2035ffc5232df931b7877ea0cfc60ee4
+    commit: 22aaf95855a1b14158796889ddd07a54da803cac
   original:
     subdir: packages/safe-tensor-sparse-tensor-compat
     git: https://github.com/nilsalex/safe-tensor.git
-    commit: 45e480ba2035ffc5232df931b7877ea0cfc60ee4
+    commit: 22aaf95855a1b14158796889ddd07a54da803cac
 snapshots:
 - completed:
     size: 512195
