@@ -1,10 +1,15 @@
-resolver: nightly-2019-11-29
+resolver: nightly-2020-07-19
 
 packages:
 - .
 
 extra-deps:
 - git: https://github.com/nilsalex/sparse-tensor.git
-  commit: 52a735019cedebe916a2abd5b9f1cb5da2e809a5
+  commit: 6e1dbc8194c00e1a4aa29e86e65284740e8ace85
   subdirs:
     - package
+- git: https://github.com/nilsalex/safe-tensor.git
+  commit: 45e480ba2035ffc5232df931b7877ea0cfc60ee4
+  subdirs:
+    - packages/safe-tensor
+    - packages/safe-tensor-sparse-tensor-compat

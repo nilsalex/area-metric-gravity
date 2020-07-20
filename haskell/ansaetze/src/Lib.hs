@@ -1,20 +1,42 @@
-{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE FlexibleContexts #-}
 
 module Lib (
   someFunc
 ) where
 
---import Debug.Trace (trace)
+import Debug.Trace (trace)
+
+import DiffeoSymmetry
 
 import Math.Tensor
-import Math.Tensor.Examples.Gravity
-import Math.Tensor.Examples.Gravity.DiffeoSymEqns
-import Math.Tensor.LorentzGenerator
-import Math.Tensor.Internal.LinearAlgebra
-import Data.List (intersperse, sortOn, sort, nub, nubBy)
-import Data.Ratio ((%), numerator, denominator)
-import qualified Data.IntMap.Strict as I
+import Math.Tensor.LinearAlgebra
+
+import Math.Tensor.SparseTensor.Ansaetze
+
+import Data.List
+  ( intersperse
+  , sortOn
+  , sort
+  , nub
+  , nubBy
+  )
+import Data.Ratio
+  ( (%)
+  , numerator
+  , denominator
+  )
+import qualified Data.IntMap.Strict         as I
+import qualified Data.Map.Strict            as M
 import qualified Numeric.LinearAlgebra.Data as HM
+
+import Control.Monad.Except
+  ( runExcept
+  , runExceptT
+  , lift
+  , MonadError
+  , ExceptT
+  )
 
 type Expr = I.IntMap Rational
 
@@ -43,84 +65,48 @@ epsList = map (\(f, _, s) -> if f > 0 then s else error "negative prefactor") .
           map (\(e, is, Var f x) -> (f, x, (concat $ intersperse " " $ [epsString e] ++ map etaString is))) .
           flattenForestEpsilon
 
-metric :: ATens 0 0 2 0 0 0 (SField Rational)
-metric = fromListT6 $ map (\(i, s) -> ((Empty, Empty, (Ind9 i) `Append` ((Ind9 i) `Append` Empty), Empty, Empty, Empty), SField s))
-                    $ zip [0..] [1, -1, -1, -1, 1, 1, 1, 1, 1, 1]
-
-system :: (Int, [(AnsatzForestEta, AnsatzForestEpsilon)], TensList6 Ind20 Ind9 Ind3 AnsVarR)
-system =
-         --trace (unlines . fmap show . nub . sort . fmap (\(_,AnsVar m) -> let xs = I.assocs m
-         --                                                                     xs' = fmap (fmap (\(SField a) -> a)) xs
-         --                                                                     p  = snd (head xs')
-         --                                                                 in fmap (fmap (/p)) xs') . toListT6 $ e2) $
-         ( r
-         , [ (eta6, eps6)
-           , (eta8, eps8)
-           , (eta10_1, eps10_1)
-           , (eta10_2, eps10_2)
-           , (eta12, eps12)
-           , (eta14_1, eps14_1)
-           , (eta14_2, eps14_2)]
-         , sys)
-  where
---  (eta4,eps4,ans4) = mkAnsatzTensorFastAbs 4 symList4 areaList4 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 1 0 0 0 0 0 AnsVarR)
-    ans4 = ZeroTensor :: ATens 0 1 0 0 0 0 AnsVarR
-    (eta6,eps6,_ans6) = mkAnsatzTensorFastAbs 6 symList6 areaList6 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 0 1 0 1 0 0 AnsVarR)
-    (eta8,eps8,_ans8) = mkAnsatzTensorFastAbs 8 symList8 areaList8 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 0 2 0 0 0 0 AnsVarR)
-    (eta10_1,eps10_1,_ans10_1) = mkAnsatzTensorFastAbs 10 symList10_1 areaList10_1 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 0 2 0 0 0 2 AnsVarR)
-    (eta10_2,eps10_2,_ans10_2) = mkAnsatzTensorFastAbs 10 symList10_2 areaList10_2 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 0 2 0 1 0 0 AnsVarR)
-    (eta12,eps12,_ans12) = mkAnsatzTensorFastAbs 12 symList12 areaList12 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 0 3 0 0 0 0 AnsVarR)
-    (eta14_1,eps14_1,_ans14_1) = mkAnsatzTensorFastAbs 14 symList14_1 areaList14_1 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 0 3 0 0 0 2 AnsVarR)
-    (eta14_2,eps14_2,_ans14_2) = mkAnsatzTensorFastAbs 14 symList14_2 areaList14_2 :: (AnsatzForestEta, AnsatzForestEpsilon, ATens 0 3 0 1 0 0 AnsVarR)
-
-    ans6 = contrATens2 (0,0) $ (SField $ 1 / (16 :: Rational)) &. metric &* _ans6
-    ans8 = (SField $ 1 / (128 :: Rational)) &. _ans8
-    ans10_1 = contrATens3 (0,0) $ contrATens3 (2,1) $ (SField $ 1 / (128 :: Rational)) &. invEtaA &* invEtaA &* _ans10_1
-    ans10_2 = contrATens2 (0,0) $ (SField $ 1 / (128 :: Rational)) &. metric &* _ans10_2
-    ans12 = (SField $ 1 / (3072 :: Rational)) &. _ans12
-    ans14_1 = contrATens3 (0,0) $ contrATens3 (2,1) $ (SField $ 1 / (1024 :: Rational)) &. invEtaA &* invEtaA &* _ans14_1
-    ans14_2 = contrATens2 (0,0) $ (SField $ 1 / (2048 :: Rational)) &. metric &* _ans14_2
-
-    r6    = tensorRank6' ans6
-    r8    = tensorRank6' ans8
-    r10_1 = tensorRank6' ans10_1
-    r10_2 = tensorRank6' ans10_2
-    r12    = tensorRank6' ans12
-    r14_1 = tensorRank6' ans14_1
-    r14_2 = tensorRank6' ans14_2
-    r = r6 + r8 + r10_1 + r10_2 + r12 + r14_1 + r14_2
-
-    ans8'    = ans8                                   -- from 1 to 6
-    ans10_1' = shiftLabels6 r8 ans10_1                -- from 7 to 21
-    ans10_2' = shiftLabels6 (r8 + r10_1) ans10_2      -- from 22 to 37
-    ans6'    = shiftLabels6 (r8 + r10_1 + r10_2) ans6 -- from 38 to 40
-    ans12'   = shiftLabels6 (r8 + r10_1 + r10_2 + r6) ans12
-    ans14_1' = shiftLabels6 (r8 + r10_1 + r10_2 + r6 + r12) ans14_1
-    ans14_2' = shiftLabels6 (r8 + r10_1 + r10_2 + r6 + r12 + r14_1) ans14_2
-
-    two = SField (2 :: Rational)
-    six = SField (6 :: Rational)
-
-    e1 = eqn3 ans6'
-    e2 = eqn1A (ZeroTensor :: ATens 0 1 0 0 0 0 AnsVarR) (two &. ans8')
-    e3 = eqn1AI ans6' ans10_2'
-    e4 = eqn2Aa ans6' (two &. ans10_1')
-    e5 = eqn3A ans6' ans10_2'
-    e6 = eqn1AB (two &. ans8') (six &. ans12')
-    e7 = eqn1ABI ans10_2' (two &. ans14_2')
-    e8 = eqn3AB ans10_2' (two &. ans14_2')
-    e9 = eqn2ABb (two &. ans10_1') ans10_2' (two &. ans14_1')
-    e10 = eqn1AaBb (two &. ans10_1') (two &. ans14_1')
-
-    sys = (e10 `AppendTList6`) $
-          (e9  `AppendTList6`) $
-          (e8  `AppendTList6`) $
-          (e7  `AppendTList6`) $
-          (e6  `AppendTList6`) $
-          (e5  `AppendTList6`) $
-          (e4  `AppendTList6`) $
-          (e3  `AppendTList6`) $
-           e2  `AppendTList6` (singletonTList6 e1)
+system :: MonadError String m =>
+          m ( [(AnsatzForestEta, AnsatzForestEpsilon)]
+            , [T (Poly Rational)]
+            )
+system = do
+  r4      <- covRank "STArea" 21 ["A"]
+  _ans4   <- zeroT r4
+  let ans4 = (EmptyForest, M.empty, _ans4)
+  let ans6 = someAns6 "ST" "A" "I"
+  ans8    <- someAns8 "ST" "A" "B"
+  ans10_1 <- someAns10_1 "ST" "A" "B" "I"
+  ans10_2 <- someAns10_2 "ST" "A" "B" "p" "q"
+  ans12   <- someAns12 "ST" "A" "B" "C"
+  ans14_1 <- someAns14_1 "ST" "A" "B" "C" "I"
+  ans14_2 <- someAns14_2 "ST" "A" "B" "C" "p" "q"
+  let ansaetze@[ (_,_,ansA)
+               , (_,_,ansAB)
+               , (_,_,ansApBq)
+               , (_,_,ansABI)
+               , (_,_,ansAI)
+               , (_,_,ansABC)
+               , (_,_,ansABpCq)
+               , (_,_,ansABCI)
+               ] =
+        ans4 : makeVarsConsecutive
+                 [ ans8
+                 , ans10_2
+                 , ans10_1
+                 , ans6
+                 , ans12
+                 , ans14_2
+                 , ans14_1
+                 ]
+  let forests = fmap (\(a,b,_) -> (a,b)) ansaetze
+  sys <- sequence
+           [ diffeoEq3   ansAI
+           , diffeoEq1A  ansA  ansAB
+           , diffeoEq1AI ansAI ansABI
+           , diffeoEq2Ap ansAI ansApBq
+           , diffeoEq3A  ansAI ansABI
+           ]
+  return (forests, sys)
     
 texStringRationalPositive :: Rational -> String
 texStringRationalPositive r
@@ -147,6 +133,7 @@ writeRules rules = writeFile "rules.txt" $ unlines rules
 writeAnsatz :: String -> AnsatzForestEta -> AnsatzForestEpsilon -> IO ()
 writeAnsatz name eta eps = writeFile (name ++ ".txt") $ unlines $ (etaList eta) ++ (epsList eps)
 
+{-
 someFunc :: IO ()
 someFunc
         | isFractional  = error "system is not fraction-free"
@@ -178,3 +165,9 @@ someFunc
         keyMap   = I.fromList $ zip indets [1..]
         sol''    = fmap (I.mapKeys ((I.!) keyMap)) sol'
         rules    = zipWith cadabraRule [1..] sol''
+-}
+
+someFunc :: ExceptT String IO ()
+someFunc = do
+             (forests, sys) <- system
+             lift $ print $ systemRank sys
