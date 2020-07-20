@@ -251,7 +251,7 @@ diffeoEq1ABI ansatz10_1 ansatz14_1 = do
     e2 <- fmap contractT $ ansCBI .* c1
     ansACJ <- relabelT (VSpace "STSym2" 10) [("I","J")] =<< relabelT (VSpace "STArea" 21) [("B","C")] ansatz10_1
     e3 <- fmap contractT $ ansACJ .* c3
-    ansACBI <- transposeT (VSpace "STArea" 21) (ICov "A") (ICov "B") ansatz14_1
+    ansACBI <- transposeT (VSpace "STArea" 21) (ICov "B") (ICov "C") ansatz14_1
     e4 <- fmap (contractT . fmap (2*)) $ (ansACBI .*) =<< fmap contractT (c2 .* n)
     res <- fmap removeZerosT $ (e1 .+) =<< ((e2 .+) =<< e3 .+ e4)
     case rankT res of
@@ -276,7 +276,7 @@ diffeoEq1ApBq ansatz10_2 ansatz14_2 = do
     c1 <- someInterAreaJet1 "ST" "m" "n" "C" "B" "r" "q"
     e2 <- fmap (fmap (2*) . contractT) $ ansApCr .* c1
     e3 <- transposeT (VSpace "STArea" 21) (ICov "A") (ICov "B") =<< transposeT (VSpace "ST" 4) (ICon "p") (ICon "q") e2
-    ansCApBq <- transposeMultT (VSpace "STArea" 21) [] [("A","B"),("B","C"),("C","A")] ansatz14_2
+    ansCApBq <- transposeMultT (VSpace "STArea" 21) [] [("A","C"),("B","A"),("C","B")] ansatz14_2
     e4 <- fmap (fmap (2*) . contractT) $ (ansCApBq .*) =<< fmap contractT (c2 .* n)
     res <- fmap removeZerosT $ (e1 .+) =<< ((e2 .+) =<< e3 .+ e4)
     case rankT res of
