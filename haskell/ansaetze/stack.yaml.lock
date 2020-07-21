@@ -6,23 +6,20 @@
 packages:
 - completed:
     subdir: package
-    cabal-file:
-      size: 3313
-      sha256: 2290aae3a32a36824efb15b63dfddb39c6fbf1c71979c5a5d9da6d314d2e70e2
     name: sparse-tensor
     version: '0.3'
     git: https://github.com/nilsalex/sparse-tensor.git
     pantry-tree:
       size: 1358
-      sha256: fd8ad67e9aefa179ede2d90b917cc7249f62ae7a1bf3ecb546bdc0a1740224a6
-    commit: 52a735019cedebe916a2abd5b9f1cb5da2e809a5
+      sha256: 17ea4cc17b26328d071eafd6135f1cd0bceb7702f05cae12f804eebe48f5f95d
+    commit: 6e1dbc8194c00e1a4aa29e86e65284740e8ace85
   original:
     subdir: package
     git: https://github.com/nilsalex/sparse-tensor.git
-    commit: 52a735019cedebe916a2abd5b9f1cb5da2e809a5
+    commit: 6e1dbc8194c00e1a4aa29e86e65284740e8ace85
 snapshots:
 - completed:
-    size: 434661
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2019/11/29.yaml
-    sha256: 9edba401b588c0b8359262043b51f0bd33e2334802f0a1467eb660a23601eaf6
-  original: nightly-2019-11-29
+    size: 512195
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2020/7/19.yaml
+    sha256: c5ab758fbac270898400c61189919841d0c6755bff153a651311fca69d906d23
+  original: nightly-2020-07-19
