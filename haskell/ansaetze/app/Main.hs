@@ -8,4 +8,4 @@ main = do
         res <- runExceptT someFunc
         case res of
           Left err -> putStrLn err
-          _        -> return ()
+          _        -> pure ()

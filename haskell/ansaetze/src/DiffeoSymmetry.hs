@@ -26,7 +26,7 @@ someInterAreaJet1 vid m n a b p q = do
     i1 <- c .* someDelta vid 4 q p
     i2 <- (someDeltaArea vid a b .* ) =<< (someDelta vid 4 m p .* someDelta vid 4 q n)
     res :: T Int <- fmap removeZerosT $ i1 .+ i2
-    return $ fmap fromIntegral res
+    pure $ fmap fromIntegral res
   where
     c = someInterAreaCon vid m n a b
 
@@ -48,7 +48,7 @@ someInterAreaJet2 vid m n a b i j = int
         i1 <- c .* someDeltaSym2 vid 4 j i
         i2 <- k .* someDeltaArea vid a b
         res :: T Int <- fmap removeZerosT $ i1 .+ i2
-        return $ fmap fromIntegral res
+        pure $ fmap fromIntegral res
 
 --
 --  L_A^r * C^A_B_r^{pm}_n * v^B
@@ -62,7 +62,7 @@ someInterAreaJet1_2 :: (Num v, Eq v, MonadError String m) =>
 someInterAreaJet1_2 vid m n a b r p = do
     i <- c .* someDelta @Int vid 4 p r
     i' <- fmap removeZerosT $ (i .+) =<< transposeT (VSpace vid 4) (ICon m) (ICon p) i
-    return $ fmap fromIntegral i'
+    pure $ fmap fromIntegral i'
   where
     c = someInterAreaCon vid m n a b
 
@@ -110,7 +110,7 @@ someInterAreaJet2_3 vid m n a b i p q = do
     t5 <- transposeMultT (VSpace vid 4) [(m,q),(p,m),(q,p)] [] t1
     t6 <- transposeMultT (VSpace vid 4) [(m,q),(p,p),(q,m)] [] t1
     res <- fmap removeZerosT $ (t6 .+) =<< (t5 .+) =<< (t4 .+) =<< (t3 .+) =<< (t2 .+ t1)
-    return $ fmap (\v -> if denominator v == 1
+    pure $ fmap (\v -> if denominator v == 1
                          then fromIntegral (numerator v)
                          else error "someInterAreaJet2_3 is not fraction-free, as it should be!") res
   where
@@ -123,7 +123,7 @@ diffeoEq1 ansatz0 ansatz4 = do
     e2 <- fmap contractT $ (ansatz4 .*) =<< (c .* n)
     res <- fmap removeZerosT $ e1 .+ e2
     case rankT res of
-      [(VSpace "ST" 4, ConCov ("m" :| []) ("n" :| []))] -> return res
+      [(VSpace "ST" 4, ConCov ("m" :| []) ("n" :| []))] -> pure res
       _ -> throwError $ "diffeoEq1: inconsistent ansatz rank\n" ++ show (rankT ansatz4)
   where
     d = someDelta "ST" 4 "m" "n"
@@ -136,7 +136,7 @@ diffeoEq3 ansatz6 = do
     c   <- someInterAreaJet2_3 "ST" "m" "n" "A" "B" "I" "p" "q"
     res <- fmap (removeZerosT . contractT) $ (ansatz6 .*) =<< (c .* n)
     case rankT res of
-      [(VSpace "ST" 4, ConCov ("m" :| ["p","q"]) ("n" :| []))] -> return res
+      [(VSpace "ST" 4, ConCov ("m" :| ["p","q"]) ("n" :| []))] -> pure res
       _ -> throwError $ "diffeoEq3: inconsistent ansatz rank\n" ++ show (rankT ansatz6)
   where
     n = someFlatAreaCon "ST" "B"
@@ -150,7 +150,7 @@ diffeoEq1A ansatz4 ansatz8 = do
     res <- fmap removeZerosT $ (e3 .+) =<< (e1 .+ e2)
     case rankT res of
       [(VSpace "ST" 4, ConCov ("m" :| []) ("n" :| [])),
-       (VSpace "STArea" 21, Cov ("A" :| []))] -> return res
+       (VSpace "STArea" 21, Cov ("A" :| []))] -> pure res
       _ -> throwError $ "diffeoEq1A: inconsistent ansatz ranks\n" ++
                         show (rankT ansatz4) ++ "\n" ++
                         show (rankT ansatz8)
@@ -173,7 +173,7 @@ diffeoEq1AI ansatz6 ansatz10_1 = do
     case rankT res of
       [(VSpace "ST" 4, ConCov ("m" :| []) ("n" :| [])),
        (VSpace "STArea" 21, Cov ("A" :| [])),
-       (VSpace "STSym2" 10, Con ("I" :| []))] -> return res
+       (VSpace "STSym2" 10, Con ("I" :| []))] -> pure res
       _ -> throwError $ "diffeoEq1AI: inconsistent ansatz ranks\n" ++
                         show (rankT ansatz6) ++ "\n" ++
                         show (rankT ansatz10_1)
@@ -195,7 +195,7 @@ diffeoEq2Ap ansatz6 ansatz10_2 = do
     res <- fmap removeZerosT $ e1 .+ e2
     case rankT res of
       [(VSpace "ST" 4, ConCov ("m" :| ["p","q"]) ("n" :| [])),
-       (VSpace "STArea" 21, Cov ("A" :| []))] -> return res
+       (VSpace "STArea" 21, Cov ("A" :| []))] -> pure res
       _ -> throwError $ "diffeoEq2Ap: inconsistent ansatz ranks\n" ++
                         show (rankT ansatz6) ++ "\n" ++
                         show (rankT ansatz10_2)
@@ -214,7 +214,7 @@ diffeoEq3A ansatz6 ansatz10_1 = do
     res <- fmap removeZerosT $ e1 .+ e2
     case rankT res of
       [(VSpace "ST" 4, ConCov ("m" :| ["p","q"]) ("n" :| [])),
-       (VSpace "STArea" 21, Cov ("A" :| []))] -> return res
+       (VSpace "STArea" 21, Cov ("A" :| []))] -> pure res
       _ -> throwError $ "diffeoEq2Ap: inconsistent ansatz ranks\n" ++
                         show (rankT ansatz6) ++ "\n" ++
                         show (rankT ansatz10_1)
@@ -232,7 +232,7 @@ diffeoEq1AB ansatz8 ansatz12 = do
     res <- fmap removeZerosT $ (e1 .+) =<< ((e2 .+) =<< e3 .+ e4)
     case rankT res of
       [(VSpace "ST" 4, ConCov ("m" :| []) ("n" :| [])),
-       (VSpace "STArea" 21, Cov ("A" :| ["B"]))] -> return res
+       (VSpace "STArea" 21, Cov ("A" :| ["B"]))] -> pure res
       _ -> throwError $ "diffeoEq1AB: inconsistent ansatz ranks\n" ++
                         show (rankT ansatz8) ++ "\n" ++
                         show (rankT ansatz12)
@@ -257,7 +257,7 @@ diffeoEq1ABI ansatz10_1 ansatz14_1 = do
     case rankT res of
       [(VSpace "ST" 4, ConCov ("m" :| []) ("n" :| [])),
        (VSpace "STArea" 21, Cov ("A" :| ["B"])),
-       (VSpace "STSym2" 10, Con ("I" :| []))] -> return res
+       (VSpace "STSym2" 10, Con ("I" :| []))] -> pure res
       _ -> throwError $ "diffeoEq1ABI: inconsistent ansatz ranks\n" ++
                         show (rankT ansatz10_1) ++ "\n" ++
                         show (rankT ansatz14_1)
@@ -281,7 +281,7 @@ diffeoEq1ApBq ansatz10_2 ansatz14_2 = do
     res <- fmap removeZerosT $ (e1 .+) =<< ((e2 .+) =<< e3 .+ e4)
     case rankT res of
       [(VSpace "ST" 4, ConCov ("m" :| ["p","q"]) ("n" :| [])),
-       (VSpace "STArea" 21, Cov ("A" :| ["B"]))] -> return res
+       (VSpace "STArea" 21, Cov ("A" :| ["B"]))] -> pure res
       _ -> throwError $ "diffeoEq1ApBq: inconsistent ansatz ranks\n" ++
                         show (rankT ansatz10_2) ++ "\n" ++
                         show (rankT ansatz14_2)
@@ -306,7 +306,7 @@ diffeoEq2ABs ansatz10_1 ansatz10_2 ansatz14_2 = do
     res <- fmap removeZerosT $ (e1 .+) =<< e2 .+ e3
     case rankT res of
       [(VSpace "ST" 4, ConCov ("m" :| ["p","s"]) ("n" :| [])),
-       (VSpace "STArea" 21, Cov ("A" :| ["B"]))] -> return res
+       (VSpace "STArea" 21, Cov ("A" :| ["B"]))] -> pure res
       _ -> throwError $ "diffeoEq2ABs: inconsistent ansatz ranks\n" ++
                         show (rankT ansatz10_1) ++ "\n" ++
                         show (rankT ansatz10_2) ++ "\n" ++
@@ -326,7 +326,7 @@ diffeoEq3AB ansatz10_1 ansatz14_1 = do
     res <- fmap removeZerosT $ (e1 .+) =<< e2 .+ e3
     case rankT res of
       [(VSpace "ST" 4, ConCov ("m" :| ["p","q"]) ("n" :| [])),
-       (VSpace "STArea" 21, Cov ("A" :| ["B"]))] -> return res
+       (VSpace "STArea" 21, Cov ("A" :| ["B"]))] -> pure res
       _ -> throwError $ "diffeoEq3AB: inconsistent ansatz ranks\n" ++
                         show (rankT ansatz10_1) ++ "\n" ++
                         show (rankT ansatz14_1)
