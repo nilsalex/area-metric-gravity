@@ -9,7 +9,7 @@ extra-deps:
   subdirs:
     - package
 - git: https://github.com/nilsalex/safe-tensor.git
-  commit: e91e0c048650749053369dec8e6ab31628edd81d
+  commit: c5563276952f690224d484a1b73e6e96f315911e
   subdirs:
     - packages/safe-tensor
     - packages/safe-tensor-sparse-tensor-compat
