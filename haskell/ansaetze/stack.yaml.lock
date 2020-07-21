@@ -43,3 +43,9 @@ packages:
     subdir: packages/safe-tensor-sparse-tensor-compat
     git: https://github.com/nilsalex/safe-tensor.git
     commit: c5563276952f690224d484a1b73e6e96f315911e
+snapshots:
+- completed:
+    size: 512195
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2020/7/19.yaml
+    sha256: c5ab758fbac270898400c61189919841d0c6755bff153a651311fca69d906d23
+  original: nightly-2020-07-19
