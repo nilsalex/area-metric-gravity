@@ -1,12 +1,10 @@
-resolver: lts-15.5
+resolver: nightly-2020-07-19
 
 packages:
 - .
 
 extra-deps:
-- git: https://github.com/nilsalex/type-tensor.git
-  commit: b3993be9f030c451b0a6bacfdaa811229f8adb65
-- git: https://github.com/nilsalex/sparse-tensor.git
-  commit: e72e9a60b5f0a5c8f944c1c4836b8d8e5419deb3
+- git: https://github.com/nilsalex/safe-tensor.git
+  commit: c5563276952f690224d484a1b73e6e96f315911e
   subdirs:
-    - package
+    - packages/safe-tensor

@@ -5,10 +5,9 @@
 
 module Lib where
 
-import Sym2
-import Epsilon
-import Safe
-import TH
+import Math.Tensor.Safe
+import Math.Tensor.Safe.TH
+import Math.Tensor.Basic
 import Data.List.NonEmpty (NonEmpty(..))
 import Data.Singletons
 
@@ -24,7 +23,7 @@ t2 = epsilon' (sing :: Sing "V") (sing :: Sing 3) (sing :: Sing ("a" :| ["b","c"
 
 t3 = t1 &* t2
 
-t4 = contract t3
+t4 = removeZeros $ contract t3
 
 someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+someFunc = print t4
