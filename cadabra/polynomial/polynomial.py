@@ -148,6 +148,20 @@ def poly():
 
     my_canonicalise(ex)
 
+    substitute(ex, rule_epsI_epsI)
+    distribute(ex, repeat=True)
+
+    my_eliminate_metric(ex, repeat=True)
+    eliminate_kronecker(ex, repeat=True)
+
+    my_eliminate_metric(ex, repeat=True)
+    eliminate_kronecker(ex, repeat=True)
+
+    my_eliminate_metric(ex, repeat=True)
+    eliminate_kronecker(ex, repeat=True)
+
+    my_canonicalise(ex)
+
     map_sympy(ex, "simplify")
     my_canonicalise(ex)
 
