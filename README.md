@@ -1,4 +1,4 @@
-# linear-area-lagrangian
+# area-metric-gravity
 
 Perturbative expansion of area metric gravity to second order in the equations of motion (third order in the lagrangian). This repository contains:
 
