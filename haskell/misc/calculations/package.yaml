@@ -1,16 +1,14 @@
 name:                calculations
 version:             0.1.0.0
-github:              "githubuser/calculations"
-license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2020 Author name here"
+license:             MIT
+author:              "Nils Alex"
+maintainer:          "nils@famalex.de"
+copyright:           "2020 Nils Alex"
 
 extra-source-files:
 - README.md
-- ChangeLog.md
 
-description:         Please see the README on GitHub at <https://github.com/githubuser/calculations#readme>
+description:         Please see the README
 
 dependencies:
 - base >= 4.7 && < 5

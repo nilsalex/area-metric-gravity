@@ -4,26 +4,19 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 4a0a22047461db44ef5e3803640ca3bc9084b578b1c8758d67d17be6ac8ba6c8
+-- hash: b2b3107282b81b4361d05b075302fd495a6aea43da57275ba55a27df028df5bf
 
 name:           calculations
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/calculations#readme>
-homepage:       https://github.com/githubuser/calculations#readme
-bug-reports:    https://github.com/githubuser/calculations/issues
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2020 Author name here
-license:        BSD3
+description:    Please see the README
+author:         Nils Alex
+maintainer:     nils@famalex.de
+copyright:      2020 Nils Alex
+license:        MIT
 license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
     README.md
-    ChangeLog.md
-
-source-repository head
-  type: git
-  location: https://github.com/githubuser/calculations
 
 library
   exposed-modules:

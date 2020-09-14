@@ -1,0 +1,29 @@
+name:                deviation
+version:             0.1.0.0
+license:             MIT
+author:              "Nils Alex"
+maintainer:          "nils@famalex.de"
+copyright:           "2020 Nils Alex"
+
+extra-source-files:
+- README.md
+
+description:         Please see the README
+
+dependencies:
+- base >= 4.7 && < 5
+- gloss
+
+library:
+  source-dirs: src
+
+executables:
+  deviation-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - deviation
