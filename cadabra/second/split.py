@@ -54,12 +54,7 @@ Depends(Ex(r'''dV1'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dV2'''), Ex(r'''\partial{#})''') )
 Depends(Ex(r'''dW2'''), Ex(r'''\partial{#})''') )
 
-#SortOrder(Ex(r'''{dU{#},dV{#},dW{#},dB{#},dA,m{#},k{#},t{#},e{#},A,B{#},X{#},Y{#},Z{#},U{#},V{#},W{#},\epsilon{#},\gamma{#},\partial{#}{dU{#}},\partial{#}{dV{#}},\partial{#}{dW{#}},\partial{#}{dB{#}},\partial{#}{dA},\partial{#}{A},\partial{#}{B{#}},\partial{#}{X{#}},\partial{#}{Y{#}},\partial{#}{Z{#}},\partial{#}{U{#}},\partial{#}{V{#}},\partial{#}{W{#}}}'''), Ex(r'''''') )
 SortOrder(Ex(r'''{\gamma_{p? q?},\epsilon_{p? q? r?},\gamma^{p? q?},\epsilon^{p? q? r?}'''), Ex(r'''''') )
-
-#ruleH1  = Ex(r''' H1_{\mu \nu} -> \gamma_{\alpha \mu} \gamma_{\beta \nu} X^{\alpha \beta}''')
-#ruleH2  = Ex(r''' H2_{\mu \nu \rho} -> \epsilon_{\alpha \nu \rho} * \gamma_{\mu \sigma} Z^{\alpha \sigma}''')
-#ruleH3  = Ex(r''' H3_{\mu \nu \rho \sigma} -> \epsilon_{\alpha \mu \nu} \epsilon_{\beta \rho \sigma} Y^{\alpha \beta}''')
 
 ruleH1 = Ex(r''' H1^{\alpha \beta} -> 2 A \gamma^{\alpha \beta} - X^{\alpha \beta}''')
 ruleH2 = Ex(r''' H2^{\alpha \beta \gamma} -> -A \epsilon^{\alpha \beta \gamma} + B^{\beta} \gamma^{\alpha \gamma} - B^{\gamma} \gamma^{\alpha \beta} + \epsilon^{\mu \beta \gamma} \gamma_{\mu \nu} Z^{\nu \alpha} + (1/2) \epsilon^{\alpha \beta \gamma} \gamma_{\mu \nu} X^{\mu \nu}''')
@@ -672,48 +667,7 @@ def mass_ABC():
     
     return(ex)
 
-def save_all():
-  save_AB()
-  save_ApBq()
-  save_ABI()
-
-def save_AB():
-    ex = mass_AB()
-    with open("mass_AB.cdb", "w") as file:
-      file.write(ex.input_form()+"\n")
-
-def save_ApBq():
-    ex = kin_ApBq()
-    with open("kin_ApBq.cdb", "w") as file:
-      file.write(ex.input_form()+"\n")
-
-def save_ABI():
-    ex = kin_ABI()
-    with open("kin_ABI.cdb", "w") as file:
-      file.write(ex.input_form()+"\n")
-
-def load_AB():
-    with open("mass_AB.cdb", "r") as file:
-      ex = Ex(file.readline())
-    return(ex)
-
-def load_ApBq():
-    with open("kin_ApBq.cdb", "r") as file:
-      ex = Ex(file.readline())
-    return(ex)
-
-def load_ABI():
-    with open("kin_ABI.cdb", "r") as file:
-      ex = Ex(file.readline())
-    return(ex)
-
 def eom(massABC, kinABCI, kinABpCq, toVary):
-    shift(kinABCI, kinABpCq)
-
-    apply_sol(massABC)
-    apply_sol(kinABCI)
-    apply_sol(kinABpCq)
-
     variation = Ex(r'd' + toVary.input_form())
     ruleVary = Ex(r'@{toVary} -> @{variation}')
 
@@ -745,127 +699,6 @@ def eom(massABC, kinABCI, kinABpCq, toVary):
     factor_out(ex, variation)
 
     return ex
-
-def eom_from_files(toVary):
-    ex1 = load_AB()
-    ex2 = load_ABI()
-    ex3 = load_ApBq()
-
-    my_eliminate_metric(ex1)
-    eliminate_kronecker(ex1, repeat=True)
-    my_canonicalise(ex1)
-    substitute(ex1, ruleTraceFree1)
-    substitute(ex1, ruleTraceFree2)
-
-    my_eliminate_metric(ex2)
-    eliminate_kronecker(ex2, repeat=True)
-    my_canonicalise(ex2)
-    substitute(ex2, ruleTraceFree1)
-    substitute(ex2, ruleTraceFree2)
-
-    my_eliminate_metric(ex3)
-    eliminate_kronecker(ex3, repeat=True)
-    my_canonicalise(ex3)
-    substitute(ex3, ruleTraceFree1)
-    substitute(ex3, ruleTraceFree2)
-
-    return eom(ex1, ex2, ex3, toVary)
-
-def tt(ex):
-  substitute(ex, Ex(r'''\int{Q??}{x} -> Q??'''))
-  distribute(ex)
-  my_canonicalise(ex)
-  substitute(ex, Ex(r'''A -> 0'''))
-  substitute(ex, Ex(r'''B^{\alpha} -> 0'''))
-  substitute(ex, Ex(r'''U^{\mu \nu} \gamma_{\mu \nu} -> 0'''))
-  substitute(ex, Ex(r'''V^{\mu \nu} \gamma_{\mu \nu} -> 0'''))
-  substitute(ex, Ex(r'''W^{\mu \nu} \gamma_{\mu \nu} -> 0'''))
-  substitute(ex, Ex(r'''U^{\nu \mu} \gamma_{\mu \nu} -> 0'''))
-  substitute(ex, Ex(r'''V^{\nu \mu} \gamma_{\mu \nu} -> 0'''))
-  substitute(ex, Ex(r'''W^{\nu \mu} \gamma_{\mu \nu} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{p? q?}{U^{\mu \nu}} \gamma_{\mu \nu} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{p? q?}{V^{\mu \nu}} \gamma_{\mu \nu} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{p? q?}{W^{\mu \nu}} \gamma_{\mu \nu} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{p? q?}{U^{\nu \mu}} \gamma_{\mu \nu} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{p? q?}{V^{\nu \mu}} \gamma_{\mu \nu} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{p? q?}{W^{\nu \mu}} \gamma_{\mu \nu} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{p? \mu}{U^{q? \mu}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{p? \mu}{V^{q? \mu}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{p? \mu}{W^{q? \mu}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{p? \mu}{U^{\mu q?}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{p? \mu}{V^{\mu q?}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{p? \mu}{W^{\mu q?}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{\mu p?}{U^{q? \mu}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{\mu p?}{V^{q? \mu}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{\mu p?}{W^{q? \mu}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{\mu p?}{U^{\mu q?}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{\mu p?}{V^{\mu q?}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{\mu p?}{W^{\mu q?}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{\mu \nu}{U^{\mu \nu}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{\mu \nu}{V^{\mu \nu}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{\mu \nu}{W^{\mu \nu}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{\mu \nu}{U^{\nu \mu}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{\mu \nu}{V^{\nu \mu}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{\mu \nu}{W^{\nu \mu}} -> 0'''))
-
-  simplify3d(ex)
-
-  factor_in(ex, Ex(r'''k{1}, k{2}, k{3}, k{4}, k{5}, k{6}, k{7}, k{8}, k{9}, k{10}, k{11}, k{12}, k{13}, k{14}, k{15}, k{16}'''))
-
-def vector(ex):
-  substitute(ex, Ex(r'''\int{Q??}{x} -> Q??'''))
-  distribute(ex)
-  my_canonicalise(ex)
-  substitute(ex, Ex(r'''A -> 0'''))
-  substitute(ex, Ex(r'''U^{\alpha \beta} -> \gamma^{\alpha \mu} \partial_{\mu}{U^{\beta}} + \gamma^{\beta \mu} \partial_{\mu}{U^{\alpha}}'''))
-  substitute(ex, Ex(r'''V^{\alpha \beta} -> \gamma^{\alpha \mu} \partial_{\mu}{U^{\beta}} + \gamma^{\beta \mu} \partial_{\mu}{U^{\alpha}}'''))
-  substitute(ex, Ex(r'''W^{\alpha \beta} -> \gamma^{\alpha \mu} \partial_{\mu}{W^{\beta}} + \gamma^{\beta \mu} \partial_{\mu}{W^{\alpha}}'''))
-
-  simplify3d(ex)
-
-  substitute(ex, Ex(r'''\partial_{\alpha}{B^{\alpha}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{\alpha}{U^{\alpha}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{\alpha}{W^{\alpha}} -> 0'''))
-
-  substitute(ex, Ex(r'''\partial_{p? \alpha}{B^{\alpha}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{p? \alpha}{U^{\alpha}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{p? \alpha}{W^{\alpha}} -> 0'''))
-
-  substitute(ex, Ex(r'''\partial_{\alpha p?}{B^{\alpha}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{\alpha p?}{U^{\alpha}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{\alpha p?}{W^{\alpha}} -> 0'''))
-
-  substitute(ex, Ex(r'''\partial_{p? q? \alpha}{B^{\alpha}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{p? q? \alpha}{U^{\alpha}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{p? q? \alpha}{W^{\alpha}} -> 0'''))
-
-  substitute(ex, Ex(r'''\partial_{p? \alpha q?}{B^{\alpha}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{p? \alpha q?}{U^{\alpha}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{p? \alpha q?}{W^{\alpha}} -> 0'''))
-
-  substitute(ex, Ex(r'''\partial_{\alpha p? q?}{B^{\alpha}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{\alpha p? q?}{U^{\alpha}} -> 0'''))
-  substitute(ex, Ex(r'''\partial_{\alpha p? q?}{W^{\alpha}} -> 0'''))
-
-  simplify3d(ex)
-
-  factor_in(ex, Ex(r'''k{1}, k{2}, k{3}, k{4}, k{5}, k{6}, k{7}, k{8}, k{9}, k{10}, k{11}, k{12}, k{13}, k{14}, k{15}, k{16}'''))
-
-def scalar(ex):
-  substitute(ex, Ex(r'''\int{Q??}{x} -> Q??'''))
-  distribute(ex)
-  my_canonicalise(ex)
-  substitute(ex, Ex(r'''B^{\alpha} -> 0'''))
-  substitute(ex, Ex(r'''U^{\alpha \beta} -> \gamma^{\alpha \beta} U1 - (\gamma^{\alpha \mu} \gamma^{\beta \nu} \partial_{\mu \nu}{V2} + 1/3 \gamma^{\alpha \beta} \gamma^{\mu \nu} \partial_{\mu \nu}{V2})'''))
-  substitute(ex, Ex(r'''V^{\alpha \beta} -> \gamma^{\alpha \beta} V1 + (\gamma^{\alpha \mu} \gamma^{\beta \nu} \partial_{\mu \nu}{V2} - 1/3 \gamma^{\alpha \beta} \gamma^{\mu \nu} \partial_{\mu \nu}{V2})'''))
-  substitute(ex, Ex(r'''W^{\alpha \beta} -> (\gamma^{\alpha \mu} \gamma^{\beta \nu} \partial_{\mu \nu}{W2} - 1/3 \gamma^{\alpha \beta} \gamma^{\mu \nu} \partial_{\mu \nu}{W2})'''))
-
-  sort_product(ex)
-  sort_sum(ex)
-  canonicalise(ex)
-  rename_dummies(ex)
-
-  factor_in(ex, Ex(r'''k{1}, k{2}, k{3}, k{4}, k{5}, k{6}, k{7}, k{8}, k{9}, k{10}, k{11}, k{12}, k{13}, k{14}, k{15}, k{16}'''))
 
 def apply_sol(ex):
     substitute(ex, Ex(r'''e{1} -> 1*k{1}'''))
@@ -1105,6 +938,8 @@ def apply_sol(ex):
     substitute(ex, Ex(r'''e{235} -> 7/12*k{4} + 5/24*k{6} + (-13/96)*k{7} + 1/4*k{12} + 1/12*k{14} + (-2)*k{15} + (-1/2)*k{16}'''))
     substitute(ex, Ex(r'''e{236} -> (-17/48)*k{4} + (-5/16)*k{6} + (-11/192)*k{7} + 1/6*k{11} + 25/24*k{12} + 9/32*k{13} + 73/192*k{14} + (-2)*k{15} + 13/16*k{16} + (-1/12)*k{39} + 7/48*k{40} + (-1/6)*k{41} + (-1/24)*k{42} + (-11/24)*k{43} + (-3)*k{48} + (-3/2)*k{49} + (-1/4)*k{50}'''))
     substitute(ex, Ex(r'''e{237} -> (-17/192)*k{4} + 49/2304*k{6} + 185/3072*k{7} + (-23/288)*k{11} + (-19/288)*k{12} + 13/288*k{13} + (-5/1152)*k{14} + (-1/6)*k{15} + (-5/192)*k{16} + (-1/4)*k{38} + (-29/288)*k{39} + (-79/576)*k{40} + (-23/144)*k{41} + (-11/288)*k{42} + (-7/144)*k{43} + 1/6*k{44} + 1/4*k{47} + 1/4*k{48} + 1/8*k{49} + (-1/48)*k{50}'''))
+    substitute(ex, Ex(r'''k{14} -> 0'''))
+    substitute(ex, Ex(r'''k{16} -> 1/6*k{6} + 1/8*k{7} - 1/2*k{12}'''))
     return(ex)
 
 def shift(massABC, kinABCI, kinABpCq):
@@ -1311,53 +1146,6 @@ def shift(massABC, kinABCI, kinABpCq):
     substitute(kinABpCq, Ex(r'f{108} -> e{163}'))
     substitute(kinABpCq, Ex(r'f{109} -> e{164}'))
     substitute(kinABpCq, Ex(r'f{110} -> e{165}'))
-
-def noether0():
-  n1temp = eom_from_files(Ex(r'A'))
-  substitute(n1temp, Ex(r'\int{Q??}{x} -> Q??'))
-  distribute(n1temp, repeat=True)
-  substitute(n1temp, Ex(r'dA -> 1'))
-  n1 = Ex(r'\partial_{0}{@(n1temp)}')
-  simplify3d(n1)
-
-  n2temp = eom_from_files(Ex(r'B^{\alpha}'))
-  substitute(n2temp, Ex(r'\int{Q??}{x} -> Q??'))
-  distribute(n2temp, repeat=True)
-  substitute(n2temp, Ex(r'dB^{\alpha} -> \gamma^{\alpha \tau101}'))
-  n2 = Ex(r'\partial_{\tau101}{@(n2temp)}')
-  simplify3d(n2)
-
-  n = Ex(r'@(n1) - @(n2)')
-  simplify3d(n)
-
-  factor_in(n, Ex(r'k{1}, k{2}, k{3}, k{4}, k{5}, k{6}, k{7}, k{8}, k{9}, k{10}, k{11}, k{12}, k{13}, k{14}, k{15}, k{16}'))
-
-  return(n)
-
-def noethera():
-  n1temp = eom_from_files(Ex(r'B^{\alpha}'))
-  substitute(n1temp, Ex(r'\int{Q??}{x} -> Q??'))
-  distribute(n1temp, repeat=True)
-  substitute(n1temp, Ex(r'dB^{\alpha} -> \delta^{\alpha}_{\tau100}'))
-  n1 = Ex(r'\partial_{0}{@(n1temp)}')
-  simplify3d(n1)
-
-  n2temp = eom_from_files(Ex(r'U^{\alpha \beta}'))
-  substitute(n2temp, Ex(r'\int{Q??}{x} -> Q??'))
-  distribute(n2temp, repeat=True)
-  substitute(n2temp, Ex(r'dU^{\alpha \beta} -> 1/2 \delta^{\alpha}_{\tau100} \gamma^{\beta \tau101} + 1/2 \delta^{\beta}_{\tau100} \gamma^{\alpha \tau101}'))
-  n2 = Ex(r'\partial_{\tau101}{@(n2temp)}')
-  simplify3d(n2)
-
-  n = Ex(r'@(n1) - 4 @(n2)')
-  simplify3d(n)
-
-  factor_in(n, Ex(r'k{1}, k{2}, k{3}, k{4}, k{5}, k{6}, k{7}, k{8}, k{9}, k{10}, k{11}, k{12}, k{13}, k{14}, k{15}, k{16}, k{17}, k{18}, k{19}, k{20}, k{21}, k{22}, k{23}, k{24}, k{25}, k{26}, k{27}, k{28}, k{29}, k{30}, k{31}, k{32}, k{33}, k{34}, k{35}, k{36}, k{37}, k{38}, k{39}, k{40}, k{41}, k{42}, k{43}, k{44}, k{45}, k{46}, k{47}, k{48}, k{49}, k{50}'))
-
-  return(n)
-
-def noether():
-  return(noether0(),noethera())
 
 def simplify3d(n):
   distribute(n, repeat=True)
