@@ -1,4 +1,5 @@
 # area-metric-gravity
+[![DOI](https://zenodo.org/badge/195409525.svg)](https://zenodo.org/badge/latestdoi/195409525)
 
 Perturbative expansion of area metric gravity to second order in the equations of motion (third order in the lagrangian). Building up on the [paper](https://doi.org/10.1103/PhysRevD.101.084025) on covariant constructive gravity. This repository contains:
 
