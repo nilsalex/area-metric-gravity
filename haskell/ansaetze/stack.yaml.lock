@@ -18,19 +18,6 @@ packages:
     git: https://github.com/nilsalex/sparse-tensor.git
     commit: 6e1dbc8194c00e1a4aa29e86e65284740e8ace85
 - completed:
-    subdir: packages/safe-tensor
-    name: safe-tensor
-    version: 0.2.1.0
-    git: https://github.com/nilsalex/safe-tensor.git
-    pantry-tree:
-      size: 1576
-      sha256: a93c57df13795841457a4e22cb25b2056843f5f0dc8e207664ab70cc5056ba0e
-    commit: c5563276952f690224d484a1b73e6e96f315911e
-  original:
-    subdir: packages/safe-tensor
-    git: https://github.com/nilsalex/safe-tensor.git
-    commit: c5563276952f690224d484a1b73e6e96f315911e
-- completed:
     subdir: packages/safe-tensor-sparse-tensor-compat
     name: safe-tensor-sparse-tensor-compat
     version: 0.1.0.0
@@ -45,7 +32,7 @@ packages:
     commit: c5563276952f690224d484a1b73e6e96f315911e
 snapshots:
 - completed:
-    size: 531275
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2020/9/14.yaml
-    sha256: 0a9622e876494d7ea5d8e7f457a15b54c7257ebc2da70acfc4563624dee7275b
-  original: nightly-2020-09-14
+    size: 531280
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2020/9/16.yaml
+    sha256: cab814521b1514f75dc37be21ba24a680d12200ac02928a4038a827b4f474ae9
+  original: nightly-2020-09-16
